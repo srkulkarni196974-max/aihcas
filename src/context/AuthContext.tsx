@@ -16,7 +16,7 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
+  loginWithGoogle: (email?: string, name?: string) => Promise<void>;
   forgotPassword: (email: string) => Promise<string>;
   logout: () => void;
   isDemo: boolean;
@@ -73,7 +73,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await login(email, password);
   };
 
-  const loginWithGoogle = async () => {
+  const loginWithGoogle = async (email?: string, name?: string) => {
+    // If email is provided, we could potentially pass it to NextAuth or use it for a mock flow
     await nextAuthSignIn('google', { callbackUrl: '/dashboard' });
   };
 
