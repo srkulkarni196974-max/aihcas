@@ -202,3 +202,8 @@ export async function updateUserPassword(email: string, newPassword: string): Pr
   await writeUsers(users);
   return { success: true };
 }
+
+export async function destroySession() {
+  // Session destruction is handled by NextAuth cookies
+  return { success: true };
+}
