@@ -3,6 +3,7 @@
 import bcrypt from 'bcryptjs';
 import fs from 'fs/promises';
 import path from 'path';
+import { getServerSession } from 'next-auth/next';
 import { sendPasswordResetEmail } from './email';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -206,4 +207,15 @@ export async function updateUserPassword(email: string, newPassword: string): Pr
 export async function destroySession() {
   // Session destruction is handled by NextAuth cookies
   return { success: true };
+}
+
+export async function getSession() {
+  try {
+    const session = await getServerSession();
+    if (!session || !session.user) return null;
+    return session.user;
+  } catch (error) {
+    console.error('Error getting session:', error);
+    return null;
+  }
 }
