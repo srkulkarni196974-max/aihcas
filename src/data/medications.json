@@ -1,0 +1,5965 @@
+[
+  {
+    "names": [
+      "paracetamol",
+      "dolo",
+      "crocin",
+      "calpol",
+      "metacin",
+      "fepanil",
+      "p 500",
+      "p-500",
+      "acetaminophen"
+    ],
+    "purpose": "Fever and pain relief",
+    "drugClass": "Analgesic / Antipyretic",
+    "warnings": [
+      "Do not exceed 4g per day",
+      "Avoid alcohol",
+      "Caution in liver disease"
+    ],
+    "instructions": "Take with or without food. Max 4 doses per day."
+  },
+  {
+    "names": [
+      "ibuprofen",
+      "brufen",
+      "combiflam",
+      "ibugesic",
+      "advil",
+      "nurofen"
+    ],
+    "purpose": "Pain, inflammation, and fever relief",
+    "drugClass": "NSAID (Non-Steroidal Anti-Inflammatory)",
+    "warnings": [
+      "Take with food to avoid stomach irritation",
+      "Avoid in kidney/heart disease",
+      "Do NOT use if dengue suspected"
+    ],
+    "instructions": "Always take after meals. Avoid on empty stomach."
+  },
+  {
+    "names": [
+      "amoxicillin",
+      "amoxil",
+      "mox",
+      "novamox",
+      "biomox",
+      "amoxyclav",
+      "augmentin",
+      "clavam"
+    ],
+    "purpose": "Bacterial infections (throat, ear, chest, urinary)",
+    "drugClass": "Antibiotic – Penicillin class",
+    "warnings": [
+      "Complete full course",
+      "May cause diarrhea",
+      "Allergic reactions possible – stop if rash develops"
+    ],
+    "instructions": "Take after food. Complete the full prescribed course even if feeling better."
+  },
+  {
+    "names": [
+      "azithromycin",
+      "azee",
+      "zithromax",
+      "azithral",
+      "azicip",
+      "z-pak"
+    ],
+    "purpose": "Bacterial infections, community-acquired pneumonia, typhoid",
+    "drugClass": "Antibiotic – Macrolide class",
+    "warnings": [
+      "Take on empty stomach or 2 hours after meals",
+      "May cause heart rhythm changes at high doses"
+    ],
+    "instructions": "Take at the same time each day. Avoid antacids within 2 hours."
+  },
+  {
+    "names": [
+      "ciprofloxacin",
+      "cipro",
+      "ciplox",
+      "cifran",
+      "zoxan",
+      "ciprobid"
+    ],
+    "purpose": "UTI, typhoid, respiratory/GI bacterial infections",
+    "drugClass": "Antibiotic – Fluoroquinolone",
+    "warnings": [
+      "Avoid dairy products and antacids",
+      "May cause tendon damage",
+      "Avoid in children < 18"
+    ],
+    "instructions": "Take with water, not milk. Avoid direct sunlight (photosensitivity)."
+  },
+  {
+    "names": [
+      "metronidazole",
+      "flagyl",
+      "metrogyl",
+      "aristogyl",
+      "metron"
+    ],
+    "purpose": "Amoebic infections, giardiasis, anaerobic bacterial infections",
+    "drugClass": "Antibiotic / Antiprotozoal",
+    "warnings": [
+      "STRICTLY avoid alcohol during and 48h after course",
+      "May cause nausea and metallic taste"
+    ],
+    "instructions": "Take with food. Absolutely no alcohol."
+  },
+  {
+    "names": [
+      "cetirizine",
+      "cetzine",
+      "zyrtec",
+      "alerid",
+      "cetcip",
+      "okacet"
+    ],
+    "purpose": "Allergic rhinitis, urticaria, hay fever",
+    "drugClass": "Antihistamine (2nd generation)",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid driving after taking"
+    ],
+    "instructions": "Preferably take at night as it may cause drowsiness."
+  },
+  {
+    "names": [
+      "loratadine",
+      "claritin",
+      "lorano",
+      "larinate",
+      "lorfast"
+    ],
+    "purpose": "Allergies, hay fever, hives",
+    "drugClass": "Antihistamine (non-sedating)",
+    "warnings": [
+      "Rare drowsiness",
+      "Safe for daytime use"
+    ],
+    "instructions": "Can be taken any time of day. Take with or without food."
+  },
+  {
+    "names": [
+      "levocetirizine",
+      "xyzal",
+      "levocet",
+      "vozet",
+      "bilaxten"
+    ],
+    "purpose": "Allergic rhinitis, chronic urticaria",
+    "drugClass": "Antihistamine",
+    "warnings": [
+      "Avoid alcohol",
+      "May cause drowsiness"
+    ],
+    "instructions": "Take at night. Avoid driving if drowsy."
+  },
+  {
+    "names": [
+      "omeprazole",
+      "prilosec",
+      "omez",
+      "omesec",
+      "omee",
+      "rantac",
+      "ranitidine",
+      "pan",
+      "pantoprazole",
+      "pantocid",
+      "pan-d",
+      "rabeprazole",
+      "razo",
+      "pariet"
+    ],
+    "purpose": "Acid reflux, GERD, peptic ulcer, gastritis",
+    "drugClass": "Proton Pump Inhibitor (PPI)",
+    "warnings": [
+      "Long-term use may reduce B12 and magnesium",
+      "Take before meals"
+    ],
+    "instructions": "Take 30 minutes before breakfast on empty stomach."
+  },
+  {
+    "names": [
+      "metformin",
+      "glycomet",
+      "glucopage",
+      "gluformin",
+      "glyciphage",
+      "bigomet"
+    ],
+    "purpose": "Type 2 diabetes management",
+    "drugClass": "Antidiabetic – Biguanide",
+    "warnings": [
+      "Take with meals to reduce GI upset",
+      "Stop before contrast dye procedures",
+      "Avoid alcohol"
+    ],
+    "instructions": "Take with or just after food. Never skip meals."
+  },
+  {
+    "names": [
+      "glimepiride",
+      "amaryl",
+      "glimisave",
+      "glimpid",
+      "glimy"
+    ],
+    "purpose": "Type 2 diabetes – stimulates insulin release",
+    "drugClass": "Antidiabetic – Sulfonylurea",
+    "warnings": [
+      "Risk of low blood sugar (hypoglycemia)",
+      "Do not skip meals after taking"
+    ],
+    "instructions": "Take 30 minutes before breakfast. Always eat after taking."
+  },
+  {
+    "names": [
+      "amlodipine",
+      "amlong",
+      "norvasc",
+      "stamlo",
+      "amdopin",
+      "amdepin"
+    ],
+    "purpose": "High blood pressure and angina",
+    "drugClass": "Calcium Channel Blocker",
+    "warnings": [
+      "May cause ankle swelling",
+      "Avoid grapefruit juice",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take at the same time each day. Can be taken with or without food."
+  },
+  {
+    "names": [
+      "atenolol",
+      "tenormin",
+      "aten",
+      "betacard",
+      "zoten"
+    ],
+    "purpose": "Hypertension, angina, heart rate control",
+    "drugClass": "Beta-Blocker",
+    "warnings": [
+      "Do NOT stop suddenly – may cause rebound hypertension",
+      "May mask hypoglycemia signs in diabetics"
+    ],
+    "instructions": "Take at the same time daily. Do not skip doses."
+  },
+  {
+    "names": [
+      "losartan",
+      "cozaar",
+      "losar",
+      "repace",
+      "losakind"
+    ],
+    "purpose": "High blood pressure, kidney protection in diabetes",
+    "drugClass": "ARB (Angiotensin Receptor Blocker)",
+    "warnings": [
+      "Do not use in pregnancy",
+      "Monitor potassium levels",
+      "Avoid NSAIDs"
+    ],
+    "instructions": "Can be taken with or without food at the same time daily."
+  },
+  {
+    "names": [
+      "atorvastatin",
+      "lipitor",
+      "atorva",
+      "atorlip",
+      "aztor",
+      "torvast"
+    ],
+    "purpose": "High cholesterol, cardiovascular risk reduction",
+    "drugClass": "Statin",
+    "warnings": [
+      "Report muscle pain immediately",
+      "Avoid grapefruit",
+      "Check liver function periodically"
+    ],
+    "instructions": "Take in the evening. Avoid grapefruit juice."
+  },
+  {
+    "names": [
+      "levothyroxine",
+      "thyronorm",
+      "eltroxin",
+      "thyrox",
+      "lethyrox"
+    ],
+    "purpose": "Hypothyroidism (underactive thyroid)",
+    "drugClass": "Thyroid Hormone Replacement",
+    "warnings": [
+      "Take on empty stomach",
+      "Separate from calcium/iron by 4 hours",
+      "Do not change brands without consulting doctor"
+    ],
+    "instructions": "Take 30–60 min before breakfast on empty stomach. Consistent timing is critical."
+  },
+  {
+    "names": [
+      "salbutamol",
+      "asthalin",
+      "ventolin",
+      "aerocort",
+      "salbuvent",
+      "albuterol"
+    ],
+    "purpose": "Acute asthma/COPD relief (bronchodilator)",
+    "drugClass": "Short-Acting Beta-2 Agonist (SABA)",
+    "warnings": [
+      "Rescue inhaler only – not for daily use",
+      "Excessive use indicates poor control"
+    ],
+    "instructions": "Use only when needed. Inhale slowly and deeply. Rinse mouth after."
+  },
+  {
+    "names": [
+      "montelukast",
+      "montek",
+      "singulair",
+      "lukotas",
+      "montair"
+    ],
+    "purpose": "Asthma prevention and allergic rhinitis",
+    "drugClass": "Leukotriene Receptor Antagonist",
+    "warnings": [
+      "May cause mood changes or sleep disturbances",
+      "Not for acute attacks"
+    ],
+    "instructions": "Take in the evening. Report any mood changes."
+  },
+  {
+    "names": [
+      "prednisolone",
+      "wysolone",
+      "omnacortil",
+      "deltacortril"
+    ],
+    "purpose": "Inflammation, allergic reactions, autoimmune conditions",
+    "drugClass": "Corticosteroid",
+    "warnings": [
+      "Do not stop suddenly – must taper",
+      "May raise blood sugar",
+      "Increases infection risk"
+    ],
+    "instructions": "Take with food in the morning. Do not miss doses. Do not stop abruptly."
+  },
+  {
+    "names": [
+      "diclofenac",
+      "voveran",
+      "voltaren",
+      "dynapar",
+      "reactin",
+      "serratiopeptidase"
+    ],
+    "purpose": "Pain and inflammation (arthritis, injuries)",
+    "drugClass": "NSAID",
+    "warnings": [
+      "Take with food",
+      "Avoid in kidney/peptic ulcer disease",
+      "Short-term use preferred"
+    ],
+    "instructions": "Always take after meals. Use the lowest effective dose for shortest time."
+  },
+  {
+    "names": [
+      "tramadol",
+      "ultram",
+      "tramazac",
+      "contramal",
+      "tram-sr"
+    ],
+    "purpose": "Moderate to severe pain",
+    "drugClass": "Opioid Analgesic",
+    "warnings": [
+      "May cause dizziness and drowsiness",
+      "Addiction potential",
+      "Avoid driving",
+      "Do not take with alcohol"
+    ],
+    "instructions": "Do not drive. Avoid alcohol completely. Do not take more than prescribed."
+  },
+  {
+    "names": [
+      "ferrous sulphate",
+      "fefol",
+      "livogen",
+      "orofer",
+      "haemup",
+      "iron supplement",
+      "ferrous ascorbate"
+    ],
+    "purpose": "Iron deficiency anemia treatment",
+    "drugClass": "Iron Supplement",
+    "warnings": [
+      "Causes dark/black stools (normal)",
+      "Can cause constipation",
+      "Keep away from children – overdose dangerous"
+    ],
+    "instructions": "Take with vitamin C (lemon water/orange juice) for better absorption. Avoid tea/coffee/milk within 2 hours."
+  },
+  {
+    "names": [
+      "vitamin d",
+      "calcirol",
+      "cholecalciferol",
+      "d3",
+      "calciferol",
+      "arachitol",
+      "uprise"
+    ],
+    "purpose": "Vitamin D deficiency, bone health",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "High doses can cause toxicity",
+      "Take with fatty meals for absorption"
+    ],
+    "instructions": "Take with main meal (contains fat). Sun exposure also helps."
+  },
+  {
+    "names": [
+      "vitamin b12",
+      "cobalamin",
+      "methylcobalamin",
+      "neurobion",
+      "mecobalamin",
+      "cobadex"
+    ],
+    "purpose": "B12 deficiency, neuropathy",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "Injections are more effective in severe deficiency"
+    ],
+    "instructions": "Can be taken at any time. Sublingual form absorbs best."
+  },
+  {
+    "names": [
+      "doxycycline",
+      "doxt",
+      "doxy",
+      "vibramycin",
+      "biodoxi"
+    ],
+    "purpose": "Acne, malaria prophylaxis, chlamydia, typhus",
+    "drugClass": "Antibiotic – Tetracycline",
+    "warnings": [
+      "Take with water, stay upright 30 min after",
+      "Avoid dairy and antacids",
+      "Severe sun sensitivity",
+      "Not for children < 8 or pregnant"
+    ],
+    "instructions": "Take with a full glass of water. Do not lie down immediately. Use sunscreen."
+  },
+  {
+    "names": [
+      "ondansetron",
+      "emeset",
+      "zofran",
+      "ondem",
+      "vomidon",
+      "domperidone"
+    ],
+    "purpose": "Nausea and vomiting prevention",
+    "drugClass": "Antiemetic",
+    "warnings": [
+      "May cause headache",
+      "Avoid in liver disease"
+    ],
+    "instructions": "Take 30 minutes before meals if for nausea. Can be dissolved under tongue."
+  },
+  {
+    "names": [
+      "clopidogrel",
+      "plavix",
+      "deplatt",
+      "clopilet"
+    ],
+    "purpose": "Prevention of heart attack/stroke, antiplatelet",
+    "drugClass": "Antiplatelet Agent",
+    "warnings": [
+      "Risk of increased bleeding",
+      "Inform dentist/surgeon before procedures",
+      "Do not stop without consulting doctor"
+    ],
+    "instructions": "Take at the same time daily. Inform all healthcare providers you are on this."
+  },
+  {
+    "names": [
+      "aspirin",
+      "ecosprin",
+      "loprin",
+      "aspro",
+      "cardace"
+    ],
+    "purpose": "Blood clot prevention, heart disease, pain/fever (high dose)",
+    "drugClass": "Antiplatelet / NSAID",
+    "warnings": [
+      "Avoid in children for fever (Reye syndrome)",
+      "Do NOT take if dengue suspected",
+      "Stomach irritation risk"
+    ],
+    "instructions": "Low-dose (75mg) for heart: take at night. High-dose: take with food."
+  },
+  {
+    "names": [
+      "cefixime",
+      "taxim-o",
+      "ceftas",
+      "milixim",
+      "zi-fi"
+    ],
+    "purpose": "Bacterial infections (typhoid, respiratory, urinary)",
+    "drugClass": "Antibiotic – 3rd Gen Cephalosporin",
+    "warnings": [
+      "Complete full course",
+      "May cause stomach upset"
+    ],
+    "instructions": "Take after food. Complete the entire course."
+  },
+  {
+    "names": [
+      "ofloxacin",
+      "oflox",
+      "zenflox",
+      "tarivid",
+      "ofal"
+    ],
+    "purpose": "Bacterial infections, typhoid, diarrhea",
+    "drugClass": "Antibiotic – Quinolone",
+    "warnings": [
+      "Avoid dairy and antacids",
+      "May cause dizziness"
+    ],
+    "instructions": "Take with plenty of water. Avoid direct sunlight."
+  },
+  {
+    "names": [
+      "fluconazole",
+      "forcan",
+      "flucos",
+      "zocon",
+      "syscan"
+    ],
+    "purpose": "Fungal infections (candidiasis, skin fungus)",
+    "drugClass": "Antifungal",
+    "warnings": [
+      "Avoid in pregnancy",
+      "Caution in liver disease"
+    ],
+    "instructions": "Can be taken with or without food. Usually a single dose."
+  },
+  {
+    "names": [
+      "telmisartan",
+      "telma",
+      "telsar",
+      "telmikind",
+      "telvas"
+    ],
+    "purpose": "High blood pressure and heart protection",
+    "drugClass": "ARB (Angiotensin Receptor Blocker)",
+    "warnings": [
+      "Do not use in pregnancy",
+      "Monitor potassium",
+      "May cause dizziness"
+    ],
+    "instructions": "Take at the same time daily. Avoid salt substitutes."
+  },
+  {
+    "names": [
+      "ascoril",
+      "zedex",
+      "grilinctus",
+      "benadryl",
+      "phensedyl",
+      "corex",
+      "cough syrup"
+    ],
+    "purpose": "Cough, congestion, and respiratory relief",
+    "drugClass": "Expectorant / Antitussive",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid driving",
+      "Check if sugar-free if diabetic"
+    ],
+    "instructions": "Take the exact volume measured with a spoon/cup. Avoid water immediately after taking."
+  },
+  {
+    "names": [
+      "digene",
+      "gelusil",
+      "eno",
+      "pudina hara",
+      "mucaine",
+      "antacid"
+    ],
+    "purpose": "Acidity, heartburn, gas, and indigestion",
+    "drugClass": "Antacid / Antiflatulent",
+    "warnings": [
+      "Long-term use may mask ulcers",
+      "Check sodium content if hypertensive"
+    ],
+    "instructions": "Chew tablets thoroughly or shake liquid well before use. Take after meals or when symptoms occur."
+  },
+  {
+    "names": [
+      "zincovit",
+      "becosules",
+      "supradyn",
+      "revital",
+      "multivitamin",
+      "neurobion forte"
+    ],
+    "purpose": "Vitamin and mineral deficiency, immunity boost",
+    "drugClass": "Multivitamin / Supplement",
+    "warnings": [
+      "Rare side effects",
+      "Bright yellow urine is normal (B2)"
+    ],
+    "instructions": "Take one tablet daily after breakfast or lunch."
+  },
+  {
+    "names": [
+      "loperamide",
+      "eldoper",
+      "imodium",
+      "lopamide"
+    ],
+    "purpose": "Acute diarrhea and loose motions",
+    "drugClass": "Antidiarrheal",
+    "warnings": [
+      "Do not use if blood in stool",
+      "Avoid in severe dehydration",
+      "Not for prolonged use without doctor advice"
+    ],
+    "instructions": "Take after each loose stool as directed. Drink plenty of fluids."
+  },
+  {
+    "names": [
+      "ors",
+      "electral",
+      "electrobion",
+      "oral rehydration salts"
+    ],
+    "purpose": "Dehydration due to diarrhea, vomiting, heat exposure",
+    "drugClass": "Electrolyte Replacement",
+    "warnings": [
+      "Prepare exactly as directed",
+      "Discard after 24 hours"
+    ],
+    "instructions": "Mix in clean water only. Sip frequently throughout the day."
+  },
+  {
+    "names": [
+      "meftal spas",
+      "mefenamic acid",
+      "dicyclomine",
+      "meftal"
+    ],
+    "purpose": "Menstrual cramps, abdominal spasms, stomach pain",
+    "drugClass": "NSAID + Antispasmodic",
+    "warnings": [
+      "Take after food",
+      "May cause acidity",
+      "Avoid in peptic ulcer disease"
+    ],
+    "instructions": "Take after meals with water."
+  },
+  {
+    "names": [
+      "cyclopam",
+      "dicycloverine",
+      "dicyclomine"
+    ],
+    "purpose": "Abdominal cramps, stomach spasms",
+    "drugClass": "Antispasmodic",
+    "warnings": [
+      "May cause dizziness",
+      "May cause dry mouth"
+    ],
+    "instructions": "Take as prescribed, preferably after meals."
+  },
+  {
+    "names": [
+      "lactulose",
+      "duphalac",
+      "looz"
+    ],
+    "purpose": "Constipation relief",
+    "drugClass": "Osmotic Laxative",
+    "warnings": [
+      "May cause bloating",
+      "Drink plenty of water"
+    ],
+    "instructions": "Usually taken at night or as advised."
+  },
+  {
+    "names": [
+      "bisacodyl",
+      "dulcolax"
+    ],
+    "purpose": "Constipation relief",
+    "drugClass": "Stimulant Laxative",
+    "warnings": [
+      "Do not use daily for long periods",
+      "May cause stomach cramps"
+    ],
+    "instructions": "Usually take at bedtime with water."
+  },
+  {
+    "names": [
+      "ambroxol",
+      "mucosolvan",
+      "ambrodil"
+    ],
+    "purpose": "Productive cough with mucus",
+    "drugClass": "Mucolytic / Expectorant",
+    "warnings": [
+      "May cause nausea",
+      "Drink more fluids"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "acetylcysteine",
+      "mucinac",
+      "nac"
+    ],
+    "purpose": "Thick mucus in cough and respiratory illness",
+    "drugClass": "Mucolytic",
+    "warnings": [
+      "May cause stomach upset",
+      "Strong smell is normal"
+    ],
+    "instructions": "Dissolve in water if effervescent tablet."
+  },
+  {
+    "names": [
+      "albendazole",
+      "zentel",
+      "bandy",
+      "wormiza"
+    ],
+    "purpose": "Worm infections",
+    "drugClass": "Anthelmintic",
+    "warnings": [
+      "Avoid in early pregnancy",
+      "May cause mild stomach discomfort"
+    ],
+    "instructions": "Usually taken as a single dose after food."
+  },
+  {
+    "names": [
+      "ivermectin",
+      "ivrea",
+      "iverjohn",
+      "scaboma"
+    ],
+    "purpose": "Parasitic infections, scabies",
+    "drugClass": "Antiparasitic",
+    "warnings": [
+      "Use only under medical advice",
+      "May cause dizziness"
+    ],
+    "instructions": "Take on empty stomach with water."
+  },
+  {
+    "names": [
+      "hydroxyzine",
+      "atarax"
+    ],
+    "purpose": "Allergy, itching, anxiety",
+    "drugClass": "Antihistamine",
+    "warnings": [
+      "Can cause drowsiness",
+      "Avoid driving"
+    ],
+    "instructions": "Usually taken at night."
+  },
+  {
+    "names": [
+      "betadine",
+      "povidone iodine"
+    ],
+    "purpose": "Wound cleaning and infection prevention",
+    "drugClass": "Antiseptic",
+    "warnings": [
+      "For external use only",
+      "Avoid contact with eyes"
+    ],
+    "instructions": "Apply to clean skin or wound area."
+  },
+  {
+    "names": [
+      "clotrimazole",
+      "candid",
+      "canesten",
+      "clocip"
+    ],
+    "purpose": "Fungal skin infections",
+    "drugClass": "Antifungal",
+    "warnings": [
+      "External use only",
+      "Keep affected area dry"
+    ],
+    "instructions": "Apply thin layer 2–3 times daily."
+  },
+  {
+    "names": [
+      "terbinafine",
+      "lamisil",
+      "terbest"
+    ],
+    "purpose": "Ringworm, fungal skin infections",
+    "drugClass": "Antifungal",
+    "warnings": [
+      "Complete treatment even if symptoms improve"
+    ],
+    "instructions": "Apply to clean dry skin."
+  },
+  {
+    "names": [
+      "mupirocin",
+      "t-bact",
+      "supirocin"
+    ],
+    "purpose": "Bacterial skin infections",
+    "drugClass": "Topical Antibiotic",
+    "warnings": [
+      "External use only",
+      "Do not apply in eyes"
+    ],
+    "instructions": "Apply thin layer on affected area."
+  },
+  {
+    "names": [
+      "silver sulfadiazine",
+      "silverex",
+      "flamazine"
+    ],
+    "purpose": "Burn wound infection prevention",
+    "drugClass": "Topical Antibacterial",
+    "warnings": [
+      "External use only",
+      "Avoid in sulfa allergy"
+    ],
+    "instructions": "Apply on clean burn wound."
+  },
+  {
+    "names": [
+      "xylometazoline",
+      "otrivin",
+      "nasivion"
+    ],
+    "purpose": "Nasal congestion and blocked nose",
+    "drugClass": "Nasal Decongestant",
+    "warnings": [
+      "Do not use more than 5 days",
+      "May cause rebound congestion"
+    ],
+    "instructions": "Use as nasal drops/spray as directed."
+  },
+  {
+    "names": [
+      "carboxymethylcellulose",
+      "refresh tears",
+      "lubrex"
+    ],
+    "purpose": "Dry eyes and eye lubrication",
+    "drugClass": "Artificial Tears",
+    "warnings": [
+      "Avoid touching dropper tip"
+    ],
+    "instructions": "Instill as needed in affected eye."
+  },
+  {
+    "names": [
+      "timolol",
+      "timoptic"
+    ],
+    "purpose": "Glaucoma and eye pressure control",
+    "drugClass": "Beta Blocker Eye Drops",
+    "warnings": [
+      "Use only as prescribed",
+      "Can affect heart rate in some patients"
+    ],
+    "instructions": "Instill drops as directed by eye specialist."
+  },
+  {
+    "names": [
+      "insulin",
+      "novorapid",
+      "lantus",
+      "huminsulin",
+      "mixtard"
+    ],
+    "purpose": "Diabetes blood sugar control",
+    "drugClass": "Hormone – Antidiabetic",
+    "warnings": [
+      "Risk of hypoglycemia",
+      "Must be stored properly in refrigerator"
+    ],
+    "instructions": "Inject exactly as prescribed. Never skip meals."
+  },
+  {
+    "names": [
+      "linezolid",
+      "linox",
+      "lizolid",
+      "linez"
+    ],
+    "purpose": "Serious bacterial infections including resistant infections",
+    "drugClass": "Antibiotic – Oxazolidinone",
+    "warnings": [
+      "Use only under medical supervision",
+      "May affect blood counts in long-term use",
+      "Avoid with certain antidepressants"
+    ],
+    "instructions": "Take at the same time daily. Complete full prescribed course."
+  },
+  {
+    "names": [
+      "clarithromycin",
+      "klaricid",
+      "claribid",
+      "clarithro"
+    ],
+    "purpose": "Respiratory infections, sinus infections, skin infections",
+    "drugClass": "Antibiotic – Macrolide",
+    "warnings": [
+      "May interact with heart medicines",
+      "Can cause altered taste"
+    ],
+    "instructions": "Take exactly as prescribed, with or without food."
+  },
+  {
+    "names": [
+      "ceftriaxone",
+      "rocephin",
+      "monocef",
+      "cefaxone"
+    ],
+    "purpose": "Severe bacterial infections, typhoid, pneumonia",
+    "drugClass": "Antibiotic – 3rd Generation Cephalosporin",
+    "warnings": [
+      "Usually given by injection",
+      "Possible allergic reactions"
+    ],
+    "instructions": "Administer only under medical supervision."
+  },
+  {
+    "names": [
+      "nitrofurantoin",
+      "nitrofur",
+      "niftas",
+      "urantoin"
+    ],
+    "purpose": "Urinary tract infections (UTI)",
+    "drugClass": "Urinary Antibiotic",
+    "warnings": [
+      "May darken urine",
+      "Avoid in severe kidney disease"
+    ],
+    "instructions": "Take after food with plenty of water."
+  },
+  {
+    "names": [
+      "tamsulosin",
+      "urimax",
+      "flomax",
+      "tamflo"
+    ],
+    "purpose": "Difficulty urinating due to enlarged prostate",
+    "drugClass": "Alpha Blocker",
+    "warnings": [
+      "May cause dizziness",
+      "Stand up slowly"
+    ],
+    "instructions": "Take after the same meal each day."
+  },
+  {
+    "names": [
+      "furosemide",
+      "lasix",
+      "fruselac"
+    ],
+    "purpose": "Fluid retention, swelling, heart failure",
+    "drugClass": "Loop Diuretic",
+    "warnings": [
+      "May cause dehydration",
+      "Monitor potassium levels"
+    ],
+    "instructions": "Preferably take in morning to avoid nighttime urination."
+  },
+  {
+    "names": [
+      "spironolactone",
+      "aldactone",
+      "lasilactone"
+    ],
+    "purpose": "Fluid retention, heart failure, PCOS support",
+    "drugClass": "Potassium-Sparing Diuretic",
+    "warnings": [
+      "Monitor potassium",
+      "Avoid potassium supplements unless advised"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "thyronorm",
+      "eltroxin"
+    ],
+    "purpose": "Hypothyroidism management",
+    "drugClass": "Thyroid Hormone",
+    "warnings": [
+      "Take on empty stomach",
+      "Do not miss doses"
+    ],
+    "instructions": "Take early morning before breakfast."
+  },
+  {
+    "names": [
+      "clonazepam",
+      "clonotril",
+      "rivotril"
+    ],
+    "purpose": "Anxiety, panic attacks, seizures",
+    "drugClass": "Benzodiazepine",
+    "warnings": [
+      "May cause dependence",
+      "Avoid alcohol",
+      "Can cause drowsiness"
+    ],
+    "instructions": "Take exactly as prescribed. Avoid driving."
+  },
+  {
+    "names": [
+      "escitalopram",
+      "nexito",
+      "cipralex",
+      "stalopam"
+    ],
+    "purpose": "Depression, anxiety disorders",
+    "drugClass": "SSRI Antidepressant",
+    "warnings": [
+      "May take weeks to show effect",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "sertraline",
+      "zoloft",
+      "sertima",
+      "serlift"
+    ],
+    "purpose": "Depression, anxiety, OCD",
+    "drugClass": "SSRI Antidepressant",
+    "warnings": [
+      "May cause nausea initially",
+      "Do not stop abruptly"
+    ],
+    "instructions": "Take regularly as prescribed."
+  },
+  {
+    "names": [
+      "pregabalin",
+      "pregaba",
+      "maxgalin",
+      "lynica"
+    ],
+    "purpose": "Nerve pain, neuropathy, epilepsy",
+    "drugClass": "Neuropathic Pain Agent",
+    "warnings": [
+      "May cause dizziness and sleepiness",
+      "Avoid alcohol"
+    ],
+    "instructions": "Usually taken at night unless advised otherwise."
+  },
+  {
+    "names": [
+      "gabapentin",
+      "gabapin",
+      "gabaneuron"
+    ],
+    "purpose": "Nerve pain, seizures",
+    "drugClass": "Anticonvulsant",
+    "warnings": [
+      "May cause drowsiness",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "allopurinol",
+      "zyloric"
+    ],
+    "purpose": "High uric acid, gout prevention",
+    "drugClass": "Xanthine Oxidase Inhibitor",
+    "warnings": [
+      "Drink plenty of water",
+      "Report skin rash immediately"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "colchicine",
+      "colcrys",
+      "colchiheal"
+    ],
+    "purpose": "Acute gout attacks",
+    "drugClass": "Anti-inflammatory",
+    "warnings": [
+      "Can cause diarrhea",
+      "Do not overdose"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "sildenafil",
+      "viagra",
+      "manforce",
+      "penegra"
+    ],
+    "purpose": "Erectile dysfunction",
+    "drugClass": "PDE5 Inhibitor",
+    "warnings": [
+      "Do not combine with nitrate heart medicines",
+      "May cause dizziness"
+    ],
+    "instructions": "Take before planned activity as prescribed."
+  },
+  {
+    "names": [
+      "tranexamic acid",
+      "pause",
+      "trapic"
+    ],
+    "purpose": "Heavy menstrual bleeding, bleeding control",
+    "drugClass": "Antifibrinolytic",
+    "warnings": [
+      "Use only under medical advice",
+      "Caution in clotting disorders"
+    ],
+    "instructions": "Take exactly as prescribed during bleeding episodes."
+  },
+  {
+    "names": [
+      "folic acid",
+      "folvite",
+      "folic"
+    ],
+    "purpose": "Pregnancy support, anemia prevention",
+    "drugClass": "Vitamin B Supplement",
+    "warnings": [
+      "Usually well tolerated"
+    ],
+    "instructions": "Take daily after meals."
+  },
+  {
+    "names": [
+      "calcium carbonate",
+      "shelcal",
+      "caldikind",
+      "calcimax"
+    ],
+    "purpose": "Calcium deficiency, bone health",
+    "drugClass": "Mineral Supplement",
+    "warnings": [
+      "Can cause constipation",
+      "Separate from thyroid medicines"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "sucralfate",
+      "sucrafil",
+      "carafate"
+    ],
+    "purpose": "Stomach ulcers, gastritis protection",
+    "drugClass": "Gastroprotective Agent",
+    "warnings": [
+      "May interfere with absorption of other medicines"
+    ],
+    "instructions": "Take on empty stomach before meals."
+  },
+  {
+    "names": [
+      "domperidone",
+      "domstal",
+      "motilium",
+      "vomistop"
+    ],
+    "purpose": "Nausea, vomiting, bloating, gastric discomfort",
+    "drugClass": "Antiemetic / Prokinetic",
+    "warnings": [
+      "May affect heart rhythm in high doses",
+      "Use cautiously in liver disease"
+    ],
+    "instructions": "Take 15–30 minutes before meals."
+  },
+  {
+    "names": [
+      "itopride",
+      "ganaton",
+      "itomac"
+    ],
+    "purpose": "Indigestion, bloating, acid reflux, slow gastric emptying",
+    "drugClass": "Prokinetic Agent",
+    "warnings": [
+      "May cause diarrhea or abdominal discomfort"
+    ],
+    "instructions": "Take before meals as prescribed."
+  },
+  {
+    "names": [
+      "ursodeoxycholic acid",
+      "udiliv",
+      "ursocol",
+      "udca"
+    ],
+    "purpose": "Gallstones, liver disorders, fatty liver support",
+    "drugClass": "Bile Acid Agent",
+    "warnings": [
+      "Use under medical supervision",
+      "May cause loose stools"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "liver tonic",
+      "liv 52",
+      "livogen liver",
+      "heptovit"
+    ],
+    "purpose": "Liver support, appetite improvement",
+    "drugClass": "Hepatoprotective Supplement",
+    "warnings": [
+      "Not a substitute for liver disease treatment"
+    ],
+    "instructions": "Take after food as directed."
+  },
+  {
+    "names": [
+      "glyceryl trinitrate",
+      "sorbitrate",
+      "nitroglycerin"
+    ],
+    "purpose": "Chest pain (angina)",
+    "drugClass": "Nitrate Vasodilator",
+    "warnings": [
+      "May cause sudden drop in blood pressure",
+      "May cause headache"
+    ],
+    "instructions": "Place under tongue during chest pain. Seek emergency care if pain persists."
+  },
+  {
+    "names": [
+      "isosorbide mononitrate",
+      "monotrate",
+      "imdur"
+    ],
+    "purpose": "Prevention of angina",
+    "drugClass": "Nitrate",
+    "warnings": [
+      "May cause dizziness and headache"
+    ],
+    "instructions": "Take at the same time daily."
+  },
+  {
+    "names": [
+      "clonidine",
+      "arkamin",
+      "catapres"
+    ],
+    "purpose": "High blood pressure, withdrawal symptoms",
+    "drugClass": "Alpha-2 Agonist",
+    "warnings": [
+      "Do not stop suddenly",
+      "May cause drowsiness"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "hydrochlorothiazide",
+      "hydride",
+      "hctz"
+    ],
+    "purpose": "High blood pressure, fluid retention",
+    "drugClass": "Thiazide Diuretic",
+    "warnings": [
+      "May lower potassium levels",
+      "May increase urination"
+    ],
+    "instructions": "Preferably take in morning."
+  },
+  {
+    "names": [
+      "enalapril",
+      "enam",
+      "vasotec"
+    ],
+    "purpose": "High blood pressure, heart failure",
+    "drugClass": "ACE Inhibitor",
+    "warnings": [
+      "May cause dry cough",
+      "Avoid in pregnancy"
+    ],
+    "instructions": "Take at same time every day."
+  },
+  {
+    "names": [
+      "carvedilol",
+      "carvil",
+      "cardivas"
+    ],
+    "purpose": "Heart failure, hypertension",
+    "drugClass": "Beta Blocker",
+    "warnings": [
+      "Do not stop suddenly",
+      "May cause dizziness"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "rosuvastatin",
+      "rosuvas",
+      "crestor",
+      "rozavel"
+    ],
+    "purpose": "High cholesterol management",
+    "drugClass": "Statin",
+    "warnings": [
+      "Report muscle pain",
+      "Regular liver tests may be needed"
+    ],
+    "instructions": "Take once daily, same time each day."
+  },
+  {
+    "names": [
+      "fenofibrate",
+      "lipicard",
+      "fenolip"
+    ],
+    "purpose": "High triglycerides and cholesterol",
+    "drugClass": "Fibrate",
+    "warnings": [
+      "Monitor liver function",
+      "Can cause muscle pain"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "warfarin",
+      "warf",
+      "coumadin"
+    ],
+    "purpose": "Blood clot prevention",
+    "drugClass": "Anticoagulant",
+    "warnings": [
+      "Risk of bleeding",
+      "Requires INR monitoring"
+    ],
+    "instructions": "Take at same time daily. Avoid self-adjusting dose."
+  },
+  {
+    "names": [
+      "apixaban",
+      "eliquis"
+    ],
+    "purpose": "Blood clot prevention, stroke prevention",
+    "drugClass": "Oral Anticoagulant",
+    "warnings": [
+      "Risk of bleeding",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "dabigatran",
+      "pradaxa"
+    ],
+    "purpose": "Blood clot prevention",
+    "drugClass": "Direct Thrombin Inhibitor",
+    "warnings": [
+      "Risk of bleeding",
+      "Capsule must not be crushed"
+    ],
+    "instructions": "Swallow whole with water."
+  },
+  {
+    "names": [
+      "sitagliptin",
+      "janumet",
+      "istavel",
+      "sitared"
+    ],
+    "purpose": "Type 2 diabetes control",
+    "drugClass": "DPP-4 Inhibitor",
+    "warnings": [
+      "Monitor blood sugar regularly"
+    ],
+    "instructions": "Take with or without food."
+  },
+  {
+    "names": [
+      "voglibose",
+      "voglib",
+      "volibo"
+    ],
+    "purpose": "Post-meal blood sugar control",
+    "drugClass": "Alpha-Glucosidase Inhibitor",
+    "warnings": [
+      "May cause gas and bloating"
+    ],
+    "instructions": "Take just before meals."
+  },
+  {
+    "names": [
+      "pioglitazone",
+      "pioz",
+      "pioglar"
+    ],
+    "purpose": "Type 2 diabetes management",
+    "drugClass": "Thiazolidinedione",
+    "warnings": [
+      "May cause fluid retention",
+      "Not suitable in heart failure"
+    ],
+    "instructions": "Take once daily with or without food."
+  },
+  {
+    "names": [
+      "budesonide",
+      "budecort",
+      "pulmicort"
+    ],
+    "purpose": "Asthma prevention, airway inflammation",
+    "drugClass": "Inhaled Corticosteroid",
+    "warnings": [
+      "Not for emergency asthma attacks",
+      "Can cause oral fungal infection"
+    ],
+    "instructions": "Rinse mouth after inhalation."
+  },
+  {
+    "names": [
+      "formoterol",
+      "foracort",
+      "symbicort"
+    ],
+    "purpose": "Asthma and COPD control",
+    "drugClass": "Long-Acting Bronchodilator",
+    "warnings": [
+      "Not for sudden asthma attacks"
+    ],
+    "instructions": "Use regularly as prescribed."
+  },
+  {
+    "names": [
+      "beclomethasone",
+      "becosules inhaler",
+      "beclate"
+    ],
+    "purpose": "Asthma prevention",
+    "drugClass": "Inhaled Corticosteroid",
+    "warnings": [
+      "Rinse mouth after use"
+    ],
+    "instructions": "Use daily for best control."
+  },
+  {
+    "names": [
+      "insulin glargine",
+      "lantus",
+      "basalog"
+    ],
+    "purpose": "Long-term blood sugar control",
+    "drugClass": "Long-Acting Insulin",
+    "warnings": [
+      "Risk of hypoglycemia",
+      "Store properly"
+    ],
+    "instructions": "Inject at same time every day."
+  },
+  {
+    "names": [
+      "human insulin",
+      "huminsulin",
+      "actrapid"
+    ],
+    "purpose": "Blood sugar control in diabetes",
+    "drugClass": "Short-Acting Insulin",
+    "warnings": [
+      "Monitor blood sugar carefully"
+    ],
+    "instructions": "Take before meals as prescribed."
+  },
+  {
+    "names": [
+      "hydrocortisone cream",
+      "cortaid",
+      "dermacort"
+    ],
+    "purpose": "Skin allergy, eczema, itching",
+    "drugClass": "Topical Corticosteroid",
+    "warnings": [
+      "External use only",
+      "Avoid prolonged use on face"
+    ],
+    "instructions": "Apply thin layer on affected area."
+  },
+  {
+    "names": [
+      "permethrin",
+      "permite",
+      "scabper"
+    ],
+    "purpose": "Scabies and lice treatment",
+    "drugClass": "Topical Antiparasitic",
+    "warnings": [
+      "External use only",
+      "Avoid contact with eyes"
+    ],
+    "instructions": "Apply to entire affected area and wash as directed."
+  },
+  {
+    "names": [
+      "amikacin",
+      "amikin",
+      "amikac"
+    ],
+    "purpose": "Severe bacterial infections including hospital-acquired infections",
+    "drugClass": "Antibiotic – Aminoglycoside",
+    "warnings": [
+      "Can affect kidneys and hearing",
+      "Requires medical supervision"
+    ],
+    "instructions": "Usually given by injection under medical supervision."
+  },
+  {
+    "names": [
+      "clindamycin",
+      "dalacin c",
+      "clindac"
+    ],
+    "purpose": "Dental infections, skin infections, bone infections",
+    "drugClass": "Antibiotic – Lincosamide",
+    "warnings": [
+      "May cause severe diarrhea",
+      "Complete full course"
+    ],
+    "instructions": "Take with a full glass of water."
+  },
+  {
+    "names": [
+      "cefuroxime",
+      "ceftum",
+      "zinnat",
+      "uroxime"
+    ],
+    "purpose": "Respiratory, urinary, and skin bacterial infections",
+    "drugClass": "Antibiotic – Cephalosporin",
+    "warnings": [
+      "May cause stomach upset",
+      "Complete the course"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "levofloxacin",
+      "levoflox",
+      "levaquin",
+      "levoday"
+    ],
+    "purpose": "Respiratory infections, UTI, sinus infections",
+    "drugClass": "Antibiotic – Fluoroquinolone",
+    "warnings": [
+      "May cause tendon injury",
+      "Avoid excessive sunlight"
+    ],
+    "instructions": "Take with water. Avoid dairy close to dose."
+  },
+  {
+    "names": [
+      "rifaximin",
+      "rifagut",
+      "normix"
+    ],
+    "purpose": "Traveler’s diarrhea, IBS, intestinal infections",
+    "drugClass": "Antibiotic – Gut Specific",
+    "warnings": [
+      "Use only as prescribed"
+    ],
+    "instructions": "Take with or without food."
+  },
+  {
+    "names": [
+      "rifampicin",
+      "rifadin",
+      "r-cin"
+    ],
+    "purpose": "Tuberculosis and serious bacterial infections",
+    "drugClass": "Antibiotic – Rifamycin",
+    "warnings": [
+      "Can turn urine/orange body fluids orange-red",
+      "May affect liver"
+    ],
+    "instructions": "Take on empty stomach."
+  },
+  {
+    "names": [
+      "isoniazid",
+      "isonex"
+    ],
+    "purpose": "Tuberculosis treatment",
+    "drugClass": "Antitubercular",
+    "warnings": [
+      "Can affect liver",
+      "Avoid alcohol"
+    ],
+    "instructions": "Take on empty stomach."
+  },
+  {
+    "names": [
+      "pyrazinamide",
+      "pyzina"
+    ],
+    "purpose": "Tuberculosis treatment",
+    "drugClass": "Antitubercular",
+    "warnings": [
+      "Can increase uric acid",
+      "May affect liver"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "ethambutol",
+      "myambutol"
+    ],
+    "purpose": "Tuberculosis treatment",
+    "drugClass": "Antitubercular",
+    "warnings": [
+      "Can affect vision",
+      "Report blurred vision immediately"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "chloroquine",
+      "lariago"
+    ],
+    "purpose": "Malaria treatment",
+    "drugClass": "Antimalarial",
+    "warnings": [
+      "Use only where medically appropriate",
+      "May affect vision with prolonged use"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "hydroxychloroquine",
+      "hcqs",
+      "plaquenil"
+    ],
+    "purpose": "Autoimmune diseases, malaria",
+    "drugClass": "Antimalarial / Immunomodulator",
+    "warnings": [
+      "Eye monitoring may be needed with long-term use"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "artemether lumefantrine",
+      "larinate",
+      "falcigo"
+    ],
+    "purpose": "Malaria treatment",
+    "drugClass": "Antimalarial Combination",
+    "warnings": [
+      "Complete full treatment course"
+    ],
+    "instructions": "Take with food or milk."
+  },
+  {
+    "names": [
+      "methotrexate",
+      "folitrax",
+      "mexate"
+    ],
+    "purpose": "Rheumatoid arthritis, psoriasis, autoimmune disorders",
+    "drugClass": "DMARD / Immunosuppressant",
+    "warnings": [
+      "Can affect liver",
+      "Avoid pregnancy",
+      "Weekly dosing is common—not daily"
+    ],
+    "instructions": "Take exactly on scheduled day as prescribed."
+  },
+  {
+    "names": [
+      "sulfasalazine",
+      "saaz",
+      "sazo"
+    ],
+    "purpose": "Rheumatoid arthritis, inflammatory bowel disease",
+    "drugClass": "Anti-inflammatory / DMARD",
+    "warnings": [
+      "May cause stomach upset",
+      "Drink plenty of water"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "febuxostat",
+      "feburic",
+      "fubox"
+    ],
+    "purpose": "High uric acid, gout prevention",
+    "drugClass": "Xanthine Oxidase Inhibitor",
+    "warnings": [
+      "Monitor liver function"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "baclofen",
+      "baclof",
+      "lioresal"
+    ],
+    "purpose": "Muscle spasms and stiffness",
+    "drugClass": "Muscle Relaxant",
+    "warnings": [
+      "May cause drowsiness",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "thiocolchicoside",
+      "myoril",
+      "thiomac"
+    ],
+    "purpose": "Muscle pain and spasms",
+    "drugClass": "Muscle Relaxant",
+    "warnings": [
+      "May cause drowsiness"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "tolperisone",
+      "mypol",
+      "tolpidol"
+    ],
+    "purpose": "Muscle stiffness and back pain",
+    "drugClass": "Muscle Relaxant",
+    "warnings": [
+      "May cause dizziness"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "levetiracetam",
+      "keppra",
+      "levipil"
+    ],
+    "purpose": "Epilepsy and seizure control",
+    "drugClass": "Antiepileptic",
+    "warnings": [
+      "Do not stop suddenly",
+      "May affect mood"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "sodium valproate",
+      "valparin",
+      "valprol"
+    ],
+    "purpose": "Seizures, bipolar disorder, migraine prevention",
+    "drugClass": "Antiepileptic",
+    "warnings": [
+      "Avoid in pregnancy",
+      "May affect liver"
+    ],
+    "instructions": "Take regularly as prescribed."
+  },
+  {
+    "names": [
+      "carbamazepine",
+      "tegretol",
+      "zeptol"
+    ],
+    "purpose": "Seizures, nerve pain",
+    "drugClass": "Antiepileptic",
+    "warnings": [
+      "Do not stop suddenly",
+      "May cause dizziness"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "sumatriptan",
+      "suminat",
+      "imigran"
+    ],
+    "purpose": "Migraine attack relief",
+    "drugClass": "Antimigraine – Triptan",
+    "warnings": [
+      "Not for heart patients unless prescribed"
+    ],
+    "instructions": "Take at first sign of migraine."
+  },
+  {
+    "names": [
+      "propranolol",
+      "inderal",
+      "ciplar"
+    ],
+    "purpose": "Migraine prevention, anxiety, tremors, hypertension",
+    "drugClass": "Beta Blocker",
+    "warnings": [
+      "Do not stop suddenly",
+      "Can worsen asthma"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "metoclopramide",
+      "perinorm",
+      "metozolv"
+    ],
+    "purpose": "Nausea, vomiting, gastric motility issues",
+    "drugClass": "Antiemetic / Prokinetic",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid long-term unsupervised use"
+    ],
+    "instructions": "Take before meals."
+  },
+  {
+    "names": [
+      "mesalamine",
+      "mesacol",
+      "pentasa"
+    ],
+    "purpose": "Ulcerative colitis, inflammatory bowel disease",
+    "drugClass": "Anti-inflammatory – GI",
+    "warnings": [
+      "Kidney monitoring may be needed"
+    ],
+    "instructions": "Take as prescribed with water."
+  },
+  {
+    "names": [
+      "moxifloxacin",
+      "avelox",
+      "moxicip",
+      "moxif"
+    ],
+    "purpose": "Respiratory infections, eye infections, skin infections",
+    "drugClass": "Antibiotic – Fluoroquinolone",
+    "warnings": [
+      "May affect heart rhythm",
+      "Avoid unnecessary sun exposure"
+    ],
+    "instructions": "Take with water at the same time daily."
+  },
+  {
+    "names": [
+      "ertapenem",
+      "invanz"
+    ],
+    "purpose": "Severe bacterial infections, resistant infections",
+    "drugClass": "Antibiotic – Carbapenem",
+    "warnings": [
+      "Hospital-use medicine",
+      "May cause diarrhea"
+    ],
+    "instructions": "Usually administered by injection under supervision."
+  },
+  {
+    "names": [
+      "meropenem",
+      "meronem",
+      "meromac"
+    ],
+    "purpose": "Severe hospital-acquired infections",
+    "drugClass": "Antibiotic – Carbapenem",
+    "warnings": [
+      "Hospital-use only",
+      "Kidney dose adjustment may be needed"
+    ],
+    "instructions": "Administered under medical supervision."
+  },
+  {
+    "names": [
+      "vancomycin",
+      "vancocin"
+    ],
+    "purpose": "Serious resistant bacterial infections",
+    "drugClass": "Antibiotic – Glycopeptide",
+    "warnings": [
+      "Requires kidney monitoring",
+      "May affect hearing"
+    ],
+    "instructions": "Given only under medical supervision."
+  },
+  {
+    "names": [
+      "teicoplanin",
+      "targocid"
+    ],
+    "purpose": "Resistant bacterial infections",
+    "drugClass": "Antibiotic – Glycopeptide",
+    "warnings": [
+      "Use under supervision only"
+    ],
+    "instructions": "Usually given by injection."
+  },
+  {
+    "names": [
+      "oseltamivir",
+      "tamiflu",
+      "antiflu"
+    ],
+    "purpose": "Influenza (flu) treatment",
+    "drugClass": "Antiviral",
+    "warnings": [
+      "Works best when started early",
+      "May cause nausea"
+    ],
+    "instructions": "Start as early as possible after symptoms begin."
+  },
+  {
+    "names": [
+      "acyclovir",
+      "zovirax",
+      "aciclovir"
+    ],
+    "purpose": "Herpes, chickenpox, shingles",
+    "drugClass": "Antiviral",
+    "warnings": [
+      "Drink plenty of water",
+      "May affect kidneys if dehydrated"
+    ],
+    "instructions": "Take with plenty of water."
+  },
+  {
+    "names": [
+      "valacyclovir",
+      "valtrex"
+    ],
+    "purpose": "Herpes infections, shingles",
+    "drugClass": "Antiviral",
+    "warnings": [
+      "May cause headache",
+      "Kidney dose adjustment may be needed"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "acyclovir cream",
+      "herpex",
+      "zovirax cream"
+    ],
+    "purpose": "Cold sores, herpes skin lesions",
+    "drugClass": "Topical Antiviral",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply to affected area as directed."
+  },
+  {
+    "names": [
+      "acyclovir eye ointment",
+      "zovirax eye"
+    ],
+    "purpose": "Viral eye infections",
+    "drugClass": "Ophthalmic Antiviral",
+    "warnings": [
+      "Use only under eye specialist supervision"
+    ],
+    "instructions": "Apply as directed."
+  },
+  {
+    "names": [
+      "metoprolol",
+      "betaloc",
+      "metolar",
+      "starpress xl"
+    ],
+    "purpose": "High blood pressure, angina, heart rate control",
+    "drugClass": "Beta Blocker",
+    "warnings": [
+      "Do not stop suddenly",
+      "May cause dizziness"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "diltiazem",
+      "dilzem",
+      "cardizem"
+    ],
+    "purpose": "Angina, hypertension, irregular heartbeat",
+    "drugClass": "Calcium Channel Blocker",
+    "warnings": [
+      "May lower heart rate excessively"
+    ],
+    "instructions": "Take as prescribed."
+  },
+  {
+    "names": [
+      "torsemide",
+      "tor",
+      "dytor"
+    ],
+    "purpose": "Fluid retention, heart failure",
+    "drugClass": "Loop Diuretic",
+    "warnings": [
+      "May cause dehydration",
+      "Monitor electrolytes"
+    ],
+    "instructions": "Preferably take in morning."
+  },
+  {
+    "names": [
+      "empagliflozin",
+      "jardiance",
+      "empaone"
+    ],
+    "purpose": "Type 2 diabetes, heart protection",
+    "drugClass": "SGLT2 Inhibitor",
+    "warnings": [
+      "May increase urination",
+      "Maintain hydration"
+    ],
+    "instructions": "Take once daily."
+  },
+  {
+    "names": [
+      "dapagliflozin",
+      "forxiga",
+      "oxra"
+    ],
+    "purpose": "Type 2 diabetes, heart failure support",
+    "drugClass": "SGLT2 Inhibitor",
+    "warnings": [
+      "Risk of dehydration",
+      "Maintain genital hygiene"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "linagliptin",
+      "trajenta",
+      "linaone"
+    ],
+    "purpose": "Type 2 diabetes",
+    "drugClass": "DPP-4 Inhibitor",
+    "warnings": [
+      "Monitor blood sugar regularly"
+    ],
+    "instructions": "Take with or without food."
+  },
+  {
+    "names": [
+      "glucosamine",
+      "jointace",
+      "cartigen"
+    ],
+    "purpose": "Joint pain, osteoarthritis support",
+    "drugClass": "Joint Supplement",
+    "warnings": [
+      "Not an instant pain reliever"
+    ],
+    "instructions": "Take after meals regularly."
+  },
+  {
+    "names": [
+      "etoricoxib",
+      "etoshine",
+      "nucoxia"
+    ],
+    "purpose": "Arthritis pain, joint inflammation",
+    "drugClass": "COX-2 Inhibitor NSAID",
+    "warnings": [
+      "May increase blood pressure",
+      "Use cautiously in heart disease"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "aceclofenac",
+      "zerodol",
+      "hifenac"
+    ],
+    "purpose": "Pain, arthritis, inflammation",
+    "drugClass": "NSAID",
+    "warnings": [
+      "May irritate stomach",
+      "Avoid on empty stomach"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "pantoprazole domperidone",
+      "pan d",
+      "pantodac d"
+    ],
+    "purpose": "Acidity, reflux, bloating",
+    "drugClass": "PPI + Prokinetic Combination",
+    "warnings": [
+      "Take before meals"
+    ],
+    "instructions": "Take on empty stomach before breakfast."
+  },
+  {
+    "names": [
+      "methylprednisolone",
+      "medrol",
+      "wysolone m"
+    ],
+    "purpose": "Severe allergy, inflammation, autoimmune conditions",
+    "drugClass": "Corticosteroid",
+    "warnings": [
+      "Do not stop suddenly",
+      "Can raise blood sugar"
+    ],
+    "instructions": "Take with food."
+  },
+  {
+    "names": [
+      "deflazacort",
+      "dezacor",
+      "defcort"
+    ],
+    "purpose": "Inflammation, allergy, autoimmune disorders",
+    "drugClass": "Corticosteroid",
+    "warnings": [
+      "Long-term use needs monitoring"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "cetirizine paracetamol phenylephrine",
+      "sinarest",
+      "wikoryl"
+    ],
+    "purpose": "Cold, fever, blocked nose",
+    "drugClass": "Cold Combination Medicine",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid alcohol"
+    ],
+    "instructions": "Take after food with water."
+  },
+  {
+    "names": [
+      "levosalbutamol",
+      "levolin"
+    ],
+    "purpose": "Asthma, wheezing, breathing difficulty",
+    "drugClass": "Bronchodilator",
+    "warnings": [
+      "Not for overuse",
+      "May cause palpitations"
+    ],
+    "instructions": "Use inhaler/nebulizer as prescribed."
+  },
+  {
+    "names": [
+      "ipratropium bromide",
+      "duolin",
+      "atrovent"
+    ],
+    "purpose": "COPD, asthma, wheezing",
+    "drugClass": "Anticholinergic Bronchodilator",
+    "warnings": [
+      "May cause dry mouth"
+    ],
+    "instructions": "Use through inhaler or nebulizer."
+  },
+  {
+    "names": [
+      "dolo 650",
+      "dolo",
+      "dolo 500"
+    ],
+    "purpose": "Fever, body pain, headache, cold-related fever",
+    "drugClass": "Analgesic / Antipyretic",
+    "warnings": [
+      "Do not exceed recommended daily dose",
+      "Use carefully in liver disease"
+    ],
+    "instructions": "Take after food or with water as needed for fever or pain."
+  },
+  {
+    "names": [
+      "sumo",
+      "sumo l",
+      "sumo cold"
+    ],
+    "purpose": "Fever, headache, body pain, common cold symptoms",
+    "drugClass": "Analgesic / Cold Combination Medicine",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid taking with other paracetamol-containing medicines"
+    ],
+    "instructions": "Take after meals with water."
+  },
+  {
+    "names": [
+      "becosules",
+      "becosules capsule",
+      "b complex"
+    ],
+    "purpose": "Vitamin B deficiency, weakness, mouth ulcers, fatigue",
+    "drugClass": "Vitamin B Complex Supplement",
+    "warnings": [
+      "Bright yellow urine is normal",
+      "Do not overdose"
+    ],
+    "instructions": "Take one capsule daily after food."
+  },
+  {
+    "names": [
+      "neurobion forte",
+      "neurobion",
+      "methylcobalamin b-complex"
+    ],
+    "purpose": "Nerve health, vitamin deficiency, weakness",
+    "drugClass": "Vitamin B Complex / Nerve Supplement",
+    "warnings": [
+      "Usually well tolerated"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "crocin advance",
+      "crocin 650",
+      "crocin cold and flu"
+    ],
+    "purpose": "Fever, headache, body pain",
+    "drugClass": "Analgesic / Antipyretic",
+    "warnings": [
+      "Avoid overdose",
+      "Do not combine with similar medicines"
+    ],
+    "instructions": "Take with water as needed."
+  },
+  {
+    "names": [
+      "combiflam",
+      "combiflam tablet"
+    ],
+    "purpose": "Pain, inflammation, fever, toothache",
+    "drugClass": "NSAID Combination",
+    "warnings": [
+      "Can cause stomach irritation",
+      "Take after food"
+    ],
+    "instructions": "Always take after meals."
+  },
+  {
+    "names": [
+      "vicks action 500",
+      "action 500"
+    ],
+    "purpose": "Cold, fever, headache, blocked nose",
+    "drugClass": "Cold Combination Medicine",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid alcohol"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "sinarest",
+      "sinarest af"
+    ],
+    "purpose": "Cold, sneezing, blocked nose, fever",
+    "drugClass": "Cold Combination Medicine",
+    "warnings": [
+      "May cause sleepiness",
+      "Avoid driving"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "strepsils",
+      "strepsils lozenges"
+    ],
+    "purpose": "Sore throat, throat irritation",
+    "drugClass": "Throat Lozenges / Antiseptic",
+    "warnings": [
+      "Do not exceed recommended lozenges per day"
+    ],
+    "instructions": "Allow to dissolve slowly in mouth."
+  },
+  {
+    "names": [
+      "cofsils",
+      "cofsils lozenges"
+    ],
+    "purpose": "Sore throat, cough irritation",
+    "drugClass": "Throat Lozenges",
+    "warnings": [
+      "Contains sugar in some variants"
+    ],
+    "instructions": "Slowly dissolve in mouth."
+  },
+  {
+    "names": [
+      "benadryl cough syrup",
+      "benadryl"
+    ],
+    "purpose": "Cough, throat irritation",
+    "drugClass": "Cough Suppressant / Antihistamine",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid driving"
+    ],
+    "instructions": "Measure exact dose using measuring cup."
+  },
+  {
+    "names": [
+      "honitus",
+      "dabur honitus"
+    ],
+    "purpose": "Cough, throat irritation",
+    "drugClass": "Herbal Cough Syrup",
+    "warnings": [
+      "Contains sugar in some variants"
+    ],
+    "instructions": "Take measured dose after meals."
+  },
+  {
+    "names": [
+      "digene gel",
+      "digene tablet"
+    ],
+    "purpose": "Acidity, gas, indigestion",
+    "drugClass": "Antacid",
+    "warnings": [
+      "Do not overuse regularly"
+    ],
+    "instructions": "Take after meals or when symptoms occur."
+  },
+  {
+    "names": [
+      "eno",
+      "eno fruit salt"
+    ],
+    "purpose": "Instant acidity and bloating relief",
+    "drugClass": "Antacid",
+    "warnings": [
+      "Contains sodium",
+      "Use cautiously in high BP"
+    ],
+    "instructions": "Mix in water and drink immediately."
+  },
+  {
+    "names": [
+      "gelusil",
+      "gelusil mps"
+    ],
+    "purpose": "Acidity, bloating, gas",
+    "drugClass": "Antacid",
+    "warnings": [
+      "Do not use excessively"
+    ],
+    "instructions": "Chew thoroughly or take liquid after meals."
+  },
+  {
+    "names": [
+      "volini",
+      "volini spray",
+      "volini gel"
+    ],
+    "purpose": "Muscle pain, sprain, back pain",
+    "drugClass": "Topical Pain Relief",
+    "warnings": [
+      "For external use only",
+      "Avoid eyes and open wounds"
+    ],
+    "instructions": "Apply to affected area gently."
+  },
+  {
+    "names": [
+      "moov",
+      "moov spray",
+      "moov cream"
+    ],
+    "purpose": "Muscle pain, back pain, sprains",
+    "drugClass": "Topical Pain Relief",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply gently on affected area."
+  },
+  {
+    "names": [
+      "iodex",
+      "iodex balm"
+    ],
+    "purpose": "Muscle pain, headache, body pain",
+    "drugClass": "Topical Analgesic",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Massage gently on painful area."
+  },
+  {
+    "names": [
+      "boroline",
+      "boroline cream"
+    ],
+    "purpose": "Dry skin, minor cuts, cracked lips",
+    "drugClass": "Antiseptic Cream",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply thin layer on affected skin."
+  },
+  {
+    "names": [
+      "savlon",
+      "savlon antiseptic liquid"
+    ],
+    "purpose": "Wound cleaning, antiseptic skin care",
+    "drugClass": "Antiseptic",
+    "warnings": [
+      "External use only",
+      "Avoid eyes"
+    ],
+    "instructions": "Dilute if needed and apply to wound."
+  },
+  {
+    "names": [
+      "electral",
+      "ors powder"
+    ],
+    "purpose": "Dehydration, weakness, loose motions",
+    "drugClass": "Electrolyte Replacement",
+    "warnings": [
+      "Use prepared solution within 24 hours"
+    ],
+    "instructions": "Mix with clean water and sip frequently."
+  },
+  {
+    "names": [
+      "zandu balm",
+      "amrutanjan"
+    ],
+    "purpose": "Headache, cold, body pain",
+    "drugClass": "Topical Pain Balm",
+    "warnings": [
+      "External use only",
+      "Avoid eyes"
+    ],
+    "instructions": "Apply gently to forehead or affected area."
+  },
+  {
+    "names": [
+      "cremaffin",
+      "dulcoflex"
+    ],
+    "purpose": "Constipation relief",
+    "drugClass": "Laxative",
+    "warnings": [
+      "Do not use daily without advice"
+    ],
+    "instructions": "Usually taken at bedtime."
+  },
+  {
+    "names": [
+      "multivitamin",
+      "revital h",
+      "supradyn daily"
+    ],
+    "purpose": "Weakness, fatigue, vitamin deficiency",
+    "drugClass": "Multivitamin Supplement",
+    "warnings": [
+      "Do not exceed daily dose"
+    ],
+    "instructions": "Take after breakfast."
+  },
+  {
+    "names": [
+      "vitamin c",
+      "limcee",
+      "celin"
+    ],
+    "purpose": "Immunity support, vitamin C deficiency",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "High doses may cause acidity"
+    ],
+    "instructions": "Take after meals or dissolve if chewable."
+  },
+  {
+    "names": [
+      "meftal 500",
+      "meftal",
+      "mefenamic acid"
+    ],
+    "purpose": "Headache, body pain, menstrual pain, fever",
+    "drugClass": "NSAID Pain Reliever",
+    "warnings": [
+      "Can irritate stomach",
+      "Avoid on empty stomach"
+    ],
+    "instructions": "Take after meals with water."
+  },
+  {
+    "names": [
+      "disprin",
+      "disprin tablet"
+    ],
+    "purpose": "Headache, fever, mild pain relief",
+    "drugClass": "Analgesic / Antiplatelet",
+    "warnings": [
+      "Can cause stomach irritation",
+      "Avoid in dengue suspicion",
+      "Not for children with viral fever"
+    ],
+    "instructions": "Dissolve in water or take as directed."
+  },
+  {
+    "names": [
+      "saridon",
+      "saridon tablet"
+    ],
+    "purpose": "Headache, migraine, body pain",
+    "drugClass": "Analgesic Combination",
+    "warnings": [
+      "Contains caffeine",
+      "Avoid overdose"
+    ],
+    "instructions": "Take with water after food if sensitive stomach."
+  },
+  {
+    "names": [
+      "pudin hara",
+      "pudin hara pearls"
+    ],
+    "purpose": "Gas, indigestion, stomach discomfort",
+    "drugClass": "Digestive / Herbal Antacid",
+    "warnings": [
+      "Do not exceed recommended dose"
+    ],
+    "instructions": "Take after meals or when needed."
+  },
+  {
+    "names": [
+      "eno lemon",
+      "eno orange",
+      "eno regular"
+    ],
+    "purpose": "Acidity, bloating, indigestion",
+    "drugClass": "Antacid",
+    "warnings": [
+      "Contains sodium",
+      "Use cautiously in hypertension"
+    ],
+    "instructions": "Mix in water and drink immediately."
+  },
+  {
+    "names": [
+      "hajmola",
+      "dabur hajmola"
+    ],
+    "purpose": "Indigestion, bloating, digestion support",
+    "drugClass": "Digestive Aid",
+    "warnings": [
+      "Contains salt and sugar"
+    ],
+    "instructions": "Chew after meals."
+  },
+  {
+    "names": [
+      "vicks vaporub",
+      "vaporub",
+      "vicks"
+    ],
+    "purpose": "Cold, nasal congestion, cough relief",
+    "drugClass": "Topical Decongestant",
+    "warnings": [
+      "External use only",
+      "Avoid nostrils and eyes"
+    ],
+    "instructions": "Apply on chest, throat, or back."
+  },
+  {
+    "names": [
+      "vicks inhaler",
+      "nasal inhaler"
+    ],
+    "purpose": "Blocked nose, cold relief",
+    "drugClass": "Nasal Decongestant",
+    "warnings": [
+      "Do not overuse"
+    ],
+    "instructions": "Inhale as directed."
+  },
+  {
+    "names": [
+      "otrivin",
+      "otrivin nasal drops",
+      "otrivin spray"
+    ],
+    "purpose": "Blocked nose, sinus congestion",
+    "drugClass": "Nasal Decongestant",
+    "warnings": [
+      "Do not use more than 5 days continuously"
+    ],
+    "instructions": "Use in each nostril as directed."
+  },
+  {
+    "names": [
+      "candid powder",
+      "candid dusting powder"
+    ],
+    "purpose": "Fungal infection, sweat rash, itching",
+    "drugClass": "Topical Antifungal",
+    "warnings": [
+      "External use only",
+      "Keep skin dry"
+    ],
+    "instructions": "Apply on clean dry skin."
+  },
+  {
+    "names": [
+      "clocip cream",
+      "candid cream"
+    ],
+    "purpose": "Ringworm, fungal infection, itching",
+    "drugClass": "Topical Antifungal",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply twice daily."
+  },
+  {
+    "names": [
+      "calamine lotion",
+      "lacto calamine"
+    ],
+    "purpose": "Skin irritation, acne, itching, sunburn",
+    "drugClass": "Skin Protectant",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Shake well and apply gently."
+  },
+  {
+    "names": [
+      "soframycin",
+      "framycetin cream"
+    ],
+    "purpose": "Minor cuts, wounds, skin infection",
+    "drugClass": "Topical Antibiotic",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply thin layer on affected area."
+  },
+  {
+    "names": [
+      "burnol",
+      "burn cream"
+    ],
+    "purpose": "Minor burns, skin burns",
+    "drugClass": "Topical Burn Relief",
+    "warnings": [
+      "External use only",
+      "Not for severe burns"
+    ],
+    "instructions": "Apply on clean burn area."
+  },
+  {
+    "names": [
+      "dettol antiseptic",
+      "dettol liquid"
+    ],
+    "purpose": "Wound cleaning, hygiene, infection prevention",
+    "drugClass": "Antiseptic",
+    "warnings": [
+      "External use only",
+      "Dilute before use when needed"
+    ],
+    "instructions": "Use as directed."
+  },
+  {
+    "names": [
+      "liv 52",
+      "liv fifty two"
+    ],
+    "purpose": "Liver support, appetite improvement",
+    "drugClass": "Herbal Supplement",
+    "warnings": [
+      "Not a replacement for medical treatment"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "revital h",
+      "revital"
+    ],
+    "purpose": "Weakness, fatigue, nutritional support",
+    "drugClass": "Multivitamin / Mineral Supplement",
+    "warnings": [
+      "Do not exceed dose"
+    ],
+    "instructions": "Take one capsule daily after meals."
+  },
+  {
+    "names": [
+      "shelcal 500",
+      "shelcal"
+    ],
+    "purpose": "Calcium deficiency, bone support",
+    "drugClass": "Calcium Supplement",
+    "warnings": [
+      "May cause constipation in some people"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "limcee",
+      "limcee vitamin c"
+    ],
+    "purpose": "Vitamin C supplementation, immunity support",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "Excessive use may cause acidity"
+    ],
+    "instructions": "Chew after meals."
+  },
+  {
+    "names": [
+      "crocin baby",
+      "calpol syrup",
+      "p250 syrup"
+    ],
+    "purpose": "Fever and pain relief in children",
+    "drugClass": "Pediatric Analgesic / Antipyretic",
+    "warnings": [
+      "Use proper pediatric dose only",
+      "Use measuring syringe/spoon"
+    ],
+    "instructions": "Give according to child's weight or doctor's advice."
+  },
+  {
+    "names": [
+      "ibugesic plus syrup",
+      "ibugesic syrup"
+    ],
+    "purpose": "Fever, pain, inflammation in children",
+    "drugClass": "Pediatric NSAID",
+    "warnings": [
+      "Give after food",
+      "Use correct pediatric dose"
+    ],
+    "instructions": "Shake well before use."
+  },
+  {
+    "names": [
+      "gripe water",
+      "woodwards gripe water"
+    ],
+    "purpose": "Infant colic, gas, stomach discomfort",
+    "drugClass": "Digestive Aid",
+    "warnings": [
+      "Use only age-appropriate products"
+    ],
+    "instructions": "Give as directed on label or by pediatrician."
+  },
+  {
+    "names": [
+      "johnsons baby cream",
+      "baby rash cream",
+      "diaper rash cream"
+    ],
+    "purpose": "Diaper rash, skin protection",
+    "drugClass": "Skin Protectant",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply to clean dry skin."
+  },
+  {
+    "names": [
+      "smyle gel",
+      "dologel ct",
+      "mucopain gel"
+    ],
+    "purpose": "Mouth ulcers, gum pain",
+    "drugClass": "Oral Pain Relief Gel",
+    "warnings": [
+      "Do not swallow large amounts"
+    ],
+    "instructions": "Apply directly on ulcer area."
+  },
+  {
+    "names": [
+      "sensodyne repair gel",
+      "hexigel",
+      "mouth gel"
+    ],
+    "purpose": "Gum pain, mouth infection, oral hygiene",
+    "drugClass": "Oral Care / Antiseptic",
+    "warnings": [
+      "Do not swallow"
+    ],
+    "instructions": "Apply or rinse as directed."
+  },
+  {
+    "names": [
+      "digene fizz",
+      "digene effervescent"
+    ],
+    "purpose": "Acidity, gas, bloating, indigestion",
+    "drugClass": "Antacid",
+    "warnings": [
+      "Do not overuse regularly",
+      "Contains sodium in some variants"
+    ],
+    "instructions": "Dissolve in water and drink immediately."
+  },
+  {
+    "names": [
+      "gaviscon",
+      "gaviscon syrup",
+      "gaviscon tablet"
+    ],
+    "purpose": "Acid reflux, heartburn, indigestion",
+    "drugClass": "Antacid / Reflux Suppressant",
+    "warnings": [
+      "Use carefully in kidney disease if high sodium intake is restricted"
+    ],
+    "instructions": "Take after meals and before bedtime if needed."
+  },
+  {
+    "names": [
+      "limcee kids",
+      "vitamin c gummies"
+    ],
+    "purpose": "Vitamin C supplementation, immunity support in children",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "Contains sugar in some forms"
+    ],
+    "instructions": "Use age-appropriate dose."
+  },
+  {
+    "names": [
+      "zinc tablets",
+      "zinc sulfate",
+      "zinconia"
+    ],
+    "purpose": "Immunity support, zinc deficiency, diarrhea support",
+    "drugClass": "Mineral Supplement",
+    "warnings": [
+      "Can cause nausea if taken on empty stomach"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "evion 400",
+      "evion",
+      "vitamin e"
+    ],
+    "purpose": "Vitamin E deficiency, skin and hair support",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "Avoid excessive long-term use unless advised"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "neurokind plus",
+      "neurokind",
+      "methylcobalamin combo"
+    ],
+    "purpose": "Nerve weakness, vitamin deficiency, neuropathy support",
+    "drugClass": "Neuro Vitamin Supplement",
+    "warnings": [
+      "Usually well tolerated"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "gelusil mps liquid",
+      "gelusil syrup"
+    ],
+    "purpose": "Gas, acidity, bloating",
+    "drugClass": "Antacid / Antiflatulent",
+    "warnings": [
+      "Do not overuse for chronic symptoms"
+    ],
+    "instructions": "Shake well before use. Take after meals."
+  },
+  {
+    "names": [
+      "dulcoflex",
+      "dulcolax tablet"
+    ],
+    "purpose": "Constipation relief",
+    "drugClass": "Laxative",
+    "warnings": [
+      "May cause abdominal cramps",
+      "Not for prolonged daily use"
+    ],
+    "instructions": "Usually taken at bedtime."
+  },
+  {
+    "names": [
+      "cremaffin plus",
+      "cremaffin syrup"
+    ],
+    "purpose": "Constipation, hard stools",
+    "drugClass": "Laxative",
+    "warnings": [
+      "May cause loose stools if overused"
+    ],
+    "instructions": "Take at night with water."
+  },
+  {
+    "names": [
+      "electrobion",
+      "electrolyte drink powder"
+    ],
+    "purpose": "Dehydration, weakness, heat exhaustion",
+    "drugClass": "Electrolyte Replacement",
+    "warnings": [
+      "Prepare as directed only"
+    ],
+    "instructions": "Mix with clean drinking water."
+  },
+  {
+    "names": [
+      "glucon d",
+      "glucose powder"
+    ],
+    "purpose": "Instant energy, dehydration support, weakness",
+    "drugClass": "Energy Supplement",
+    "warnings": [
+      "Contains sugar",
+      "Use carefully in diabetes"
+    ],
+    "instructions": "Mix in water and drink."
+  },
+  {
+    "names": [
+      "fast relief spray",
+      "pain relief spray"
+    ],
+    "purpose": "Muscle pain, joint pain, sprains",
+    "drugClass": "Topical Analgesic",
+    "warnings": [
+      "External use only",
+      "Avoid eyes"
+    ],
+    "instructions": "Spray over affected area."
+  },
+  {
+    "names": [
+      "relispray",
+      "relispray pain spray"
+    ],
+    "purpose": "Muscle pain, sports injury, back pain",
+    "drugClass": "Topical Pain Relief",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Spray from recommended distance."
+  },
+  {
+    "names": [
+      "muscle rub cream",
+      "pain balm cream"
+    ],
+    "purpose": "Back pain, neck pain, muscle stiffness",
+    "drugClass": "Topical Analgesic",
+    "warnings": [
+      "For external use only"
+    ],
+    "instructions": "Massage gently onto affected area."
+  },
+  {
+    "names": [
+      "band aid",
+      "adhesive bandage"
+    ],
+    "purpose": "Minor cuts, wounds, abrasions",
+    "drugClass": "Wound Dressing",
+    "warnings": [
+      "Keep wound clean before applying"
+    ],
+    "instructions": "Apply on clean dry skin."
+  },
+  {
+    "names": [
+      "cotton roll",
+      "sterile cotton"
+    ],
+    "purpose": "Wound cleaning, first aid",
+    "drugClass": "Medical Dressing Material",
+    "warnings": [
+      "Use clean sterile cotton"
+    ],
+    "instructions": "Use for wound cleaning or dressing."
+  },
+  {
+    "names": [
+      "crepe bandage",
+      "elastic bandage"
+    ],
+    "purpose": "Sprains, swelling, joint support",
+    "drugClass": "Supportive Dressing",
+    "warnings": [
+      "Do not wrap too tightly"
+    ],
+    "instructions": "Wrap gently over injured area."
+  },
+  {
+    "names": [
+      "thermoseal ra",
+      "sensitive toothpaste"
+    ],
+    "purpose": "Tooth sensitivity, dental care",
+    "drugClass": "Oral Care Product",
+    "warnings": [
+      "Do not swallow"
+    ],
+    "instructions": "Use twice daily."
+  },
+  {
+    "names": [
+      "hexidine mouthwash",
+      "chlorhexidine mouthwash",
+      "hexidine"
+    ],
+    "purpose": "Mouth ulcers, gum infection, oral hygiene",
+    "drugClass": "Antiseptic Mouthwash",
+    "warnings": [
+      "Do not swallow",
+      "May temporarily stain teeth"
+    ],
+    "instructions": "Rinse as directed by dentist."
+  },
+  {
+    "names": [
+      "betnovate c",
+      "betnovate n"
+    ],
+    "purpose": "Skin inflammation, itching, eczema",
+    "drugClass": "Topical Steroid Combination",
+    "warnings": [
+      "External use only",
+      "Avoid prolonged unsupervised use"
+    ],
+    "instructions": "Apply thin layer to affected area."
+  },
+  {
+    "names": [
+      "lulifin cream",
+      "luliconazole",
+      "lulifin"
+    ],
+    "purpose": "Fungal skin infections, ringworm, itching",
+    "drugClass": "Topical Antifungal",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply on clean dry skin."
+  },
+  {
+    "names": [
+      "nasoclear",
+      "saline nasal drops"
+    ],
+    "purpose": "Blocked nose in babies and adults",
+    "drugClass": "Saline Nasal Drops",
+    "warnings": [
+      "Use clean dropper"
+    ],
+    "instructions": "Instill drops into nostrils as needed."
+  },
+  {
+    "names": [
+      "tear drops",
+      "artificial tears",
+      "lubricating eye drops"
+    ],
+    "purpose": "Dry eyes, screen-related eye dryness",
+    "drugClass": "Eye Lubricant",
+    "warnings": [
+      "Avoid touching dropper tip"
+    ],
+    "instructions": "Instill 1–2 drops as needed."
+  },
+  {
+    "names": [
+      "ear drops",
+      "waxsol",
+      "soliwax"
+    ],
+    "purpose": "Ear wax softening",
+    "drugClass": "Cerumenolytic Ear Drops",
+    "warnings": [
+      "Do not use if ear pain or ear discharge present"
+    ],
+    "instructions": "Use as directed before ear cleaning."
+  },
+  {
+    "names": [
+      "steam inhalation capsule",
+      "karvol plus"
+    ],
+    "purpose": "Cold, congestion, blocked nose",
+    "drugClass": "Inhalation Relief Product",
+    "warnings": [
+      "External inhalation only"
+    ],
+    "instructions": "Use with hot water for steam inhalation."
+  },
+  {
+    "names": [
+      "glycomet sr",
+      "glycomet gp",
+      "glycomet trio"
+    ],
+    "purpose": "Type 2 diabetes, blood sugar control",
+    "drugClass": "Antidiabetic Combination",
+    "warnings": [
+      "May cause low blood sugar if meals are skipped",
+      "May cause stomach upset initially"
+    ],
+    "instructions": "Take with meals. Never skip food after taking."
+  },
+  {
+    "names": [
+      "janumet",
+      "janumet xr"
+    ],
+    "purpose": "Type 2 diabetes, fasting and post-meal sugar control",
+    "drugClass": "Antidiabetic Combination – DPP-4 Inhibitor + Biguanide",
+    "warnings": [
+      "Monitor blood sugar regularly",
+      "May cause stomach upset"
+    ],
+    "instructions": "Take after meals at the same time daily."
+  },
+  {
+    "names": [
+      "istamet",
+      "istavel met"
+    ],
+    "purpose": "Type 2 diabetes management",
+    "drugClass": "Antidiabetic Combination",
+    "warnings": [
+      "Do not skip meals",
+      "Monitor kidney function periodically"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "galvus met",
+      "galvus"
+    ],
+    "purpose": "Type 2 diabetes, blood glucose control",
+    "drugClass": "Antidiabetic – DPP-4 Inhibitor Combination",
+    "warnings": [
+      "Regular sugar monitoring needed"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "amaryl m",
+      "amaryl m forte"
+    ],
+    "purpose": "Type 2 diabetes control",
+    "drugClass": "Antidiabetic Combination – Sulfonylurea + Metformin",
+    "warnings": [
+      "Risk of hypoglycemia",
+      "Never skip meals"
+    ],
+    "instructions": "Take before or with breakfast as prescribed."
+  },
+  {
+    "names": [
+      "trajenta duo",
+      "linagliptin metformin"
+    ],
+    "purpose": "Type 2 diabetes",
+    "drugClass": "Antidiabetic Combination",
+    "warnings": [
+      "Monitor blood sugar regularly"
+    ],
+    "instructions": "Take with meals."
+  },
+  {
+    "names": [
+      "forxiga",
+      "dapasmart",
+      "oxra"
+    ],
+    "purpose": "Type 2 diabetes, heart and kidney support",
+    "drugClass": "Antidiabetic – SGLT2 Inhibitor",
+    "warnings": [
+      "Can cause frequent urination",
+      "Stay hydrated"
+    ],
+    "instructions": "Take once daily at the same time."
+  },
+  {
+    "names": [
+      "jardiance",
+      "empagliflozin"
+    ],
+    "purpose": "Diabetes, heart protection, kidney support",
+    "drugClass": "Antidiabetic – SGLT2 Inhibitor",
+    "warnings": [
+      "Risk of dehydration",
+      "Maintain hygiene"
+    ],
+    "instructions": "Take once daily."
+  },
+  {
+    "names": [
+      "teneligliptin",
+      "tenepure",
+      "tenlimac",
+      "zita"
+    ],
+    "purpose": "Type 2 diabetes, blood sugar control",
+    "drugClass": "Antidiabetic – DPP-4 Inhibitor",
+    "warnings": [
+      "Regular blood sugar monitoring required"
+    ],
+    "instructions": "Take once daily with or without food."
+  },
+  {
+    "names": [
+      "human mixtard",
+      "mixtard insulin",
+      "novomix"
+    ],
+    "purpose": "Blood sugar control in diabetes",
+    "drugClass": "Insulin – Mixed Insulin",
+    "warnings": [
+      "Risk of hypoglycemia",
+      "Store in refrigerator"
+    ],
+    "instructions": "Inject before meals exactly as prescribed."
+  },
+  {
+    "names": [
+      "onetouch strips",
+      "accu chek strips",
+      "glucometer strips"
+    ],
+    "purpose": "Daily blood sugar monitoring",
+    "drugClass": "Diagnostic Medical Product",
+    "warnings": [
+      "Use before expiry date",
+      "Store in dry conditions"
+    ],
+    "instructions": "Use with compatible glucometer."
+  },
+  {
+    "names": [
+      "supradyn",
+      "supradyn daily"
+    ],
+    "purpose": "Weakness, fatigue, vitamin deficiency",
+    "drugClass": "Multivitamin Supplement",
+    "warnings": [
+      "Do not exceed daily dose"
+    ],
+    "instructions": "Take after breakfast."
+  },
+  {
+    "names": [
+      "orofer xt",
+      "livogen xt",
+      "fefol z"
+    ],
+    "purpose": "Iron deficiency, weakness, low hemoglobin",
+    "drugClass": "Iron + Folic Acid Supplement",
+    "warnings": [
+      "May cause black stools",
+      "Can cause constipation"
+    ],
+    "instructions": "Take after meals. Avoid tea/coffee nearby."
+  },
+  {
+    "names": [
+      "calcimax d",
+      "shelcal hd",
+      "caldikind plus"
+    ],
+    "purpose": "Bone strength, calcium deficiency",
+    "drugClass": "Calcium + Vitamin D Supplement",
+    "warnings": [
+      "Can cause constipation in some people"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "pan d",
+      "pantocid d",
+      "pantop d"
+    ],
+    "purpose": "Acidity, gas, bloating, reflux",
+    "drugClass": "PPI + Prokinetic",
+    "warnings": [
+      "Take before meals"
+    ],
+    "instructions": "Take on empty stomach before breakfast."
+  },
+  {
+    "names": [
+      "meftal spas",
+      "cyclopam",
+      "colimex"
+    ],
+    "purpose": "Stomach cramps, abdominal pain, period pain",
+    "drugClass": "Antispasmodic",
+    "warnings": [
+      "May cause dizziness",
+      "Avoid driving if sleepy"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "zerodol sp",
+      "hifenac p",
+      "ace proxyvon"
+    ],
+    "purpose": "Muscle pain, injury, swelling, dental pain",
+    "drugClass": "Painkiller Combination",
+    "warnings": [
+      "Can cause stomach irritation",
+      "Avoid on empty stomach"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "montek lc",
+      "montair lc"
+    ],
+    "purpose": "Allergy, sneezing, seasonal cold, asthma support",
+    "drugClass": "Antiallergic Combination",
+    "warnings": [
+      "May cause drowsiness in some people"
+    ],
+    "instructions": "Usually taken in evening."
+  },
+  {
+    "names": [
+      "alex cough syrup",
+      "corex dx",
+      "ascoril d plus"
+    ],
+    "purpose": "Dry cough, throat irritation",
+    "drugClass": "Cough Suppressant",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid driving"
+    ],
+    "instructions": "Measure exact dose."
+  },
+  {
+    "names": [
+      "mucolite",
+      "mucinac",
+      "ambrodil s"
+    ],
+    "purpose": "Wet cough, mucus, chest congestion",
+    "drugClass": "Expectorant / Mucolytic",
+    "warnings": [
+      "Drink plenty of water"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "telma h",
+      "repace h",
+      "losar h"
+    ],
+    "purpose": "High blood pressure control",
+    "drugClass": "ARB + Diuretic Combination",
+    "warnings": [
+      "May cause dizziness",
+      "Monitor potassium levels"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "ecosprin av",
+      "atorva ecosprin"
+    ],
+    "purpose": "Heart protection, cholesterol and clot prevention",
+    "drugClass": "Antiplatelet + Statin Combination",
+    "warnings": [
+      "Risk of bleeding",
+      "Take only if prescribed"
+    ],
+    "instructions": "Usually taken after dinner or at night."
+  },
+  {
+    "names": [
+      "thyronorm 25",
+      "thyronorm 50",
+      "thyronorm 100"
+    ],
+    "purpose": "Thyroid hormone replacement",
+    "drugClass": "Thyroid Hormone",
+    "warnings": [
+      "Take on empty stomach",
+      "Do not skip doses"
+    ],
+    "instructions": "Take early morning before breakfast."
+  },
+  {
+    "names": [
+      "urtikind k",
+      "potrate mb6"
+    ],
+    "purpose": "Kidney stone prevention, urinary health",
+    "drugClass": "Urinary Alkalizer",
+    "warnings": [
+      "Use under doctor advice if kidney disease present"
+    ],
+    "instructions": "Mix in water and drink as prescribed."
+  },
+  {
+    "names": [
+      "citralka",
+      "alkasol syrup"
+    ],
+    "purpose": "Burning urination, urinary discomfort",
+    "drugClass": "Urinary Alkalizer",
+    "warnings": [
+      "Monitor sugar content in diabetic patients if syrup contains sugar"
+    ],
+    "instructions": "Dilute in water and take after meals."
+  },
+  {
+    "names": [
+      "zincovit syrup",
+      "zincovit tablet",
+      "zincovit drops"
+    ],
+    "purpose": "Immunity support, weakness, vitamin deficiency",
+    "drugClass": "Multivitamin / Mineral Supplement",
+    "warnings": [
+      "Do not exceed recommended dose"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "revital h woman",
+      "revital senior",
+      "revital calcium"
+    ],
+    "purpose": "Weakness, energy support, nutritional deficiency",
+    "drugClass": "Multivitamin Supplement",
+    "warnings": [
+      "Use age-appropriate formulation"
+    ],
+    "instructions": "Take after breakfast."
+  },
+  {
+    "names": [
+      "evion lc",
+      "evion forte"
+    ],
+    "purpose": "Weakness, skin health, antioxidant support",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "Avoid overdose"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "neurobion injections",
+      "methylcobal injection",
+      "nurokind injection"
+    ],
+    "purpose": "Vitamin B12 deficiency, nerve weakness",
+    "drugClass": "Vitamin Injection",
+    "warnings": [
+      "Use under medical supervision"
+    ],
+    "instructions": "Administer only by trained professional."
+  },
+  {
+    "names": [
+      "glycomet sr 500",
+      "glycomet sr 1000"
+    ],
+    "purpose": "Type 2 diabetes, blood sugar management",
+    "drugClass": "Antidiabetic – Extended Release",
+    "warnings": [
+      "Take with meals",
+      "Monitor blood sugar"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "voglibose metformin",
+      "voglimac mf",
+      "volibo m"
+    ],
+    "purpose": "Post-meal blood sugar control",
+    "drugClass": "Antidiabetic Combination",
+    "warnings": [
+      "Can cause gas or bloating"
+    ],
+    "instructions": "Take before meals."
+  },
+  {
+    "names": [
+      "jalra",
+      "jalra m",
+      "vildagliptin"
+    ],
+    "purpose": "Type 2 diabetes management",
+    "drugClass": "Antidiabetic – DPP-4 Inhibitor",
+    "warnings": [
+      "Regular sugar monitoring needed"
+    ],
+    "instructions": "Take with or without food."
+  },
+  {
+    "names": [
+      "shelcal 250",
+      "shelcal os",
+      "calcimax forte"
+    ],
+    "purpose": "Bone health, osteoporosis support",
+    "drugClass": "Calcium Supplement",
+    "warnings": [
+      "May cause constipation"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "uprise d3",
+      "arachitol nano",
+      "d-rise"
+    ],
+    "purpose": "Vitamin D deficiency, bone support",
+    "drugClass": "Vitamin D Supplement",
+    "warnings": [
+      "Avoid excessive use without testing"
+    ],
+    "instructions": "Take with food, preferably fatty meal."
+  },
+  {
+    "names": [
+      "volini maxx",
+      "moov strong",
+      "fast relief gel"
+    ],
+    "purpose": "Joint pain, muscle pain, sprain",
+    "drugClass": "Topical Pain Relief",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply gently on affected area."
+  },
+  {
+    "names": [
+      "move tablet",
+      "jointace c2",
+      "cartigen plus"
+    ],
+    "purpose": "Joint pain, osteoarthritis support",
+    "drugClass": "Joint Health Supplement",
+    "warnings": [
+      "Not immediate pain relief"
+    ],
+    "instructions": "Take after meals regularly."
+  },
+  {
+    "names": [
+      "duphalac syrup",
+      "laxopeg",
+      "peglec"
+    ],
+    "purpose": "Constipation relief in elderly and adults",
+    "drugClass": "Laxative",
+    "warnings": [
+      "Drink plenty of water"
+    ],
+    "instructions": "Usually taken at night."
+  },
+  {
+    "names": [
+      "eno chewable",
+      "pudin hara fizz"
+    ],
+    "purpose": "Gas, acidity, indigestion",
+    "drugClass": "Digestive / Antacid",
+    "warnings": [
+      "Contains sodium or sugar in some variants"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "wikoryl",
+      "coldact",
+      "sinarest lp"
+    ],
+    "purpose": "Cold, blocked nose, sneezing, fever",
+    "drugClass": "Cold Combination Medicine",
+    "warnings": [
+      "May cause drowsiness"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "cetzine syrup",
+      "alerid syrup"
+    ],
+    "purpose": "Allergy, cold, sneezing in children",
+    "drugClass": "Pediatric Antihistamine",
+    "warnings": [
+      "May cause sleepiness"
+    ],
+    "instructions": "Use proper pediatric dose."
+  },
+  {
+    "names": [
+      "mox syrup",
+      "novamox syrup",
+      "taxim o syrup"
+    ],
+    "purpose": "Common bacterial infections in children",
+    "drugClass": "Pediatric Antibiotic",
+    "warnings": [
+      "Complete full course",
+      "Shake well before use"
+    ],
+    "instructions": "Give as prescribed using measuring spoon."
+  },
+  {
+    "names": [
+      "calpol drops",
+      "crocin drops",
+      "p250 drops"
+    ],
+    "purpose": "Fever relief in infants",
+    "drugClass": "Pediatric Fever Medicine",
+    "warnings": [
+      "Dose by body weight only"
+    ],
+    "instructions": "Use dropper or syringe."
+  },
+  {
+    "names": [
+      "livogen z",
+      "autrin",
+      "haem up"
+    ],
+    "purpose": "Iron deficiency, weakness, pregnancy support",
+    "drugClass": "Iron Supplement",
+    "warnings": [
+      "May cause constipation",
+      "Black stools are normal"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "protein powder",
+      "protinex",
+      "horlicks protein plus"
+    ],
+    "purpose": "Weakness, recovery, nutrition support",
+    "drugClass": "Nutritional Supplement",
+    "warnings": [
+      "Contains sugar in some products"
+    ],
+    "instructions": "Mix with milk or water."
+  },
+  {
+    "names": [
+      "pediasure",
+      "ensure",
+      "resource diabetic"
+    ],
+    "purpose": "Nutrition support, elderly care, diabetic nutrition",
+    "drugClass": "Nutritional Formula",
+    "warnings": [
+      "Check sugar content or diabetic formulation"
+    ],
+    "instructions": "Prepare as directed."
+  },
+  {
+    "names": [
+      "sleepwell tablets",
+      "melatonin",
+      "sleep support tablets"
+    ],
+    "purpose": "Sleep support, jet lag, disturbed sleep",
+    "drugClass": "Sleep Aid",
+    "warnings": [
+      "May cause drowsiness next morning",
+      "Avoid alcohol"
+    ],
+    "instructions": "Take before bedtime."
+  },
+  {
+    "names": [
+      "dentogel",
+      "hexigel",
+      "mucopain"
+    ],
+    "purpose": "Mouth ulcers, gum pain, oral irritation",
+    "drugClass": "Oral Gel",
+    "warnings": [
+      "Do not swallow large quantities"
+    ],
+    "instructions": "Apply directly on affected area."
+  },
+  {
+    "names": [
+      "betadine gargle",
+      "povidone gargle"
+    ],
+    "purpose": "Sore throat, throat infection",
+    "drugClass": "Antiseptic Gargle",
+    "warnings": [
+      "Do not swallow"
+    ],
+    "instructions": "Dilute if required and gargle."
+  },
+  {
+    "names": [
+      "nasivion baby",
+      "otrivin baby"
+    ],
+    "purpose": "Blocked nose in infants and children",
+    "drugClass": "Pediatric Nasal Drops",
+    "warnings": [
+      "Use only short term"
+    ],
+    "instructions": "Use as directed by pediatrician."
+  },
+  {
+    "names": [
+      "clinsol",
+      "normal saline",
+      "sterile saline wash"
+    ],
+    "purpose": "Wound washing, eye washing, nasal cleaning",
+    "drugClass": "Sterile Wash Solution",
+    "warnings": [
+      "Use sterile solution only"
+    ],
+    "instructions": "Use as directed for cleaning."
+  },
+  {
+    "names": [
+      "ecosprin 75",
+      "ecosprin 150",
+      "ecosprin av 75"
+    ],
+    "purpose": "Heart protection, clot prevention, stroke prevention",
+    "drugClass": "Antiplatelet Agent",
+    "warnings": [
+      "May increase bleeding risk",
+      "Do not stop suddenly without doctor advice"
+    ],
+    "instructions": "Usually taken after dinner or at bedtime."
+  },
+  {
+    "names": [
+      "telma 40",
+      "telma 20",
+      "telma am"
+    ],
+    "purpose": "High blood pressure management",
+    "drugClass": "Antihypertensive – ARB",
+    "warnings": [
+      "May cause dizziness initially",
+      "Monitor blood pressure regularly"
+    ],
+    "instructions": "Take at same time every day."
+  },
+  {
+    "names": [
+      "stamlo 5",
+      "stamlo 10"
+    ],
+    "purpose": "Blood pressure control, angina",
+    "drugClass": "Calcium Channel Blocker",
+    "warnings": [
+      "May cause ankle swelling",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take daily at same time."
+  },
+  {
+    "names": [
+      "glycomet gp1",
+      "glycomet gp2"
+    ],
+    "purpose": "Type 2 diabetes, fasting and post-meal sugar control",
+    "drugClass": "Antidiabetic Combination",
+    "warnings": [
+      "Risk of low blood sugar if meals are skipped"
+    ],
+    "instructions": "Take before or with meals as prescribed."
+  },
+  {
+    "names": [
+      "zita met",
+      "zita plus",
+      "tenepure m"
+    ],
+    "purpose": "Type 2 diabetes control",
+    "drugClass": "Antidiabetic Combination",
+    "warnings": [
+      "Monitor blood sugar regularly"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "accu chek active",
+      "onetouch select",
+      "contour plus"
+    ],
+    "purpose": "Daily blood glucose monitoring",
+    "drugClass": "Diagnostic Medical Device",
+    "warnings": [
+      "Use fresh strips only",
+      "Store away from moisture"
+    ],
+    "instructions": "Use according to device instructions."
+  },
+  {
+    "names": [
+      "resource diabetic",
+      "ensure diabetes care",
+      "glucerna"
+    ],
+    "purpose": "Nutritional support for diabetic patients",
+    "drugClass": "Medical Nutrition Supplement",
+    "warnings": [
+      "Use appropriate serving size",
+      "Monitor blood sugar"
+    ],
+    "instructions": "Mix with water or milk as directed."
+  },
+  {
+    "names": [
+      "daflon 500",
+      "venusia",
+      "venotonic tablets"
+    ],
+    "purpose": "Varicose veins, hemorrhoids, circulation support",
+    "drugClass": "Vascular Support Medicine",
+    "warnings": [
+      "Use regularly for best results"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "urso forte",
+      "udiliv 300"
+    ],
+    "purpose": "Liver support, gall bladder issues",
+    "drugClass": "Liver / Bile Acid Medicine",
+    "warnings": [
+      "Use under medical supervision"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "pantocid 40",
+      "pan 40",
+      "razo 20"
+    ],
+    "purpose": "Acidity, gastritis, GERD",
+    "drugClass": "Proton Pump Inhibitor",
+    "warnings": [
+      "Long-term use requires monitoring"
+    ],
+    "instructions": "Take 30 minutes before breakfast."
+  },
+  {
+    "names": [
+      "gelusil suspension",
+      "digene mint",
+      "mucaine gel"
+    ],
+    "purpose": "Acidity, gas, stomach burning",
+    "drugClass": "Antacid",
+    "warnings": [
+      "Avoid overuse for chronic symptoms"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "cyclopam syrup",
+      "colicaid drops",
+      "colimex drops"
+    ],
+    "purpose": "Gas, stomach cramps, infant colic",
+    "drugClass": "Antispasmodic / Digestive",
+    "warnings": [
+      "Use age-appropriate pediatric dose"
+    ],
+    "instructions": "Use measuring dropper."
+  },
+  {
+    "names": [
+      "cipladine ointment",
+      "betadine ointment"
+    ],
+    "purpose": "Cuts, wounds, skin infection prevention",
+    "drugClass": "Topical Antiseptic",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply on cleaned wound."
+  },
+  {
+    "names": [
+      "neosporin",
+      "polyfax"
+    ],
+    "purpose": "Minor cuts, wounds, skin infection",
+    "drugClass": "Topical Antibiotic",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply thin layer to affected area."
+  },
+  {
+    "names": [
+      "volini tablet",
+      "aceclo plus",
+      "zerodol p"
+    ],
+    "purpose": "Joint pain, body pain, arthritis pain",
+    "drugClass": "Painkiller Combination",
+    "warnings": [
+      "Can cause stomach irritation",
+      "Avoid on empty stomach"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "calpol 650",
+      "crocin 650"
+    ],
+    "purpose": "Fever, headache, body pain",
+    "drugClass": "Analgesic / Antipyretic",
+    "warnings": [
+      "Avoid overdose",
+      "Contains paracetamol"
+    ],
+    "instructions": "Take with water when needed."
+  },
+  {
+    "names": [
+      "montek fx",
+      "montair fx"
+    ],
+    "purpose": "Allergy, sneezing, skin allergy",
+    "drugClass": "Antiallergic Combination",
+    "warnings": [
+      "May cause drowsiness"
+    ],
+    "instructions": "Preferably taken at night."
+  },
+  {
+    "names": [
+      "candid b cream",
+      "quadriderm",
+      "lobate gm"
+    ],
+    "purpose": "Fungal infection with itching/inflammation",
+    "drugClass": "Topical Combination Cream",
+    "warnings": [
+      "Avoid prolonged unsupervised use",
+      "External use only"
+    ],
+    "instructions": "Apply thin layer on affected skin."
+  },
+  {
+    "names": [
+      "venusia cream",
+      "cetaphil moisturizer",
+      "physiogel"
+    ],
+    "purpose": "Dry skin, eczema-prone skin, daily skin care",
+    "drugClass": "Moisturizing Skin Care",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply on clean skin."
+  },
+  {
+    "names": [
+      "sebamed baby cream",
+      "himalaya diaper rash cream"
+    ],
+    "purpose": "Baby skin care, diaper rash prevention",
+    "drugClass": "Skin Protectant",
+    "warnings": [
+      "External use only"
+    ],
+    "instructions": "Apply on clean dry skin."
+  },
+  {
+    "names": [
+      "folvite",
+      "folic acid tablet",
+      "fol 5"
+    ],
+    "purpose": "Pregnancy support, anemia prevention",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "Use regular dose as prescribed"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "cranberry tablets",
+      "urikind cranberry"
+    ],
+    "purpose": "Urinary tract health support",
+    "drugClass": "Urinary Health Supplement",
+    "warnings": [
+      "Not a replacement for antibiotics in active infection"
+    ],
+    "instructions": "Take with water."
+  },
+  {
+    "names": [
+      "proteinx diabetic",
+      "resource high protein"
+    ],
+    "purpose": "Nutrition support in diabetic or elderly patients",
+    "drugClass": "Nutritional Supplement",
+    "warnings": [
+      "Monitor sugar content"
+    ],
+    "instructions": "Mix as directed."
+  },
+  {
+    "names": [
+      "melatonin 3mg",
+      "meloset",
+      "sleep support tablets"
+    ],
+    "purpose": "Sleep cycle support, insomnia, jet lag",
+    "drugClass": "Sleep Aid",
+    "warnings": [
+      "May cause morning drowsiness",
+      "Avoid alcohol"
+    ],
+    "instructions": "Take 30 minutes before bedtime."
+  },
+  {
+    "names": [
+      "systane ultra",
+      "refresh liquigel",
+      "tear plus"
+    ],
+    "purpose": "Dry eyes, screen fatigue, eye irritation",
+    "drugClass": "Lubricating Eye Drops",
+    "warnings": [
+      "Do not touch dropper tip"
+    ],
+    "instructions": "Instill as needed."
+  },
+  {
+    "names": [
+      "naproxen",
+      "naprosyn",
+      "naprosyn sr",
+      "napra"
+    ],
+    "purpose": "Pain, arthritis, muscle pain, menstrual pain",
+    "drugClass": "Analgesic / NSAID",
+    "warnings": [
+      "Take after food",
+      "May cause stomach irritation",
+      "Avoid in peptic ulcer disease"
+    ],
+    "instructions": "Take after meals with water."
+  },
+  {
+    "names": [
+      "triflow",
+      "ulgel a",
+      "sucral antacid"
+    ],
+    "purpose": "Acidity, gastritis, stomach burning",
+    "drugClass": "Antacid / Gastroprotective Agent",
+    "warnings": [
+      "Long-term use needs medical advice"
+    ],
+    "instructions": "Take after meals or as directed."
+  },
+  {
+    "names": [
+      "alprazolam",
+      "alprax",
+      "xanax",
+      "restyl"
+    ],
+    "purpose": "Anxiety, panic attacks, short-term anxiety relief",
+    "drugClass": "Antianxiety Drug – Benzodiazepine",
+    "warnings": [
+      "Can cause dependence",
+      "May cause drowsiness",
+      "Avoid alcohol"
+    ],
+    "instructions": "Take exactly as prescribed. Avoid driving."
+  },
+  {
+    "names": [
+      "diazepam",
+      "valium",
+      "calmpose"
+    ],
+    "purpose": "Anxiety, muscle spasm, seizures",
+    "drugClass": "Antianxiety Drug – Benzodiazepine",
+    "warnings": [
+      "May cause sleepiness",
+      "Dependence possible"
+    ],
+    "instructions": "Use only as prescribed."
+  },
+  {
+    "names": [
+      "amiodarone",
+      "cordarone",
+      "amifru"
+    ],
+    "purpose": "Irregular heartbeat, arrhythmia control",
+    "drugClass": "Antiarrhythmic",
+    "warnings": [
+      "Requires thyroid/liver monitoring",
+      "Use under specialist supervision"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "lidocaine injection",
+      "xylocard"
+    ],
+    "purpose": "Emergency arrhythmia treatment",
+    "drugClass": "Antiarrhythmic",
+    "warnings": [
+      "Hospital use only"
+    ],
+    "instructions": "Administered under medical supervision."
+  },
+  {
+    "names": [
+      "cefepime",
+      "maxipime",
+      "cefimax"
+    ],
+    "purpose": "Severe bacterial infections",
+    "drugClass": "Antibacterial – Cephalosporin",
+    "warnings": [
+      "Complete full course",
+      "Hospital-use in many cases"
+    ],
+    "instructions": "Usually administered under medical supervision."
+  },
+  {
+    "names": [
+      "piperacillin tazobactam",
+      "piptaz",
+      "tazact"
+    ],
+    "purpose": "Serious bacterial infections",
+    "drugClass": "Antibiotic – Penicillin Combination",
+    "warnings": [
+      "Hospital use only",
+      "Possible allergic reactions"
+    ],
+    "instructions": "Usually given by injection."
+  },
+  {
+    "names": [
+      "heparin",
+      "heplock",
+      "heparin sodium"
+    ],
+    "purpose": "Blood clot prevention and treatment",
+    "drugClass": "Anticoagulant",
+    "warnings": [
+      "Risk of bleeding",
+      "Requires monitoring"
+    ],
+    "instructions": "Use only under medical supervision."
+  },
+  {
+    "names": [
+      "streptokinase",
+      "myokinase",
+      "streptase"
+    ],
+    "purpose": "Emergency clot dissolution in heart attack or stroke",
+    "drugClass": "Thrombolytic",
+    "warnings": [
+      "High bleeding risk",
+      "Emergency use only"
+    ],
+    "instructions": "Hospital administration only."
+  },
+  {
+    "names": [
+      "phenytoin",
+      "eptoin",
+      "dilantin"
+    ],
+    "purpose": "Seizures, epilepsy",
+    "drugClass": "Anticonvulsant",
+    "warnings": [
+      "Do not stop suddenly",
+      "May affect gums and coordination"
+    ],
+    "instructions": "Take regularly at same time daily."
+  },
+  {
+    "names": [
+      "lamotrigine",
+      "lamitor",
+      "lamictal"
+    ],
+    "purpose": "Epilepsy, bipolar disorder",
+    "drugClass": "Anticonvulsant",
+    "warnings": [
+      "Report skin rash immediately",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "fluoxetine",
+      "prozac",
+      "fludac"
+    ],
+    "purpose": "Depression, anxiety, OCD",
+    "drugClass": "Antidepressant – SSRI",
+    "warnings": [
+      "May take weeks to work",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "venlafaxine",
+      "veniz",
+      "effexor"
+    ],
+    "purpose": "Depression, anxiety disorders",
+    "drugClass": "Antidepressant – SNRI",
+    "warnings": [
+      "Do not stop suddenly",
+      "Monitor blood pressure"
+    ],
+    "instructions": "Take with food if stomach upset occurs."
+  },
+  {
+    "names": [
+      "racecadotril",
+      "redotil",
+      "racigyl"
+    ],
+    "purpose": "Acute diarrhea",
+    "drugClass": "Antidiarrheal",
+    "warnings": [
+      "Use with ORS hydration",
+      "Seek care if blood in stool"
+    ],
+    "instructions": "Take with plenty of fluids."
+  },
+  {
+    "names": [
+      "prochlorperazine",
+      "stemetil"
+    ],
+    "purpose": "Nausea, vomiting, vertigo",
+    "drugClass": "Antiemetic",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid driving"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "itraconazole",
+      "canditral",
+      "sporanox"
+    ],
+    "purpose": "Fungal skin, nail, and systemic infections",
+    "drugClass": "Antifungal",
+    "warnings": [
+      "May affect liver",
+      "Avoid in pregnancy unless prescribed"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "fexofenadine",
+      "allegra",
+      "fexy"
+    ],
+    "purpose": "Allergy, sneezing, hives",
+    "drugClass": "Antihistamine",
+    "warnings": [
+      "Usually non-drowsy",
+      "Avoid fruit juice close to dose"
+    ],
+    "instructions": "Take with water."
+  },
+  {
+    "names": [
+      "olmesartan",
+      "olmezest",
+      "olmat"
+    ],
+    "purpose": "High blood pressure",
+    "drugClass": "Antihypertensive – ARB",
+    "warnings": [
+      "Monitor blood pressure regularly",
+      "Avoid in pregnancy"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "indomethacin",
+      "indocap",
+      "indomet"
+    ],
+    "purpose": "Severe inflammation, gout, arthritis",
+    "drugClass": "Anti-Inflammatory – NSAID",
+    "warnings": [
+      "Can cause stomach irritation",
+      "Take after food"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "cyclophosphamide",
+      "endoxan"
+    ],
+    "purpose": "Cancer treatment, autoimmune disorders",
+    "drugClass": "Antineoplastic",
+    "warnings": [
+      "Can suppress immunity",
+      "Requires specialist monitoring"
+    ],
+    "instructions": "Use only under oncology supervision."
+  },
+  {
+    "names": [
+      "olanzapine",
+      "oleanz",
+      "olanex"
+    ],
+    "purpose": "Schizophrenia, bipolar disorder, psychosis",
+    "drugClass": "Antipsychotic",
+    "warnings": [
+      "May cause weight gain",
+      "May cause sleepiness"
+    ],
+    "instructions": "Take as prescribed, often at night."
+  },
+  {
+    "names": [
+      "aripiprazole",
+      "abilify",
+      "arip"
+    ],
+    "purpose": "Psychosis, schizophrenia, bipolar disorder",
+    "drugClass": "Antipsychotic",
+    "warnings": [
+      "May cause restlessness",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "mefenamic acid",
+      "meftal",
+      "ponstan"
+    ],
+    "purpose": "Fever, pain, menstrual cramps",
+    "drugClass": "Antipyretic / Analgesic",
+    "warnings": [
+      "Take after food",
+      "Can irritate stomach"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "valganciclovir",
+      "valcyte"
+    ],
+    "purpose": "Viral infections in immunocompromised patients",
+    "drugClass": "Antiviral",
+    "warnings": [
+      "Requires blood monitoring",
+      "Use only under specialist care"
+    ],
+    "instructions": "Take with food."
+  },
+  {
+    "names": [
+      "ketorolac",
+      "ketorol dt",
+      "torolac"
+    ],
+    "purpose": "Short-term severe pain, post-surgical pain, dental pain",
+    "drugClass": "Analgesic / NSAID",
+    "warnings": [
+      "Use only short-term",
+      "Can cause stomach irritation",
+      "Avoid in kidney disease"
+    ],
+    "instructions": "Take after food and only for prescribed duration."
+  },
+  {
+    "names": [
+      "baclofen",
+      "lioresal",
+      "baclof"
+    ],
+    "purpose": "Muscle spasm, nerve-related muscle stiffness",
+    "drugClass": "Muscle Relaxant / Analgesic Adjunct",
+    "warnings": [
+      "May cause dizziness or drowsiness",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take after meals as prescribed."
+  },
+  {
+    "names": [
+      "sucralfate",
+      "sucramal",
+      "carafate"
+    ],
+    "purpose": "Stomach ulcer, gastritis, acid injury protection",
+    "drugClass": "Antiulcer / Antacid Adjunct",
+    "warnings": [
+      "Can reduce absorption of other medicines"
+    ],
+    "instructions": "Take on empty stomach before meals."
+  },
+  {
+    "names": [
+      "clonazepam",
+      "clonotril",
+      "lonazep"
+    ],
+    "purpose": "Anxiety, panic disorder, seizure control",
+    "drugClass": "Antianxiety Drug – Benzodiazepine",
+    "warnings": [
+      "Can cause dependence",
+      "Avoid alcohol",
+      "May cause drowsiness"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "buspirone",
+      "buspin",
+      "anxit"
+    ],
+    "purpose": "Generalized anxiety disorder",
+    "drugClass": "Antianxiety Drug",
+    "warnings": [
+      "May take time to show effect",
+      "Avoid grapefruit products"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "metoprolol",
+      "betaloc",
+      "metolar"
+    ],
+    "purpose": "High blood pressure, irregular heartbeat, angina",
+    "drugClass": "Antiarrhythmic / Antihypertensive – Beta Blocker",
+    "warnings": [
+      "Do not stop suddenly",
+      "Can slow heart rate"
+    ],
+    "instructions": "Take at same time every day."
+  },
+  {
+    "names": [
+      "clarithromycin",
+      "claribid",
+      "klaricid"
+    ],
+    "purpose": "Respiratory, skin, and bacterial infections",
+    "drugClass": "Antibiotic – Macrolide",
+    "warnings": [
+      "Can interact with many medicines",
+      "May cause stomach upset"
+    ],
+    "instructions": "Complete full course."
+  },
+  {
+    "names": [
+      "clindamycin",
+      "dalacin c",
+      "clinmox"
+    ],
+    "purpose": "Dental infections, skin infections, bone infections",
+    "drugClass": "Antibiotic – Lincosamide",
+    "warnings": [
+      "May cause diarrhea",
+      "Complete full course"
+    ],
+    "instructions": "Take with water as prescribed."
+  },
+  {
+    "names": [
+      "rivaroxaban",
+      "xarelto",
+      "rivaxa"
+    ],
+    "purpose": "Blood clot prevention, DVT, stroke prevention",
+    "drugClass": "Anticoagulant",
+    "warnings": [
+      "Bleeding risk",
+      "Do not stop without doctor advice"
+    ],
+    "instructions": "Take with food if prescribed."
+  },
+  {
+    "names": [
+      "apixaban",
+      "eliquis",
+      "apigat"
+    ],
+    "purpose": "Stroke prevention, clot prevention",
+    "drugClass": "Anticoagulant",
+    "warnings": [
+      "Increased bleeding risk"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "levetiracetam",
+      "levipil",
+      "keppra"
+    ],
+    "purpose": "Epilepsy, seizure prevention",
+    "drugClass": "Anticonvulsant",
+    "warnings": [
+      "May cause mood changes or drowsiness"
+    ],
+    "instructions": "Take regularly without missing doses."
+  },
+  {
+    "names": [
+      "sodium valproate",
+      "valparin",
+      "valance"
+    ],
+    "purpose": "Epilepsy, bipolar disorder, migraine prevention",
+    "drugClass": "Anticonvulsant",
+    "warnings": [
+      "Requires liver monitoring",
+      "Avoid in pregnancy unless prescribed"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "sertraline",
+      "sertima",
+      "zoloft"
+    ],
+    "purpose": "Depression, anxiety, OCD, panic disorder",
+    "drugClass": "Antidepressant – SSRI",
+    "warnings": [
+      "May take several weeks to work",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take once daily."
+  },
+  {
+    "names": [
+      "escitalopram",
+      "nexito",
+      "cipralex"
+    ],
+    "purpose": "Depression, anxiety disorder",
+    "drugClass": "Antidepressant – SSRI",
+    "warnings": [
+      "May initially cause nausea or sleep changes"
+    ],
+    "instructions": "Take at same time daily."
+  },
+  {
+    "names": [
+      "loperamide",
+      "imodium",
+      "lopamide"
+    ],
+    "purpose": "Acute diarrhea, loose stools",
+    "drugClass": "Antidiarrheal",
+    "warnings": [
+      "Avoid if fever or blood in stool present"
+    ],
+    "instructions": "Take with fluids and ORS."
+  },
+  {
+    "names": [
+      "promethazine",
+      "phenergan",
+      "avomine"
+    ],
+    "purpose": "Motion sickness, nausea, vomiting",
+    "drugClass": "Antiemetic / Antihistamine",
+    "warnings": [
+      "Can cause drowsiness",
+      "Avoid driving"
+    ],
+    "instructions": "Take before travel if motion sickness."
+  },
+  {
+    "names": [
+      "voriconazole",
+      "vfend",
+      "voritek"
+    ],
+    "purpose": "Serious fungal infections",
+    "drugClass": "Antifungal",
+    "warnings": [
+      "May affect vision temporarily",
+      "Requires liver monitoring"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "terbinafine",
+      "terbicip",
+      "lamisil"
+    ],
+    "purpose": "Fungal nail and skin infections",
+    "drugClass": "Antifungal",
+    "warnings": [
+      "Long-term use may require liver monitoring"
+    ],
+    "instructions": "Take after meals if prescribed."
+  },
+  {
+    "names": [
+      "chlorpheniramine",
+      "cpm",
+      "histafree"
+    ],
+    "purpose": "Cold allergy, sneezing, itching",
+    "drugClass": "Antihistamine",
+    "warnings": [
+      "Can cause sleepiness",
+      "Avoid driving"
+    ],
+    "instructions": "Preferably taken at night."
+  },
+  {
+    "names": [
+      "hydrochlorothiazide",
+      "hydrazide",
+      "hctz"
+    ],
+    "purpose": "High blood pressure, fluid retention",
+    "drugClass": "Antihypertensive – Diuretic",
+    "warnings": [
+      "May increase urination",
+      "Monitor electrolytes"
+    ],
+    "instructions": "Usually taken in morning."
+  },
+  {
+    "names": [
+      "celecoxib",
+      "celevida",
+      "celebrex"
+    ],
+    "purpose": "Arthritis pain, inflammation, joint pain",
+    "drugClass": "Anti-Inflammatory – COX-2 Inhibitor",
+    "warnings": [
+      "Use cautiously in heart disease"
+    ],
+    "instructions": "Take after food."
+  },
+  {
+    "names": [
+      "methotrexate",
+      "folitrax",
+      "imutrex"
+    ],
+    "purpose": "Autoimmune diseases, rheumatoid arthritis, cancer",
+    "drugClass": "Antineoplastic / Immunomodulator",
+    "warnings": [
+      "Requires liver and blood monitoring",
+      "Not daily in most uses"
+    ],
+    "instructions": "Take exactly on prescribed schedule."
+  },
+  {
+    "names": [
+      "risperidone",
+      "sizodon",
+      "risdone"
+    ],
+    "purpose": "Schizophrenia, psychosis, bipolar disorder",
+    "drugClass": "Antipsychotic",
+    "warnings": [
+      "May cause weight gain or sleepiness"
+    ],
+    "instructions": "Take regularly as prescribed."
+  },
+  {
+    "names": [
+      "zanamivir",
+      "relenza"
+    ],
+    "purpose": "Influenza viral infection",
+    "drugClass": "Antiviral",
+    "warnings": [
+      "Most effective when started early"
+    ],
+    "instructions": "Use exactly as prescribed."
+  },
+  {
+    "names": [
+      "oseltamivir",
+      "tamiflu",
+      "antiflu"
+    ],
+    "purpose": "Influenza treatment and prevention",
+    "drugClass": "Antiviral",
+    "warnings": [
+      "Most effective within first 48 hours of symptoms"
+    ],
+    "instructions": "Complete full prescribed course."
+  },
+  {
+    "names": [
+      "paracetamol drops",
+      "acetaminophen drops",
+      "calpol baby drops"
+    ],
+    "purpose": "Fever, mild pain, post-vaccination discomfort",
+    "drugClass": "Analgesic / Antipyretic",
+    "warnings": [
+      "Do not exceed prescribed dose",
+      "Dose based on baby's weight"
+    ],
+    "instructions": "Use only pediatric dose as advised by doctor."
+  },
+  {
+    "names": [
+      "ibuprofen drops",
+      "brufen drops",
+      "advil infant drops"
+    ],
+    "purpose": "Fever, pain, inflammation",
+    "drugClass": "Anti-Inflammatory – NSAID",
+    "warnings": [
+      "Not suitable for very young infants without medical advice",
+      "Give after feeding if advised"
+    ],
+    "instructions": "Use only if prescribed by pediatrician."
+  },
+  {
+    "names": [
+      "simethicone drops",
+      "colicaid",
+      "gas relief drops"
+    ],
+    "purpose": "Gas, colic, bloating in babies",
+    "drugClass": "Antiflatulent",
+    "warnings": [
+      "Use recommended infant dosage only"
+    ],
+    "instructions": "Can be given after feeding if advised."
+  },
+  {
+    "names": [
+      "saline nasal drops",
+      "nasoclear",
+      "sterile saline drops"
+    ],
+    "purpose": "Nasal congestion, blocked nose",
+    "drugClass": "Nasal Preparation",
+    "warnings": [
+      "Use sterile drops only",
+      "Do not share dropper"
+    ],
+    "instructions": "Instill gently into nostrils as needed."
+  },
+  {
+    "names": [
+      "oral rehydration salts",
+      "ors",
+      "electral pediatric"
+    ],
+    "purpose": "Dehydration due to diarrhea or vomiting",
+    "drugClass": "Electrolyte Replacement",
+    "warnings": [
+      "Prepare exactly as directed",
+      "Discard after recommended time"
+    ],
+    "instructions": "Give small frequent sips as advised."
+  },
+  {
+    "names": [
+      "zinc syrup",
+      "zinconia",
+      "zincovit baby"
+    ],
+    "purpose": "Diarrhea management, zinc supplementation",
+    "drugClass": "Mineral Supplement",
+    "warnings": [
+      "Do not exceed dose",
+      "May cause mild stomach upset"
+    ],
+    "instructions": "Give after feeding unless advised otherwise."
+  },
+  {
+    "names": [
+      "vitamin d drops",
+      "d3 drops",
+      "vitadee drops"
+    ],
+    "purpose": "Bone development, vitamin D deficiency prevention",
+    "drugClass": "Vitamin Supplement",
+    "warnings": [
+      "Avoid overdose",
+      "Use measured dropper"
+    ],
+    "instructions": "Give daily as prescribed."
+  },
+  {
+    "names": [
+      "iron drops",
+      "ferium drops",
+      "dexorange pediatric"
+    ],
+    "purpose": "Iron deficiency, anemia prevention",
+    "drugClass": "Hematinic / Iron Supplement",
+    "warnings": [
+      "May darken stools",
+      "Can stain teeth temporarily"
+    ],
+    "instructions": "Give in prescribed dose, often after feeding."
+  },
+  {
+    "names": [
+      "amoxicillin",
+      "mox kid",
+      "novamox drops"
+    ],
+    "purpose": "Bacterial infections such as ear, throat, or chest infections",
+    "drugClass": "Antibiotic – Penicillin",
+    "warnings": [
+      "Complete full course",
+      "Watch for allergic reactions"
+    ],
+    "instructions": "Use only when prescribed by doctor."
+  },
+  {
+    "names": [
+      "cetirizine drops",
+      "zyrtec drops",
+      "cetzine drops"
+    ],
+    "purpose": "Allergies, itching, runny nose",
+    "drugClass": "Antihistamine",
+    "warnings": [
+      "May cause drowsiness",
+      "Use age-appropriate dose"
+    ],
+    "instructions": "Use only under pediatric guidance."
+  },
+  {
+    "names": [
+      "ethinyl estradiol + levonorgestrel",
+      "yasmin",
+      "ovral l"
+    ],
+    "purpose": "Birth control, menstrual regulation, hormonal management",
+    "drugClass": "Contraceptive – Combined Oral Contraceptive",
+    "warnings": [
+      "May increase blood clot risk in some users",
+      "Not suitable for smokers over 35 or certain medical conditions",
+      "Does not protect against STIs"
+    ],
+    "instructions": "Take one tablet daily at the same time. Follow pack schedule exactly."
+  },
+  {
+    "names": [
+      "norethindrone",
+      "micronor",
+      "cerazette"
+    ],
+    "purpose": "Birth control, suitable when estrogen is not recommended",
+    "drugClass": "Contraceptive – Progestin Only Pill",
+    "warnings": [
+      "Must be taken at the same time every day",
+      "Missing doses reduces effectiveness",
+      "Does not protect against STIs"
+    ],
+    "instructions": "Take one tablet daily without missing doses."
+  },
+  {
+    "names": [
+      "levonorgestrel",
+      "ipill",
+      "plan b"
+    ],
+    "purpose": "Emergency contraception after unprotected intercourse",
+    "drugClass": "Emergency Contraceptive",
+    "warnings": [
+      "Works best when taken as early as possible",
+      "Not for routine contraception",
+      "May temporarily affect menstrual cycle"
+    ],
+    "instructions": "Take as soon as possible after unprotected intercourse, ideally within 72 hours."
+  },
+  {
+    "names": [
+      "drospirenone + ethinyl estradiol",
+      "yasmin",
+      "yaz"
+    ],
+    "purpose": "Birth control, acne management, menstrual cycle regulation",
+    "drugClass": "Contraceptive – Combined Oral Contraceptive",
+    "warnings": [
+      "May increase blood clot risk",
+      "Not suitable in certain liver or kidney conditions"
+    ],
+    "instructions": "Take one tablet daily at the same time."
+  },
+  {
+    "names": [
+      "desogestrel",
+      "cerazette",
+      "cerelle"
+    ],
+    "purpose": "Birth control, suitable during breastfeeding or when estrogen is not advised",
+    "drugClass": "Contraceptive – Progestin Only Pill",
+    "warnings": [
+      "Must be taken at the same time every day",
+      "Irregular bleeding may occur"
+    ],
+    "instructions": "Take one tablet daily without breaks."
+  },
+  {
+    "names": [
+      "levonorgestrel + ethinyl estradiol",
+      "ovral l",
+      "loette"
+    ],
+    "purpose": "Birth control, hormonal regulation, period control",
+    "drugClass": "Contraceptive – Combined Oral Contraceptive",
+    "warnings": [
+      "Does not protect against STIs",
+      "May cause nausea or breast tenderness initially"
+    ],
+    "instructions": "Follow pack schedule exactly."
+  },
+  {
+    "names": [
+      "ethinyl estradiol + norgestimate",
+      "ortho tri-cyclen",
+      "tri-previfem"
+    ],
+    "purpose": "Birth control, acne treatment, menstrual regulation",
+    "drugClass": "Contraceptive – Combined Oral Contraceptive",
+    "warnings": [
+      "May increase blood pressure",
+      "Avoid smoking while using"
+    ],
+    "instructions": "Take one tablet daily as directed."
+  },
+  {
+    "names": [
+      "ethinyl estradiol + dienogest",
+      "femilon",
+      "novelon"
+    ],
+    "purpose": "Birth control, menstrual irregularities, hormonal acne",
+    "drugClass": "Contraceptive – Combined Oral Contraceptive",
+    "warnings": [
+      "May cause spotting during initial months",
+      "Monitor if history of migraines"
+    ],
+    "instructions": "Take one tablet daily in cycle."
+  },
+  {
+    "names": [
+      "ulipristal acetate",
+      "ella",
+      "ellaone"
+    ],
+    "purpose": "Emergency contraception after unprotected intercourse",
+    "drugClass": "Emergency Contraceptive",
+    "warnings": [
+      "Most effective when taken early",
+      "Not for regular contraception"
+    ],
+    "instructions": "Take as soon as possible, up to 120 hours after intercourse."
+  },
+  {
+    "names": [
+      "medroxyprogesterone",
+      "provera",
+      "depo provera"
+    ],
+    "purpose": "Contraception, menstrual disorders, hormone therapy",
+    "drugClass": "Hormonal Contraceptive – Progestin",
+    "warnings": [
+      "May affect bone density with long-term use",
+      "May cause delayed return of fertility"
+    ],
+    "instructions": "Use exactly as prescribed by doctor."
+  },
+  {
+    "names": [
+      "phenobarbital",
+      "luminal"
+    ],
+    "purpose": "Seizures, epilepsy, sedation",
+    "drugClass": "Barbiturate – Anticonvulsant / Sedative",
+    "warnings": [
+      "May cause drowsiness",
+      "Can be habit-forming",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take exactly as prescribed. Regular monitoring may be needed."
+  },
+  {
+    "names": [
+      "pentobarbital",
+      "nembutal"
+    ],
+    "purpose": "Sedation, seizure control, pre-anesthesia",
+    "drugClass": "Barbiturate – Sedative-Hypnotic",
+    "warnings": [
+      "Can slow breathing",
+      "Risk of dependence with prolonged use"
+    ],
+    "instructions": "Use only under strict medical supervision."
+  },
+  {
+    "names": [
+      "secobarbital",
+      "seconal"
+    ],
+    "purpose": "Insomnia, sedation before procedures",
+    "drugClass": "Barbiturate – Hypnotic",
+    "warnings": [
+      "May cause dizziness",
+      "Risk of misuse or dependence"
+    ],
+    "instructions": "Usually taken at bedtime or as prescribed."
+  },
+  {
+    "names": [
+      "amobarbital",
+      "amytal"
+    ],
+    "purpose": "Sedation, anxiety, sleep disorders",
+    "drugClass": "Barbiturate – Sedative",
+    "warnings": [
+      "May impair alertness",
+      "Avoid alcohol while taking"
+    ],
+    "instructions": "Take only under medical guidance."
+  },
+  {
+    "names": [
+      "butalbital",
+      "fioricet",
+      "fiorinal"
+    ],
+    "purpose": "Tension headaches, migraine relief",
+    "drugClass": "Barbiturate – Analgesic Combination",
+    "warnings": [
+      "May cause drowsiness",
+      "Risk of dependency with frequent use"
+    ],
+    "instructions": "Take only as prescribed. Do not exceed dose."
+  },
+  {
+    "names": [
+      "salbutamol",
+      "albuterol",
+      "ventolin"
+    ],
+    "purpose": "Asthma, wheezing, shortness of breath",
+    "drugClass": "Bronchodilator – Short Acting Beta Agonist",
+    "warnings": [
+      "May cause tremors",
+      "May increase heart rate"
+    ],
+    "instructions": "Use inhaler or nebulizer as directed."
+  },
+  {
+    "names": [
+      "ipratropium",
+      "atrovent"
+    ],
+    "purpose": "COPD, asthma, bronchospasm",
+    "drugClass": "Bronchodilator – Anticholinergic",
+    "warnings": [
+      "May cause dry mouth",
+      "Avoid contact with eyes"
+    ],
+    "instructions": "Use via inhaler or nebulizer as prescribed."
+  },
+  {
+    "names": [
+      "tiotropium",
+      "spiriva"
+    ],
+    "purpose": "COPD, chronic breathing difficulties",
+    "drugClass": "Bronchodilator – Long Acting Anticholinergic",
+    "warnings": [
+      "May cause dry mouth",
+      "Not for sudden asthma attacks"
+    ],
+    "instructions": "Use once daily as prescribed."
+  },
+  {
+    "names": [
+      "salmeterol",
+      "serevent"
+    ],
+    "purpose": "Asthma maintenance, COPD",
+    "drugClass": "Bronchodilator – Long Acting Beta Agonist",
+    "warnings": [
+      "Not for emergency relief",
+      "Use with controller medicine if prescribed"
+    ],
+    "instructions": "Use regularly as directed."
+  },
+  {
+    "names": [
+      "theophylline",
+      "theolair",
+      "uniphyl"
+    ],
+    "purpose": "Asthma, chronic airway obstruction",
+    "drugClass": "Bronchodilator – Methylxanthine",
+    "warnings": [
+      "Requires blood level monitoring",
+      "May cause palpitations or nausea"
+    ],
+    "instructions": "Take at the same time daily as prescribed."
+  },
+  {
+    "names": [
+      "paracetamol + chlorpheniramine + phenylephrine",
+      "crocin cold and flu",
+      "d-cold"
+    ],
+    "purpose": "Common cold symptoms, fever, body pain, runny nose",
+    "drugClass": "Cold Cure – Combination Medicine",
+    "warnings": [
+      "May cause drowsiness",
+      "Avoid duplicate paracetamol products"
+    ],
+    "instructions": "Take after food or as directed."
+  },
+  {
+    "names": [
+      "cetirizine + paracetamol + phenylephrine",
+      "sinarest",
+      "wikoryl"
+    ],
+    "purpose": "Cold, sneezing, nasal congestion, fever",
+    "drugClass": "Cold Cure – Antihistamine Combination",
+    "warnings": [
+      "May cause sleepiness",
+      "Avoid alcohol while taking"
+    ],
+    "instructions": "Use as prescribed, usually after meals."
+  },
+  {
+    "names": [
+      "prednisolone",
+      "wysolone",
+      "omnacortil"
+    ],
+    "purpose": "Inflammation, allergies, asthma, autoimmune conditions",
+    "drugClass": "Corticosteroid",
+    "warnings": [
+      "Do not stop suddenly",
+      "Long-term use may affect immunity"
+    ],
+    "instructions": "Take with food, follow taper schedule if prescribed."
+  },
+  {
+    "names": [
+      "dexamethasone",
+      "decadron",
+      "dexona"
+    ],
+    "purpose": "Severe inflammation, allergic reactions, immune disorders",
+    "drugClass": "Corticosteroid",
+    "warnings": [
+      "May increase blood sugar",
+      "Use cautiously in infections"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "hydrocortisone",
+      "cortef",
+      "hcqs"
+    ],
+    "purpose": "Inflammation, adrenal disorders, allergic conditions",
+    "drugClass": "Corticosteroid",
+    "warnings": [
+      "Long-term use needs monitoring",
+      "May suppress immune response"
+    ],
+    "instructions": "Take with meals if oral form."
+  },
+  {
+    "names": [
+      "dextromethorphan",
+      "benadryl dr",
+      "corex dx"
+    ],
+    "purpose": "Dry cough, throat irritation",
+    "drugClass": "Cough Suppressant",
+    "warnings": [
+      "May cause dizziness",
+      "Do not combine with certain antidepressants"
+    ],
+    "instructions": "Use only recommended dose."
+  },
+  {
+    "names": [
+      "codeine",
+      "codistar",
+      "codipront"
+    ],
+    "purpose": "Severe dry cough suppression",
+    "drugClass": "Cough Suppressant – Opioid",
+    "warnings": [
+      "May cause drowsiness",
+      "Risk of dependence",
+      "Can slow breathing"
+    ],
+    "instructions": "Use only under medical supervision."
+  },
+  {
+    "names": [
+      "cyclophosphamide",
+      "endoxan"
+    ],
+    "purpose": "Cancer treatment, autoimmune disorders",
+    "drugClass": "Cytotoxic – Alkylating Agent",
+    "warnings": [
+      "Can reduce blood cell counts",
+      "Requires regular blood monitoring"
+    ],
+    "instructions": "Take exactly as prescribed by oncologist."
+  },
+  {
+    "names": [
+      "cisplatin",
+      "platinol"
+    ],
+    "purpose": "Cancer treatment",
+    "drugClass": "Cytotoxic – Platinum Compound",
+    "warnings": [
+      "May affect kidneys or hearing",
+      "Hydration may be required"
+    ],
+    "instructions": "Administered under hospital supervision."
+  },
+  {
+    "names": [
+      "doxorubicin",
+      "adriamycin"
+    ],
+    "purpose": "Cancer treatment",
+    "drugClass": "Cytotoxic – Anthracycline",
+    "warnings": [
+      "May affect heart function",
+      "Requires medical monitoring"
+    ],
+    "instructions": "Given only under specialist supervision."
+  },
+  {
+    "names": [
+      "pseudoephedrine",
+      "sudafed"
+    ],
+    "purpose": "Nasal congestion, sinus pressure",
+    "drugClass": "Decongestant",
+    "warnings": [
+      "May increase blood pressure",
+      "May cause restlessness"
+    ],
+    "instructions": "Avoid taking close to bedtime."
+  },
+  {
+    "names": [
+      "phenylephrine",
+      "neo-synephrine"
+    ],
+    "purpose": "Blocked nose, sinus congestion",
+    "drugClass": "Decongestant",
+    "warnings": [
+      "Use cautiously in heart disease or hypertension"
+    ],
+    "instructions": "Take as directed, avoid exceeding dose."
+  },
+  {
+    "names": [
+      "oxymetazoline",
+      "nasivion",
+      "otrivin oxy"
+    ],
+    "purpose": "Nasal congestion relief",
+    "drugClass": "Decongestant – Nasal Spray",
+    "warnings": [
+      "Do not use for prolonged periods",
+      "May cause rebound congestion"
+    ],
+    "instructions": "Use for short duration only."
+  },
+  {
+    "names": [
+      "furosemide",
+      "lasix"
+    ],
+    "purpose": "Fluid retention, heart failure, high blood pressure",
+    "drugClass": "Diuretic – Loop Diuretic",
+    "warnings": [
+      "May cause dehydration",
+      "Monitor potassium levels"
+    ],
+    "instructions": "Usually taken in morning."
+  },
+  {
+    "names": [
+      "spironolactone",
+      "aldactone"
+    ],
+    "purpose": "Fluid retention, heart failure, hormonal conditions",
+    "drugClass": "Diuretic – Potassium Sparing",
+    "warnings": [
+      "May increase potassium levels",
+      "Regular blood tests may be needed"
+    ],
+    "instructions": "Take with food if advised."
+  },
+  {
+    "names": [
+      "hydrochlorothiazide",
+      "hctz",
+      "hydrazide"
+    ],
+    "purpose": "High blood pressure, fluid retention",
+    "drugClass": "Diuretic – Thiazide",
+    "warnings": [
+      "May increase urination",
+      "Monitor electrolytes"
+    ],
+    "instructions": "Usually taken in morning."
+  },
+  {
+    "names": [
+      "guaifenesin",
+      "mucinex",
+      "glycodin expectorant"
+    ],
+    "purpose": "Chest congestion, productive cough, mucus clearance",
+    "drugClass": "Expectorant",
+    "warnings": [
+      "Drink plenty of fluids",
+      "May cause mild stomach upset"
+    ],
+    "instructions": "Take with water as prescribed."
+  },
+  {
+    "names": [
+      "ambroxol",
+      "mucosolvan",
+      "ambrodil"
+    ],
+    "purpose": "Mucus loosening, productive cough, bronchitis",
+    "drugClass": "Expectorant / Mucolytic",
+    "warnings": [
+      "May cause nausea in some patients"
+    ],
+    "instructions": "Usually taken after food."
+  },
+  {
+    "names": [
+      "bromhexine",
+      "bisolvon",
+      "bro zedex"
+    ],
+    "purpose": "Cough with thick mucus, respiratory congestion",
+    "drugClass": "Expectorant / Mucolytic",
+    "warnings": [
+      "Use cautiously in gastric ulcer patients"
+    ],
+    "instructions": "Take after meals or as prescribed."
+  },
+  {
+    "names": [
+      "levothyroxine",
+      "thyronorm",
+      "eltroxin"
+    ],
+    "purpose": "Hypothyroidism, thyroid hormone replacement",
+    "drugClass": "Hormone – Thyroid Hormone",
+    "warnings": [
+      "Dose adjustments may be needed",
+      "Regular thyroid monitoring required"
+    ],
+    "instructions": "Take on empty stomach, usually in morning."
+  },
+  {
+    "names": [
+      "insulin",
+      "novorapid",
+      "lantus"
+    ],
+    "purpose": "Diabetes mellitus, blood sugar control",
+    "drugClass": "Hormone – Pancreatic Hormone",
+    "warnings": [
+      "May cause low blood sugar",
+      "Monitor glucose regularly"
+    ],
+    "instructions": "Use exactly as prescribed."
+  },
+  {
+    "names": [
+      "hydrocortisone",
+      "cortef"
+    ],
+    "purpose": "Adrenal insufficiency, inflammation, hormone replacement",
+    "drugClass": "Hormone – Corticosteroid",
+    "warnings": [
+      "Do not stop abruptly",
+      "Long-term monitoring may be required"
+    ],
+    "instructions": "Take with food if oral."
+  },
+  {
+    "names": [
+      "metformin",
+      "glycomet",
+      "glucophage"
+    ],
+    "purpose": "Type 2 diabetes, blood sugar control",
+    "drugClass": "Hypoglycemic – Biguanide",
+    "warnings": [
+      "May cause stomach upset",
+      "Monitor kidney function"
+    ],
+    "instructions": "Take after meals."
+  },
+  {
+    "names": [
+      "glimepiride",
+      "amaryl",
+      "glimisave"
+    ],
+    "purpose": "Type 2 diabetes management",
+    "drugClass": "Hypoglycemic – Sulfonylurea",
+    "warnings": [
+      "May cause low blood sugar",
+      "Do not skip meals"
+    ],
+    "instructions": "Usually taken before breakfast."
+  },
+  {
+    "names": [
+      "sitagliptin",
+      "januvia",
+      "istavel"
+    ],
+    "purpose": "Type 2 diabetes blood sugar control",
+    "drugClass": "Hypoglycemic – DPP-4 Inhibitor",
+    "warnings": [
+      "Monitor blood sugar regularly"
+    ],
+    "instructions": "Take once daily as prescribed."
+  },
+  {
+    "names": [
+      "cyclosporine",
+      "neoral",
+      "pangraf"
+    ],
+    "purpose": "Organ transplant rejection prevention, autoimmune disorders",
+    "drugClass": "Immunosuppressive",
+    "warnings": [
+      "Can affect kidney function",
+      "Requires blood monitoring"
+    ],
+    "instructions": "Take at the same time daily."
+  },
+  {
+    "names": [
+      "tacrolimus",
+      "prograf",
+      "pangraf"
+    ],
+    "purpose": "Organ transplant rejection prevention",
+    "drugClass": "Immunosuppressive",
+    "warnings": [
+      "Can increase infection risk",
+      "Regular blood tests needed"
+    ],
+    "instructions": "Use exactly as prescribed."
+  },
+  {
+    "names": [
+      "azathioprine",
+      "imuran",
+      "azoran"
+    ],
+    "purpose": "Autoimmune disorders, transplant support",
+    "drugClass": "Immunosuppressive",
+    "warnings": [
+      "Can lower blood counts",
+      "Monitor liver function"
+    ],
+    "instructions": "Take after meals if advised."
+  },
+  {
+    "names": [
+      "lactulose",
+      "duphalac",
+      "laxopeg"
+    ],
+    "purpose": "Constipation, bowel regulation",
+    "drugClass": "Laxative – Osmotic",
+    "warnings": [
+      "May cause bloating or gas"
+    ],
+    "instructions": "Take with water as directed."
+  },
+  {
+    "names": [
+      "bisacodyl",
+      "dulcolax"
+    ],
+    "purpose": "Constipation relief",
+    "drugClass": "Laxative – Stimulant",
+    "warnings": [
+      "Not for prolonged daily use"
+    ],
+    "instructions": "Usually taken at bedtime."
+  },
+  {
+    "names": [
+      "senna",
+      "senokot",
+      "senna lax"
+    ],
+    "purpose": "Short-term constipation relief",
+    "drugClass": "Laxative – Stimulant",
+    "warnings": [
+      "Long-term use may cause dependence"
+    ],
+    "instructions": "Take as prescribed."
+  },
+  {
+    "names": [
+      "baclofen",
+      "lioresal"
+    ],
+    "purpose": "Muscle spasms, muscle stiffness",
+    "drugClass": "Muscle Relaxant",
+    "warnings": [
+      "May cause drowsiness",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take after meals if advised."
+  },
+  {
+    "names": [
+      "cyclobenzaprine",
+      "flexeril"
+    ],
+    "purpose": "Muscle spasm, pain relief",
+    "drugClass": "Muscle Relaxant",
+    "warnings": [
+      "May cause sleepiness",
+      "Avoid alcohol"
+    ],
+    "instructions": "Usually taken in evening or as prescribed."
+  },
+  {
+    "names": [
+      "tizanidine",
+      "zanaflex"
+    ],
+    "purpose": "Muscle tightness, spasticity",
+    "drugClass": "Muscle Relaxant",
+    "warnings": [
+      "May lower blood pressure",
+      "May cause dizziness"
+    ],
+    "instructions": "Take as directed."
+  },
+  {
+    "names": [
+      "diazepam",
+      "valium",
+      "calmpose"
+    ],
+    "purpose": "Anxiety, sedation, muscle relaxation",
+    "drugClass": "Sedative – Benzodiazepine",
+    "warnings": [
+      "Can be habit-forming",
+      "May impair alertness"
+    ],
+    "instructions": "Use only as prescribed."
+  },
+  {
+    "names": [
+      "lorazepam",
+      "ativan",
+      "larpose"
+    ],
+    "purpose": "Anxiety, sedation, agitation",
+    "drugClass": "Sedative – Benzodiazepine",
+    "warnings": [
+      "May cause drowsiness",
+      "Risk of dependence"
+    ],
+    "instructions": "Take only as directed."
+  },
+  {
+    "names": [
+      "estradiol",
+      "estrogel",
+      "progynova"
+    ],
+    "purpose": "Hormone replacement, menopausal symptoms",
+    "drugClass": "Sex Hormone (Female) – Estrogen",
+    "warnings": [
+      "May increase clotting risk",
+      "Requires medical follow-up"
+    ],
+    "instructions": "Use exactly as prescribed."
+  },
+  {
+    "names": [
+      "progesterone",
+      "susten",
+      "utrogestan"
+    ],
+    "purpose": "Hormonal support, menstrual disorders, fertility support",
+    "drugClass": "Sex Hormone (Female) – Progesterone",
+    "warnings": [
+      "May cause dizziness or breast tenderness"
+    ],
+    "instructions": "Take as prescribed by doctor."
+  },
+  {
+    "names": [
+      "testosterone",
+      "androgel",
+      "testoviron"
+    ],
+    "purpose": "Testosterone deficiency, hormone replacement",
+    "drugClass": "Sex Hormone (Male) – Androgen",
+    "warnings": [
+      "Requires hormone monitoring",
+      "May affect prostate health"
+    ],
+    "instructions": "Use exactly as prescribed."
+  },
+  {
+    "names": [
+      "methyltestosterone",
+      "android"
+    ],
+    "purpose": "Male hormone deficiency",
+    "drugClass": "Sex Hormone (Male) – Androgen",
+    "warnings": [
+      "Requires liver monitoring",
+      "Use under specialist supervision"
+    ],
+    "instructions": "Take exactly as prescribed."
+  },
+  {
+    "names": [
+      "zolpidem",
+      "ambien",
+      "zoltrate"
+    ],
+    "purpose": "Insomnia, sleep initiation difficulty",
+    "drugClass": "Sleeping Drug – Hypnotic",
+    "warnings": [
+      "May cause next-day drowsiness",
+      "Can be habit-forming"
+    ],
+    "instructions": "Take immediately before bedtime."
+  },
+  {
+    "names": [
+      "zopiclone",
+      "zopicon",
+      "imovane"
+    ],
+    "purpose": "Short-term insomnia treatment",
+    "drugClass": "Sleeping Drug – Hypnotic",
+    "warnings": [
+      "Avoid alcohol",
+      "May cause metallic taste"
+    ],
+    "instructions": "Take before bedtime only."
+  },
+  {
+    "names": [
+      "alprazolam",
+      "xanax",
+      "alprax"
+    ],
+    "purpose": "Anxiety, panic disorder, acute stress",
+    "drugClass": "Tranquilizer – Benzodiazepine",
+    "warnings": [
+      "May cause drowsiness",
+      "Can be habit-forming",
+      "Do not stop suddenly"
+    ],
+    "instructions": "Take exactly as prescribed by doctor."
+  },
+  {
+    "names": [
+      "clonazepam",
+      "klonopin",
+      "clonotril"
+    ],
+    "purpose": "Anxiety, panic attacks, seizure disorders",
+    "drugClass": "Tranquilizer – Benzodiazepine",
+    "warnings": [
+      "May affect alertness",
+      "Risk of dependence with long-term use"
+    ],
+    "instructions": "Take at the same time daily if prescribed regularly."
+  },
+  {
+    "names": [
+      "chlordiazepoxide",
+      "librium"
+    ],
+    "purpose": "Anxiety, alcohol withdrawal, agitation",
+    "drugClass": "Tranquilizer – Benzodiazepine",
+    "warnings": [
+      "May cause dizziness or drowsiness",
+      "Avoid alcohol"
+    ],
+    "instructions": "Use only under medical supervision."
+  },
+  {
+    "names": [
+      "buspirone",
+      "buspar",
+      "buspin"
+    ],
+    "purpose": "Generalized anxiety disorder, chronic anxiety",
+    "drugClass": "Tranquilizer – Anxiolytic",
+    "warnings": [
+      "May take time to show effect",
+      "May cause dizziness"
+    ],
+    "instructions": "Take regularly as prescribed."
+  },
+  {
+    "names": [
+      "vitamin b complex",
+      "becosules",
+      "neurobion"
+    ],
+    "purpose": "Vitamin B deficiency, nerve health, fatigue",
+    "drugClass": "Vitamin Supplement – B Complex",
+    "warnings": [
+      "Usually well tolerated",
+      "Use recommended dose only"
+    ],
+    "instructions": "Usually taken after meals."
+  },
+  {
+    "names": [
+      "ascorbic acid",
+      "vitamin c",
+      "limcee"
+    ],
+    "purpose": "Vitamin C deficiency, immunity support, antioxidant support",
+    "drugClass": "Vitamin Supplement – Vitamin C",
+    "warnings": [
+      "High doses may cause stomach upset"
+    ],
+    "instructions": "Take after food or as directed."
+  },
+  {
+    "names": [
+      "cholecalciferol",
+      "vitamin d3",
+      "uprise d3"
+    ],
+    "purpose": "Vitamin D deficiency, bone health, calcium absorption",
+    "drugClass": "Vitamin Supplement – Vitamin D",
+    "warnings": [
+      "Avoid overdose",
+      "Monitoring may be needed in long-term use"
+    ],
+    "instructions": "Take as prescribed, often after meals."
+  },
+  {
+    "names": [
+      "vitamin a",
+      "a to z",
+      "retinol capsules"
+    ],
+    "purpose": "Vision health, skin health, immune support",
+    "drugClass": "Vitamin Supplement – Vitamin A",
+    "warnings": [
+      "High doses may be harmful",
+      "Avoid excess use during pregnancy"
+    ],
+    "instructions": "Take exactly as recommended."
+  },
+  {
+    "names": [
+      "vitamin e",
+      "evion"
+    ],
+    "purpose": "Antioxidant support, skin health, vitamin E deficiency",
+    "drugClass": "Vitamin Supplement – Vitamin E",
+    "warnings": [
+      "High doses may increase bleeding risk in some patients"
+    ],
+    "instructions": "Usually taken after meals."
+  },
+  {
+    "names": [
+      "multivitamin",
+      "supradyn",
+      "centrum"
+    ],
+    "purpose": "General nutritional support, vitamin deficiency prevention",
+    "drugClass": "Vitamin Supplement – Multivitamin",
+    "warnings": [
+      "Do not combine with duplicate supplements without advice"
+    ],
+    "instructions": "Usually taken once daily after meals."
+  }
+]
