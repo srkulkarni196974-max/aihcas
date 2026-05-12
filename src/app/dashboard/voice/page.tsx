@@ -6,6 +6,7 @@ import { UserStorage, StorageKeys } from '@/lib/storage';
 type Transcript = { speaker: 'user' | 'ai'; text: string; time: string };
 
 export default function VoicePage() {
+  const { user } = useAuth();
   const [isActive, setIsActive] = useState(false);
   const [status, setStatus] = useState<'Standby' | 'Listening...' | 'Processing...' | 'Speaking...' | 'Call Ended' | 'Error'>('Standby');
   const [transcripts, setTranscripts] = useState<Transcript[]>([]);
