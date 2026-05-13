@@ -163,7 +163,7 @@ export default function ReportsPage() {
 
       {/* Upload Stage */}
       {stage === 'upload' && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 24 }}>
+        <div className="grid-2">
           <div
             className="upload-zone animate-fadeInUp"
             style={{ padding: '64px 32px', textAlign: 'center', cursor: 'pointer' }}
@@ -251,7 +251,8 @@ export default function ReportsPage() {
           )}
 
           {/* Stats row */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 16 }}>
+
             {[
               { icon: '🔴', label: 'High', val: analysisResult.results.filter(r => r.status === 'high').length },
               { icon: '🟡', label: 'Low', val: analysisResult.results.filter(r => r.status === 'low').length },
@@ -282,8 +283,8 @@ export default function ReportsPage() {
                   <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12, paddingBottom: 8, borderBottom: '1px solid var(--border)' }}>
                     {category}
                   </p>
-                  {/* Header row */}
-                  <div style={{ display: 'flex', padding: '0 20px', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 8 }}>
+                  {/* Header row - Hidden on mobile */}
+                  <div className="hide-mobile" style={{ display: 'flex', padding: '0 20px', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 8 }}>
                     <div style={{ flex: 2 }}>Parameter</div>
                     <div style={{ flex: 1, textAlign: 'center' }}>Result</div>
                     <div style={{ flex: 1, textAlign: 'center' }}>Reference</div>
@@ -295,7 +296,8 @@ export default function ReportsPage() {
                       const bgs = { high: 'rgba(229,62,62,0.04)', low: 'rgba(245,158,11,0.04)', normal: 'rgba(46,196,160,0.04)' };
                       const c = colors[test.status];
                       return (
-                        <div key={i} style={{ display: 'flex', alignItems: 'center', padding: '16px 20px', borderRadius: 14, background: bgs[test.status], border: `1.5px solid ${c}25`, position: 'relative', overflow: 'hidden' }}>
+                        <div key={i} className="stack-mobile" style={{ display: 'flex', alignItems: 'center', padding: '16px 20px', borderRadius: 14, background: bgs[test.status], border: `1.5px solid ${c}25`, position: 'relative', overflow: 'hidden' }}>
+
                           <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: c, borderRadius: '3px 0 0 3px' }} />
                           <div style={{ flex: 2, paddingLeft: 8 }}>
                             <div style={{ fontWeight: 700, fontSize: '1rem' }}>{test.name}</div>

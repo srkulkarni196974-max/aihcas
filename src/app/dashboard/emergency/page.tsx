@@ -45,12 +45,12 @@ export default function EmergencyPage() {
       </header>
 
       <div className="glass-card" style={{ padding: '24px', marginBottom: '40px', background: 'white' }}>
-         <div style={{ display: 'flex', gap: '16px' }}>
+         <div className="stack-mobile" style={{ display: 'flex', gap: '16px' }}>
             <div style={{ flex: 1, position: 'relative' }}>
                <input 
                   type="text" 
                   className="input-field" 
-                  placeholder="Search for service (e.g. Ambulance, Mental Health)..." 
+                  placeholder="Search for service..." 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   style={{ paddingLeft: '48px' }}
@@ -58,7 +58,7 @@ export default function EmergencyPage() {
                <span style={{ position: 'absolute', left: '16px', top: '16px', fontSize: '1.2rem' }}>🔍</span>
             </div>
             <select 
-               className="btn btn-secondary" 
+               className="btn btn-secondary full-width-mobile" 
                style={{ outline: 'none', cursor: 'pointer', appearance: 'none', paddingRight: '32px', backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%237C5CFC%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px top 50%', backgroundSize: '12px auto' }}
                value={selectedCity}
                onChange={(e) => setSelectedCity(e.target.value)}
@@ -70,7 +70,8 @@ export default function EmergencyPage() {
          </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(450px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '20px' }}>
+
          {filteredData.length > 0 ? (
            filteredData.map((contact, i) => (
              <div key={contact.id} className="emergency-card glass-card animate-fadeInUp" style={{ animationDelay: `${i * 0.05}s`, background: 'white' }}>

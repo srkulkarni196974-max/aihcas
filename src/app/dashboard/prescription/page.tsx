@@ -220,8 +220,9 @@ export default function PrescriptionPage() {
 
       {/* Upload Stage */}
       {stage === 'upload' && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 28 }}>
+        <div className="grid-2">
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
             {/* Drop Zone */}
             <div
               className={`upload-zone animate-fadeInUp ${dragOver ? 'drag-over' : ''}`}

@@ -200,7 +200,8 @@ export default function ProfilePage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: -8 }}>Personal Information</h3>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div className="grid-2">
+
               <div>
                 <label className="input-label">Age</label>
                 <input className="input-field" type="number" placeholder="e.g. 32" value={profile.age}
@@ -313,7 +314,8 @@ export default function ProfilePage() {
                 This person will be contacted in case of a medical emergency.
               </p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div className="grid-2">
+
               <div>
                 <label className="input-label">Contact Name</label>
                 <input className="input-field" type="text" placeholder="e.g. Rajesh Kulkarni" value={profile.emergencyContact}
