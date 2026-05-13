@@ -1,6 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+import { useEffect, useState } from 'react';
 
 const navItems = [
   { icon: '🏠', label: 'Dashboard', href: '/dashboard' },
@@ -12,19 +14,22 @@ const navItems = [
   { icon: '👤', label: 'Health Profile', href: '/dashboard/profile' },
 ];
 
-import { useAuth } from '@/context/AuthContext';
-import { useEffect } from 'react';
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/auth');
     }
   }, [user, loading, router]);
+
+  // Close sidebar when route changes on mobile
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
 
   if (loading || !user) {
     return (
@@ -39,8 +44,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="gradient-bg" style={{ minHeight: '100vh', display: 'flex' }}>
+      {/* Mobile Hamburger Button */}
+      <button 
+        className="hamburger-btn" 
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label="Toggle Menu"
+      >
+        <span style={{ fontSize: '1.5rem' }}>{sidebarOpen ? '✕' : '☰'}</span>
+      </button>
+
+      {/* Sidebar Overlay */}
+      <div 
+        className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} 
+        onClick={() => setSidebarOpen(false)}
+      />
+
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-logo">
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'var(--text-dark)' }}>
             <div className="logo-icon">🏥</div>
@@ -89,7 +109,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main */}
-      <main className="main-content page-fade" style={{ flex: 1, marginLeft: 260 }}>
+      <main className="main-content page-fade">
         {children}
       </main>
     </div>

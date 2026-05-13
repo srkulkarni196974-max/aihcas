@@ -481,7 +481,58 @@ section {
   flex: 1;
   padding: 32px;
   min-height: 100vh;
+  transition: margin-left 0.3s var(--transition);
 }
+
+/* === MOBILE RESPONSIVENESS === */
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1001;
+  background: white;
+  border: 1px solid var(--border);
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s var(--transition);
+    width: 280px;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar-overlay.open {
+    display: block;
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+    padding: 80px 20px 24px;
+  }
+  
+  .hamburger-btn {
+    display: flex;
+  }
+}
+
 
 /* === CHAT === */
 .chat-container {
