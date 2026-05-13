@@ -1,7 +1,8 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { authenticateUser, readUsers, writeUsers, hashPassword } from '@/lib/auth';
+import { authenticateUser, authenticateGoogle } from '@/lib/auth';
+
 import { supabase } from '@/lib/supabase';
 
 
