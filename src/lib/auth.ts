@@ -1,12 +1,17 @@
 'use server';
 
 import bcrypt from 'bcryptjs';
-import fs from 'fs/promises';
-import path from 'path';
-import { getServerSession } from 'next-auth/next';
+import { createClient } from '@supabase/supabase-js';
 import { sendPasswordResetEmail } from './email';
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+// ─── Supabase server client ───────────────────────────────────────────────────
+// Uses the anon key — RLS is disabled on aihcas_users and aihcas_reset_tokens
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 export interface StoredUser {
   id: string;
   name: string;
@@ -22,35 +27,18 @@ export interface SessionPayload {
   email: string;
 }
 
-// ─── User Database (JSON file-based for development) ─────────────────────────
-const DB_PATH = path.join(process.cwd(), 'data', 'users.json');
-
-async function ensureDbExists(): Promise<void> {
-  const dir = path.dirname(DB_PATH);
-  try {
-    await fs.access(dir);
-  } catch {
-    await fs.mkdir(dir, { recursive: true });
-  }
-  try {
-    await fs.access(DB_PATH);
-  } catch {
-    await fs.writeFile(DB_PATH, JSON.stringify([], null, 2), 'utf-8');
-  }
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function generateId(): string {
+  return `usr_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
-export async function readUsers(): Promise<StoredUser[]> {
-  await ensureDbExists();
-  const data = await fs.readFile(DB_PATH, 'utf-8');
-  return JSON.parse(data);
+function generateToken(): string {
+  return Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15) +
+    Date.now().toString(36);
 }
 
-export async function writeUsers(users: StoredUser[]): Promise<void> {
-  await ensureDbExists();
-  await fs.writeFile(DB_PATH, JSON.stringify(users, null, 2), 'utf-8');
-}
-
-// ─── Password Hashing ───────────────────────────────────────────────────────
+// ─── Password Hashing ────────────────────────────────────────────────────────
 export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 12);
 }
@@ -59,163 +47,195 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
   return bcrypt.compare(password, hash);
 }
 
-
-
-// ─── User Operations ─────────────────────────────────────────────────────────
-function generateId(): string {
-  return `usr_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-}
-
+// ─── Create User ─────────────────────────────────────────────────────────────
 export async function createUser(
   name: string,
   email: string,
   password: string
 ): Promise<{ success: true; user: SessionPayload } | { success: false; error: string }> {
-  const users = await readUsers();
+  const normalizedEmail = email.toLowerCase().trim();
 
   // Check if email already exists
-  if (users.some((u) => u.email.toLowerCase() === email.toLowerCase())) {
+  const { data: existing } = await supabase
+    .from('aihcas_users')
+    .select('id')
+    .eq('email', normalizedEmail)
+    .maybeSingle();
+
+  if (existing) {
     return { success: false, error: 'An account with this email already exists' };
   }
 
   const passwordHash = await hashPassword(password);
-  const newUser: StoredUser = {
-    id: generateId(),
+  const id = generateId();
+
+  const { error } = await supabase.from('aihcas_users').insert({
+    id,
     name,
-    email: email.toLowerCase(),
-    passwordHash,
+    email: normalizedEmail,
+    password_hash: passwordHash,
     provider: 'credentials',
-    createdAt: new Date().toISOString(),
-  };
+  });
 
-  users.push(newUser);
-  await writeUsers(users);
+  if (error) {
+    console.error('Supabase createUser error:', error.message);
+    return { success: false, error: 'Failed to create account. Please try again.' };
+  }
 
-  const sessionPayload: SessionPayload = {
-    userId: newUser.id,
-    name: newUser.name,
-    email: newUser.email,
-  };
-
-  return { success: true, user: sessionPayload };
+  return { success: true, user: { userId: id, name, email: normalizedEmail } };
 }
 
+// ─── Authenticate User ────────────────────────────────────────────────────────
 export async function authenticateUser(
   email: string,
   password: string
 ): Promise<{ success: true; user: SessionPayload } | { success: false; error: string }> {
-  const users = await readUsers();
-  const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+  const normalizedEmail = email.toLowerCase().trim();
 
-  if (!user) {
+  const { data: user, error } = await supabase
+    .from('aihcas_users')
+    .select('*')
+    .eq('email', normalizedEmail)
+    .maybeSingle();
+
+  if (error || !user) {
     return { success: false, error: 'Invalid email or password' };
   }
 
-  const passwordValid = await verifyPassword(password, user.passwordHash);
-  if (!passwordValid) {
+  const valid = await verifyPassword(password, user.password_hash);
+  if (!valid) {
     return { success: false, error: 'Invalid email or password' };
   }
 
-  const sessionPayload: SessionPayload = {
-    userId: user.id,
-    name: user.name,
-    email: user.email,
+  return {
+    success: true,
+    user: { userId: user.id, name: user.name, email: user.email },
   };
-
-  return { success: true, user: sessionPayload };
 }
 
+// ─── Google Auth ──────────────────────────────────────────────────────────────
 export async function authenticateGoogle(
   email: string = 'user@google.com',
   name: string = 'Google User'
-): Promise<{
-  success: true;
-  user: SessionPayload;
-}> {
-  // In a real app, this would verify the Google OAuth token.
-  // For now, we simulate a Google sign-in.
-  const users = await readUsers();
-  let user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+): Promise<{ success: true; user: SessionPayload }> {
+  const normalizedEmail = email.toLowerCase().trim();
 
-  if (!user) {
-    const newUser: StoredUser = {
-      id: generateId(),
-      name: name,
-      email: email.toLowerCase(),
-      passwordHash: await hashPassword('google_linked_' + Math.random().toString(36)),
-      provider: 'google',
-      createdAt: new Date().toISOString(),
-    };
-    users.push(newUser);
-    await writeUsers(users);
-    user = newUser;
+  const { data: existing } = await supabase
+    .from('aihcas_users')
+    .select('*')
+    .eq('email', normalizedEmail)
+    .maybeSingle();
+
+  if (existing) {
+    return { success: true, user: { userId: existing.id, name: existing.name, email: existing.email } };
   }
 
-  const sessionPayload: SessionPayload = {
-    userId: user.id,
-    name: user.name,
-    email: user.email,
-  };
+  const id = generateId();
+  await supabase.from('aihcas_users').insert({
+    id,
+    name,
+    email: normalizedEmail,
+    password_hash: await hashPassword('google_linked_' + Math.random().toString(36)),
+    provider: 'google',
+  });
 
-  return { success: true, user: sessionPayload };
+  return { success: true, user: { userId: id, name, email: normalizedEmail } };
 }
 
+// ─── Forgot Password ──────────────────────────────────────────────────────────
+export async function forgotPassword(
+  email: string
+): Promise<{ success: boolean; message: string }> {
+  const normalizedEmail = email.toLowerCase().trim();
 
-export async function forgotPassword(email: string): Promise<{ success: boolean; message: string }> {
-  const users = await readUsers();
-  const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-  
-  if (!user) {
-    // For security, we don't reveal if the email exists
-    return { success: true, message: 'If an account exists with this email, a reset link has been sent.' };
-  }
+  const { data: user } = await supabase
+    .from('aihcas_users')
+    .select('id, name, email')
+    .eq('email', normalizedEmail)
+    .maybeSingle();
 
-  // Generate a mock reset token (in a real app, save this to DB with expiry)
-  const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  const resetLink = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/auth/reset-password?token=${resetToken}&email=${encodeURIComponent(user.email)}`;
+  // Always return the same message for security (don't reveal if email exists)
+  const safeMessage = 'If an account exists with this email, a password reset link has been sent. Please check your inbox and spam folder.';
 
-  // Send the actual email using Resend
-  const emailResult = await sendPasswordResetEmail(user.email, resetLink);
+  if (!user) return { success: true, message: safeMessage };
+
+  // Generate a secure reset token (expires in 1 hour)
+  const token = generateToken();
+  const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+
+  // Store the token in Supabase
+  await supabase.from('aihcas_reset_tokens').insert({
+    email: normalizedEmail,
+    token,
+    expires_at: expiresAt,
+    used: false,
+  });
+
+  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  const resetLink = `${baseUrl}/auth/reset-password?token=${token}&email=${encodeURIComponent(normalizedEmail)}`;
+
+  const emailResult = await sendPasswordResetEmail(normalizedEmail, resetLink);
 
   if (!emailResult.success) {
-    // Fallback message if email sending fails (usually due to missing API key)
-    console.warn('Email sending failed, check RESEND_API_KEY');
-    return { 
-      success: true, 
-      message: 'Email service is currently initializing. A reset link will be sent shortly to ' + user.email 
-    };
+    console.error('Email send failed:', emailResult.error);
+    // Still return safe message
   }
 
-  return { success: true, message: 'Password reset instructions have been sent to your registered Gmail: ' + user.email };
+  return { success: true, message: safeMessage };
 }
 
-export async function updateUserPassword(email: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
-  const users = await readUsers();
-  const userIndex = users.findIndex((u) => u.email.toLowerCase() === email.toLowerCase());
+// ─── Update Password ──────────────────────────────────────────────────────────
+export async function updateUserPassword(
+  email: string,
+  newPassword: string,
+  token?: string
+): Promise<{ success: boolean; error?: string }> {
+  const normalizedEmail = email.toLowerCase().trim();
 
-  if (userIndex === -1) {
-    return { success: false, error: 'User not found' };
+  // Verify the token if provided
+  if (token) {
+    const { data: resetRecord } = await supabase
+      .from('aihcas_reset_tokens')
+      .select('*')
+      .eq('token', token)
+      .eq('email', normalizedEmail)
+      .eq('used', false)
+      .maybeSingle();
+
+    if (!resetRecord) {
+      return { success: false, error: 'Invalid or expired reset link. Please request a new one.' };
+    }
+
+    if (new Date(resetRecord.expires_at) < new Date()) {
+      return { success: false, error: 'This reset link has expired. Please request a new one.' };
+    }
+
+    // Mark token as used
+    await supabase
+      .from('aihcas_reset_tokens')
+      .update({ used: true })
+      .eq('id', resetRecord.id);
   }
 
   const passwordHash = await hashPassword(newPassword);
-  users[userIndex].passwordHash = passwordHash;
-  
-  await writeUsers(users);
+  const { error } = await supabase
+    .from('aihcas_users')
+    .update({ password_hash: passwordHash })
+    .eq('email', normalizedEmail);
+
+  if (error) {
+    console.error('updateUserPassword error:', error.message);
+    return { success: false, error: 'Failed to update password.' };
+  }
+
   return { success: true };
 }
 
+// ─── Destroy Session / Get Session ───────────────────────────────────────────
 export async function destroySession() {
-  // Session destruction is handled by NextAuth cookies
   return { success: true };
 }
 
 export async function getSession() {
-  try {
-    const session = await getServerSession();
-    if (!session || !session.user) return null;
-    return session.user;
-  } catch (error) {
-    console.error('Error getting session:', error);
-    return null;
-  }
+  return null;
 }

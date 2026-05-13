@@ -12,9 +12,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // In a production app, we would verify the 'token' here
-    // For this demo, we assume the link was valid if they reached this point
-    const result = await updateUserPassword(email, password);
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: 'Password must be at least 6 characters' },
+        { status: 400 }
+      );
+    }
+
+    // Token is now validated against Supabase aihcas_reset_tokens table
+    const result = await updateUserPassword(email, password, token);
 
     if (!result.success) {
       return NextResponse.json(
