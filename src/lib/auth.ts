@@ -3,6 +3,7 @@
 import bcrypt from 'bcryptjs';
 import { createClient } from '@supabase/supabase-js';
 import { sendPasswordResetEmail } from './email';
+import { getServerSession } from 'next-auth/next';
 
 // ─── Supabase server client ───────────────────────────────────────────────────
 // Uses the anon key — RLS is disabled on aihcas_users and aihcas_reset_tokens
@@ -237,5 +238,12 @@ export async function destroySession() {
 }
 
 export async function getSession() {
-  return null;
+  try {
+    const session = await getServerSession();
+    if (!session || !session.user) return null;
+    return session.user;
+  } catch (error) {
+    console.error('Error getting session:', error);
+    return null;
+  }
 }
