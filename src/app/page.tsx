@@ -86,7 +86,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="gradient-bg" style={{ minHeight: '100vh' }}>
+    <div className="gradient-bg w-full max-w-full overflow-x-hidden" style={{ minHeight: '100vh', width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
       {/* floating orbs */}
       <FloatingOrb style={{ top: '10%', right: '5%', width: 500, height: 500, background: 'radial-gradient(circle, rgba(77,166,232,0.18) 0%, transparent 70%)' }} />
       <FloatingOrb style={{ top: '50%', left: '-5%', width: 400, height: 400, background: 'radial-gradient(circle, rgba(124,92,252,0.15) 0%, transparent 70%)' }} />
