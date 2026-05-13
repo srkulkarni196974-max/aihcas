@@ -100,11 +100,16 @@ export async function POST(req: NextRequest) {
 
   } catch (err: any) {
     console.error('[analyze-local] Final error:', err);
+    let msg = err?.message || 'Internal server error';
+    if (msg.includes('python') || msg.includes('Tesseract')) {
+      msg = "Server Configuration Error: Tesseract OCR or Python is not installed on the production server. Please use manual entry for now.";
+    }
     return NextResponse.json(
-      { error: err?.message || 'Internal server error' },
+      { error: msg },
       { status: 500 }
     );
   }
+
 }
 
 export const config = { api: { bodyParser: false } };
