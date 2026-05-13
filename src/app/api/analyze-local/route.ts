@@ -27,42 +27,54 @@ export async function POST(req: NextRequest) {
     
     await fs.writeFile(tempFilePath, buffer);
 
-    // Call Python script
+    // Call Python script - Try python3 first (common on Render/Linux), then python
     const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'analyzer.py');
     
-    const result = await new Promise((resolve, reject) => {
-      const pythonProcess = spawn('python', [scriptPath, tempFilePath, type]);
+    const runPython = (cmd: string) => new Promise((resolve, reject) => {
+      const pythonProcess = spawn(cmd, [scriptPath, tempFilePath, type]);
       
       let dataString = '';
       let errorString = '';
 
-      pythonProcess.stdout.on('data', (data) => {
-        dataString += data.toString();
-      });
+      pythonProcess.stdout.on('data', (data) => { dataString += data.toString(); });
+      pythonProcess.stderr.on('data', (data) => { errorString += data.toString(); });
 
-      pythonProcess.stderr.on('data', (data) => {
-        errorString += data.toString();
+      pythonProcess.on('error', (err) => {
+        reject(err);
       });
 
       pythonProcess.on('close', (code) => {
-        // Clean up temp file
-        fs.unlink(tempFilePath).catch(console.error);
-        
         if (code !== 0) {
-          console.error('[analyze-local] Python Error:', errorString);
-          reject(new Error(`Python processing failed: ${errorString}`));
+          reject(new Error(errorString || `Process exited with code ${code}`));
           return;
         }
-        
         try {
-          const parsed = JSON.parse(dataString);
-          resolve(parsed);
+          resolve(JSON.parse(dataString));
         } catch (e) {
-          console.error('[analyze-local] JSON Parse Error. Raw Output:', dataString);
-          reject(new Error('Failed to parse Python output'));
+          reject(new Error('Failed to parse Python output. Is Tesseract installed?'));
         }
       });
     });
+
+    let result;
+    try {
+      // Try python3 first
+      result = await runPython('python3');
+    } catch (err3: any) {
+      console.log('python3 failed, trying python...', err3.message);
+      try {
+        // Fallback to python
+        result = await runPython('python');
+      } catch (err: any) {
+        // Clean up temp file
+        await fs.unlink(tempFilePath).catch(console.error);
+        throw new Error(`AI Engine Error: Could not find python3 or python on server. Error: ${err.message}`);
+      }
+    }
+
+    // Clean up temp file
+    await fs.unlink(tempFilePath).catch(console.error);
+
 
     const typedResult = result as any;
     

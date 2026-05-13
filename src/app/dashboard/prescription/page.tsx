@@ -230,8 +230,6 @@ export default function PrescriptionPage() {
               onDragOver={e => { e.preventDefault(); setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
-              style={{ cursor: 'pointer' }}
             >
               <input ref={fileInputRef} type="file" accept="image/*,.pdf" style={{ display: 'none' }} onChange={handleFileInput} />
               <div style={{ fontSize: '3.5rem', marginBottom: 12 }}>📋</div>
@@ -239,13 +237,18 @@ export default function PrescriptionPage() {
               <p style={{ color: 'var(--text-muted)', marginBottom: 20, fontSize: '0.9rem' }}>
                 Drag &amp; drop or click — supports JPG, PNG, PDF and even handwritten prescriptions
               </p>
-              <button id="btn-upload-prescription" className="btn btn-primary" style={{ pointerEvents: 'none' }}>
+              <button 
+                id="btn-upload-prescription" 
+                className="btn btn-primary" 
+                onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+              >
                 📁 Select File
               </button>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-light)', marginTop: 12 }}>
                 Processed offline on your device via Python
               </p>
             </div>
+
 
             {/* Manual Input */}
             <div style={{ padding: 24, borderRadius: 20, border: '1px solid var(--border)', background: 'rgba(255,255,255,0.7)' }}>

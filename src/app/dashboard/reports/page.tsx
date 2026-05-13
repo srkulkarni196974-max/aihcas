@@ -166,8 +166,7 @@ export default function ReportsPage() {
         <div className="grid-2">
           <div
             className="upload-zone animate-fadeInUp"
-            style={{ padding: '64px 32px', textAlign: 'center', cursor: 'pointer' }}
-            onClick={() => fileInputRef.current?.click()}
+            style={{ padding: '64px 32px', textAlign: 'center' }}
             onDragOver={e => e.preventDefault()}
             onDrop={handleDrop}
           >
@@ -183,13 +182,18 @@ export default function ReportsPage() {
             <p style={{ color: 'var(--text-muted)', marginBottom: 32, fontSize: '1.05rem' }}>
               Blood test, CBC, Glucose, Thyroid, LFT, KFT, Lipid profile and more
             </p>
-            <button className="btn btn-primary btn-lg" style={{ width: '100%', maxWidth: 280, pointerEvents: 'none' }}>
+            <button 
+              className="btn btn-primary btn-lg" 
+              style={{ width: '100%', maxWidth: 280 }}
+              onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+            >
               Select File
             </button>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: 16 }}>
               Processed entirely offline on your device via Python
             </p>
           </div>
+
 
           {/* Sidebar */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
