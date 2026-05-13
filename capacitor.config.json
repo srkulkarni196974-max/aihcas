@@ -1,0 +1,9 @@
+{
+  "appId": "com.aihcas.app",
+  "appName": "AIHCAS",
+  "webDir": "out",
+  "server": {
+    "url": "https://aihcas-ai-healthcare-assistant.onrender.com",
+    "cleartext": true
+  }
+}

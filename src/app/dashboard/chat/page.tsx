@@ -250,9 +250,10 @@ Please tell me — what's been bothering you today? Feel free to describe your s
 
 
   return (
-    <div className="page-fade stack-mobile" style={{ display: 'flex', flexDirection: 'row', height: 'calc(100vh - 64px)', margin: '-32px', overflow: 'hidden' }}>
-      {/* Sidebar */}
+    <div className="page-fade chat-container stack-mobile">
+      {/* Sidebar - Hidden on mobile by default */}
       <aside className="hide-mobile" style={{ width: 260, background: 'rgba(255,255,255,0.85)', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+
 
         <div style={{ padding: '20px 16px' }}>
           <button className="btn btn-primary btn-sm" style={{ width: '100%', justifyContent: 'center' }} onClick={clearChat}>

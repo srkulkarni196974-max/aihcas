@@ -510,29 +510,76 @@ section {
 
 @media (max-width: 1024px) {
   .sidebar {
-    transform: translateX(-100%);
+    transform: translateX(-100%) !important;
     transition: transform 0.3s var(--transition);
-    width: 280px;
+    width: 280px !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
   }
   
   .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
   }
   
   .sidebar-overlay.open {
-    display: block;
+    display: block !important;
   }
   
   .main-content {
     margin-left: 0 !important;
-    padding: 80px 20px 24px;
+    padding: 70px 12px 20px !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    position: relative !important;
   }
   
   .hamburger-btn {
-    display: flex;
+    display: flex !important;
+  }
+
+  /* Kill negative margins on mobile */
+  .page-fade {
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: calc(100vh - 80px) !important;
+  }
+
+  /* Stacking utility for mobile */
+  .stack-mobile {
+    flex-direction: column !important;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .full-width-mobile {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+  }
+
+  /* Chat specific */
+  .chat-container, .voice-container {
+    height: auto !important;
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  /* Grid fixes */
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Box sizing force */
+  *, *::before, *::after {
+    max-width: 100vw !important;
   }
 }
-
 
 /* === CHAT === */
 .chat-container {

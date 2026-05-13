@@ -248,8 +248,9 @@ export default function VoicePage() {
     : '#E53E3E';
 
   return (
-    <div className="page-fade stack-mobile" style={{ display: 'flex', gap: '32px', height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
+    <div className="page-fade voice-container stack-mobile">
       {/* Left – Controls */}
+
       <div className="full-width-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: '0 0 360px', gap: '28px' }}>
 
         <div style={{ textAlign: 'center' }}>

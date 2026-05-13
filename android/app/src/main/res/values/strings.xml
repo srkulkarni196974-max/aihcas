@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AIHCAS</string>
+    <string name="title_activity_main">AIHCAS</string>
+    <string name="package_name">com.aihcas.app</string>
+    <string name="custom_url_scheme">com.aihcas.app</string>
+</resources>

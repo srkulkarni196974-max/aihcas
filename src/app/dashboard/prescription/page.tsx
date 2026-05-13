@@ -188,7 +188,8 @@ export default function PrescriptionPage() {
   };
 
   return (
-    <div className="page-fade" style={{ maxWidth: 1000, margin: '0 auto' }}>
+    <div className="page-fade full-width-mobile" style={{ maxWidth: 1000, margin: '0 auto' }}>
+
       <header style={{ marginBottom: 28 }}>
         <h1 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: 8 }}>
           <span className="text-gradient">Prescription</span> Analysis
