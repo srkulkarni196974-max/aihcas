@@ -110,13 +110,26 @@ async function classify(text: string): Promise<{ condition: Condition; score: nu
     const path = await import('path');
     const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'medical_ai.py');
     const pythonResult = await new Promise<any>((resolve) => {
-      const py = spawn('python', [scriptPath, text]);
-      let output = '';
-      py.stdout.on('data', (d) => output += d.toString());
-      py.on('close', () => {
-        try { resolve(JSON.parse(output)); } catch (e) { resolve(null); }
+      const runPy = (cmd: string) => new Promise((res, rej) => {
+        const py = spawn(cmd, [scriptPath, text]);
+        let output = '';
+        let err = '';
+        py.stdout.on('data', (d) => output += d.toString());
+        py.stderr.on('data', (d) => err += d.toString());
+        py.on('error', (e) => rej(e));
+        py.on('close', (code) => {
+          if (code !== 0) rej(new Error(err));
+          try { res(JSON.parse(output)); } catch (e) { res(null); }
+        });
       });
+
+      runPy('python3')
+        .then(resolve)
+        .catch(() => {
+          runPy('python').then(resolve).catch(() => resolve(null));
+        });
     });
+
     if (pythonResult && pythonResult.id) {
       const condition = CONDITIONS.find(c => c.id === pythonResult.id);
       if (condition) return { condition, score: pythonResult.score };

@@ -3,10 +3,12 @@ import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs/promises';
 import os from 'os';
+import Tesseract from 'tesseract.js';
 import { parsePrescriptionText } from '@/lib/prescription-parser';
 import { parseReportText } from '@/lib/report-parser';
 
 export async function POST(req: NextRequest) {
+  let tempFilePath = '';
   try {
     const formData = await req.formData();
     const file = formData.get('file') as File | null;
@@ -16,80 +18,77 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing type or file' }, { status: 400 });
     }
 
-    // Save file to a temporary location
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     
-    // Create a temporary file with the correct extension
-    const ext = file.name.split('.').pop() || 'jpg';
-    const tempDir = os.tmpdir();
-    const tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
+    // 1. Try Tesseract.js (Node-native, works on Render/Mobile)
+    console.log('[analyze-local] Starting Tesseract.js OCR...');
+    let extractedText = '';
     
-    await fs.writeFile(tempFilePath, buffer);
-
-    // Call Python script - Try python3 first (common on Render/Linux), then python
-    const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'analyzer.py');
-    
-    const runPython = (cmd: string) => new Promise((resolve, reject) => {
-      const pythonProcess = spawn(cmd, [scriptPath, tempFilePath, type]);
-      
-      let dataString = '';
-      let errorString = '';
-
-      pythonProcess.stdout.on('data', (data) => { dataString += data.toString(); });
-      pythonProcess.stderr.on('data', (data) => { errorString += data.toString(); });
-
-      pythonProcess.on('error', (err) => {
-        reject(err);
-      });
-
-      pythonProcess.on('close', (code) => {
-        if (code !== 0) {
-          reject(new Error(errorString || `Process exited with code ${code}`));
-          return;
-        }
-        try {
-          resolve(JSON.parse(dataString));
-        } catch (e) {
-          reject(new Error('Failed to parse Python output. Is Tesseract installed?'));
-        }
-      });
-    });
-
-    let result;
     try {
-      // Try python3 first
-      result = await runPython('python3');
-    } catch (err3: any) {
-      console.log('python3 failed, trying python...', err3.message);
+      const { data: { text } } = await Tesseract.recognize(buffer, 'eng', {
+        logger: m => console.log(m.status, (m.progress * 100).toFixed(2) + '%')
+      });
+      extractedText = text;
+      console.log('[analyze-local] Tesseract.js OCR complete.');
+    } catch (nodeOcrErr: any) {
+      console.error('[analyze-local] Tesseract.js failed, falling back to Python...', nodeOcrErr.message);
+      
+      // 2. Fallback to Python (if Tesseract.js fails or if special processing is needed)
+      const ext = file.name.split('.').pop() || 'jpg';
+      const tempDir = os.tmpdir();
+      tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
+      await fs.writeFile(tempFilePath, buffer);
+
+      const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'analyzer.py');
+      
+      const runPython = (cmd: string) => new Promise((resolve, reject) => {
+        const pythonProcess = spawn(cmd, [scriptPath, tempFilePath, type]);
+        let dataString = '';
+        let errorString = '';
+
+        pythonProcess.stdout.on('data', (data) => { dataString += data.toString(); });
+        pythonProcess.stderr.on('data', (data) => { errorString += data.toString(); });
+
+        pythonProcess.on('error', (err) => { reject(err); });
+
+        pythonProcess.on('close', (code) => {
+          if (code !== 0) {
+            reject(new Error(errorString || `Process exited with code ${code}`));
+            return;
+          }
+          try {
+            resolve(JSON.parse(dataString));
+          } catch (e) {
+            reject(new Error('Failed to parse Python output.'));
+          }
+        });
+      });
+
+      let pyResult: any;
       try {
-        // Fallback to python
-        result = await runPython('python');
-      } catch (err: any) {
-        // Clean up temp file
-        await fs.unlink(tempFilePath).catch(console.error);
-        throw new Error(`AI Engine Error: Could not find python3 or python on server. Error: ${err.message}`);
+        pyResult = await runPython('python3');
+      } catch (err3: any) {
+        try {
+          pyResult = await runPython('python');
+        } catch (err: any) {
+          throw new Error(`AI Engine Error: Both Tesseract.js and Python OCR failed. ${err.message}`);
+        }
       }
+      
+      if (pyResult.error) throw new Error(pyResult.error);
+      extractedText = pyResult.extracted_text || '';
     }
 
-    // Clean up temp file
-    await fs.unlink(tempFilePath).catch(console.error);
-
-
-    const typedResult = result as any;
-    
-    if (typedResult.error) {
-      throw new Error(typedResult.error);
+    if (tempFilePath) {
+      await fs.unlink(tempFilePath).catch(console.error);
     }
-    
-    const extractedText = typedResult.extracted_text || '';
-    
-    if (extractedText.startsWith('[Image OCR Error:') || extractedText.startsWith('[PDF Extraction Error:')) {
-       throw new Error(extractedText);
+
+    if (!extractedText || extractedText.trim().length < 5) {
+      throw new Error("Could not extract enough text from the document. Please ensure the image is clear.");
     }
-    
+
     let analysisData;
-    
     if (type === 'prescription') {
       analysisData = parsePrescriptionText(extractedText);
     } else {
@@ -99,17 +98,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, data: analysisData });
 
   } catch (err: any) {
-    console.error('[analyze-local] Final error:', err);
-    let msg = err?.message || 'Internal server error';
-    if (msg.includes('python') || msg.includes('Tesseract')) {
-      msg = "Server Configuration Error: Tesseract OCR or Python is not installed on the production server. Please use manual entry for now.";
+    if (tempFilePath) {
+      await fs.unlink(tempFilePath).catch(console.error);
     }
+    console.error('[analyze-local] Final error:', err);
     return NextResponse.json(
-      { error: msg },
+      { error: err?.message || 'Internal server error' },
       { status: 500 }
     );
   }
-
 }
 
 export const config = { api: { bodyParser: false } };
+
