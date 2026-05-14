@@ -6,98 +6,6 @@ import os from 'os';
 import { parsePrescriptionText } from '@/lib/prescription-parser';
 import { parseReportText } from '@/lib/report-parser';
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-// ─── Detect Mobile / Capacitor WebView ───────────────────────────────────────
-function isMobileRequest(req: NextRequest): boolean {
-  const ua = req.headers.get('user-agent') || '';
-  // Android WebView always contains "wv" and "Android"
-  // Capacitor adds "CapacitorApp" or just runs in Android WebView
-  return /Android.*wv\b|CapacitorApp/i.test(ua) || /android/i.test(ua);
-}
-
-// ─── 1. Gemini Vision (for mobile — fast, cloud-based) ───────────────────────
-async function extractTextWithGemini(buffer: Buffer, mimeType: string, docType: string): Promise<string> {
-  if (!GEMINI_API_KEY) throw new Error('No Gemini API key configured on server.');
-
-  const base64 = buffer.toString('base64');
-
-  const prompt = docType === 'prescription'
-    ? `You are a medical OCR assistant. Extract ALL text from this prescription image exactly as written. Include: patient name, date, all medications with their dosages (e.g. 625mg), frequencies (e.g. 1-0-1), durations (e.g. 5 days), and any other instructions. Output only the raw extracted text, no explanation.`
-    : `You are a medical OCR assistant. Extract ALL text from this lab report image exactly as written. Include all test names, numerical values, units, and reference ranges. Output only the raw extracted text, no explanation.`;
-
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{
-          parts: [
-            { text: prompt },
-            { inline_data: { mime_type: mimeType, data: base64 } }
-          ]
-        }],
-        generationConfig: { temperature: 0.1, maxOutputTokens: 2048 }
-      }),
-    }
-  );
-
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Gemini API error: ${response.status} - ${err}`);
-  }
-
-  const json = await response.json();
-  const text = json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-  if (!text) throw new Error('Gemini returned empty text.');
-  return text;
-}
-
-// ─── 2. Python/Tesseract (for desktop — local, private) ──────────────────────
-async function extractTextWithPython(buffer: Buffer, ext: string, type: string): Promise<string> {
-  const tempDir = os.tmpdir();
-  const tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
-  await fs.writeFile(tempFilePath, buffer);
-
-  const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'analyzer.py');
-
-  const runPython = (cmd: string) => new Promise<string>((resolve, reject) => {
-    const proc = spawn(cmd, [scriptPath, tempFilePath, type]);
-    let out = '';
-    let err = '';
-    proc.stdout.on('data', (d) => { out += d.toString(); });
-    proc.stderr.on('data', (d) => { err += d.toString(); });
-    proc.on('error', reject);
-    proc.on('close', (code) => {
-      if (code !== 0) { reject(new Error(err || `Python exited with code ${code}`)); return; }
-      try {
-        const parsed = JSON.parse(out);
-        if (parsed.error) reject(new Error(parsed.error));
-        else resolve(parsed.extracted_text || '');
-      } catch {
-        reject(new Error('Failed to parse Python output.'));
-      }
-    });
-  });
-
-  try {
-    const text = await runPython('python3');
-    await fs.unlink(tempFilePath).catch(() => {});
-    return text;
-  } catch {
-    try {
-      const text = await runPython('python');
-      await fs.unlink(tempFilePath).catch(() => {});
-      return text;
-    } catch (err: any) {
-      await fs.unlink(tempFilePath).catch(() => {});
-      throw new Error(`Python OCR failed: ${err.message}`);
-    }
-  }
-}
-
-// ─── Main Route ───────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -108,43 +16,80 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing type or file' }, { status: 400 });
     }
 
+    // Save file to a temporary location
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    
+    // Create a temporary file with the correct extension
+    const ext = file.name.split('.').pop() || 'jpg';
+    const tempDir = os.tmpdir();
+    const tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
+    
+    await fs.writeFile(tempFilePath, buffer);
 
-    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-    const mimeMap: Record<string, string> = {
-      jpg: 'image/jpeg', jpeg: 'image/jpeg',
-      png: 'image/png', webp: 'image/webp',
-      pdf: 'application/pdf',
-    };
-    const mimeType = mimeMap[ext] || 'image/jpeg';
+    // Call Python script - Try python3 first (common on Render/Linux), then python
+    const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'analyzer.py');
+    
+    const runPython = (cmd: string) => new Promise((resolve, reject) => {
+      const pythonProcess = spawn(cmd, [scriptPath, tempFilePath, type]);
+      
+      let dataString = '';
+      let errorString = '';
 
-    const mobile = isMobileRequest(req);
-    let extractedText = '';
+      pythonProcess.stdout.on('data', (data) => { dataString += data.toString(); });
+      pythonProcess.stderr.on('data', (data) => { errorString += data.toString(); });
 
-    if (mobile) {
-      // ── Mobile: Use Gemini Vision (cloud, fast, handles handwriting) ──
-      console.log('[analyze-local] Mobile request → Using Gemini Vision API');
-      extractedText = await extractTextWithGemini(buffer, mimeType, type);
-    } else {
-      // ── Desktop: Use Python + Tesseract (local, private, offline) ──
-      console.log('[analyze-local] Desktop request → Using Python/Tesseract OCR');
+      pythonProcess.on('error', (err) => {
+        reject(err);
+      });
+
+      pythonProcess.on('close', (code) => {
+        if (code !== 0) {
+          reject(new Error(errorString || `Process exited with code ${code}`));
+          return;
+        }
+        try {
+          resolve(JSON.parse(dataString));
+        } catch (e) {
+          reject(new Error('Failed to parse Python output. Is Tesseract installed?'));
+        }
+      });
+    });
+
+    let result;
+    try {
+      // Try python3 first
+      result = await runPython('python3');
+    } catch (err3: any) {
+      console.log('python3 failed, trying python...', err3.message);
       try {
-        extractedText = await extractTextWithPython(buffer, ext, type);
-      } catch (pyErr: any) {
-        // Desktop fallback: try Gemini if Python fails
-        console.warn('[analyze-local] Python failed, falling back to Gemini:', pyErr.message);
-        extractedText = await extractTextWithGemini(buffer, mimeType, type);
+        // Fallback to python
+        result = await runPython('python');
+      } catch (err: any) {
+        // Clean up temp file
+        await fs.unlink(tempFilePath).catch(console.error);
+        throw new Error(`AI Engine Error: Could not find python3 or python on server. Error: ${err.message}`);
       }
     }
 
-    if (!extractedText || extractedText.trim().length < 5) {
-      throw new Error('Could not extract enough text from the document. Please ensure the image is clear and try again.');
+    // Clean up temp file
+    await fs.unlink(tempFilePath).catch(console.error);
+
+
+    const typedResult = result as any;
+    
+    if (typedResult.error) {
+      throw new Error(typedResult.error);
     }
-
-    console.log('[analyze-local] Extracted text preview:', extractedText.substring(0, 200));
-
+    
+    const extractedText = typedResult.extracted_text || '';
+    
+    if (extractedText.startsWith('[Image OCR Error:') || extractedText.startsWith('[PDF Extraction Error:')) {
+       throw new Error(extractedText);
+    }
+    
     let analysisData;
+    
     if (type === 'prescription') {
       analysisData = parsePrescriptionText(extractedText);
     } else {
@@ -155,11 +100,16 @@ export async function POST(req: NextRequest) {
 
   } catch (err: any) {
     console.error('[analyze-local] Final error:', err);
+    let msg = err?.message || 'Internal server error';
+    if (msg.includes('python') || msg.includes('Tesseract')) {
+      msg = "Server Configuration Error: Tesseract OCR or Python is not installed on the production server. Please use manual entry for now.";
+    }
     return NextResponse.json(
-      { error: err?.message || 'Internal server error' },
+      { error: msg },
       { status: 500 }
     );
   }
+
 }
 
 export const config = { api: { bodyParser: false } };

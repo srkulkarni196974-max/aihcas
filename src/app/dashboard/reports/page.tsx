@@ -52,25 +52,20 @@ export default function ReportsPage() {
       formData.append('type', 'report');
 
       setProgress(40);
-      setProgressLabel('AI Vision extracting lab values...');
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 60000);
+      setProgressLabel('Python & Tesseract extracting lab values (this may take a moment)...');
 
       const res = await fetch('/api/analyze-local', {
         method: 'POST',
         body: formData,
-        signal: controller.signal
       });
 
-      clearTimeout(timeoutId);
       setProgress(85);
       setProgressLabel('Parsing local results...');
 
       const json = await res.json();
 
       if (!res.ok || !json.success) {
-        throw new Error(json.error || 'Analysis failed. Please try again.');
+        throw new Error(json.error || 'Analysis failed. Make sure Python and Tesseract are installed.');
       }
 
       setProgress(100);
@@ -92,11 +87,7 @@ export default function ReportsPage() {
       setStage('results');
     } catch (err: any) {
       console.error('OCR error:', err);
-      let msg = err?.message || 'Could not analyze. Check your connection.';
-      if (err.name === 'AbortError') {
-        msg = "Analysis timed out (60s). Please try again in a moment.";
-      }
-      setErrorMsg(msg);
+      setErrorMsg(err?.message || 'Could not analyze. Check if Python and Tesseract are working.');
       setStage('upload');
     }
   }, [user?.userId]);
