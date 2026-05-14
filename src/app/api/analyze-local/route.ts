@@ -82,7 +82,7 @@ async function analyzeWithGemini(file: File, type: 'prescription' | 'report') {
   if (!GEMINI_API_KEY) throw new Error('GEMINI_API_KEY not configured');
 
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
   const prompt = type === 'prescription' ? PRESCRIPTION_PROMPT : REPORT_PROMPT;
 
   const SUPPORTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
@@ -139,11 +139,20 @@ async function analyzeWithPython(
     });
   });
 
+  const isWindows = process.platform === 'win32';
+  const primaryCmd = isWindows ? 'python' : 'python3';
+  const fallbackCmd = isWindows ? 'python3' : 'python';
+
   let result: any;
   try {
-    result = await runPython('python3');
-  } catch {
-    result = await runPython('python');
+    result = await runPython(primaryCmd);
+  } catch (errPrimary: any) {
+    console.log(`${primaryCmd} failed, trying ${fallbackCmd}...`, errPrimary.message);
+    try {
+      result = await runPython(fallbackCmd);
+    } catch (err: any) {
+      throw err;
+    }
   }
 
   if (result.error) throw new Error(result.error);
