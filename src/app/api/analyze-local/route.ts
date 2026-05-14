@@ -1,12 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { spawn } from 'child_process';
+import path from 'path';
+import fs from 'fs/promises';
+import os from 'os';
 import { parsePrescriptionText } from '@/lib/prescription-parser';
 import { parseReportText } from '@/lib/report-parser';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-// ─── Gemini Vision OCR (fast, cloud-based) ────────────────────────────────────
+// ─── Detect Mobile / Capacitor WebView ───────────────────────────────────────
+function isMobileRequest(req: NextRequest): boolean {
+  const ua = req.headers.get('user-agent') || '';
+  // Android WebView always contains "wv" and "Android"
+  // Capacitor adds "CapacitorApp" or just runs in Android WebView
+  return /Android.*wv\b|CapacitorApp/i.test(ua) || /android/i.test(ua);
+}
+
+// ─── 1. Gemini Vision (for mobile — fast, cloud-based) ───────────────────────
 async function extractTextWithGemini(buffer: Buffer, mimeType: string, docType: string): Promise<string> {
-  if (!GEMINI_API_KEY) throw new Error('No Gemini API key configured.');
+  if (!GEMINI_API_KEY) throw new Error('No Gemini API key configured on server.');
 
   const base64 = buffer.toString('base64');
 
@@ -42,13 +54,50 @@ async function extractTextWithGemini(buffer: Buffer, mimeType: string, docType: 
   return text;
 }
 
-// ─── Tesseract.js fallback (slow but works offline) ───────────────────────────
-async function extractTextWithTesseract(buffer: Buffer): Promise<string> {
-  const Tesseract = (await import('tesseract.js')).default;
-  const { data: { text } } = await Tesseract.recognize(buffer, 'eng');
-  return text;
+// ─── 2. Python/Tesseract (for desktop — local, private) ──────────────────────
+async function extractTextWithPython(buffer: Buffer, ext: string, type: string): Promise<string> {
+  const tempDir = os.tmpdir();
+  const tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
+  await fs.writeFile(tempFilePath, buffer);
+
+  const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'analyzer.py');
+
+  const runPython = (cmd: string) => new Promise<string>((resolve, reject) => {
+    const proc = spawn(cmd, [scriptPath, tempFilePath, type]);
+    let out = '';
+    let err = '';
+    proc.stdout.on('data', (d) => { out += d.toString(); });
+    proc.stderr.on('data', (d) => { err += d.toString(); });
+    proc.on('error', reject);
+    proc.on('close', (code) => {
+      if (code !== 0) { reject(new Error(err || `Python exited with code ${code}`)); return; }
+      try {
+        const parsed = JSON.parse(out);
+        if (parsed.error) reject(new Error(parsed.error));
+        else resolve(parsed.extracted_text || '');
+      } catch {
+        reject(new Error('Failed to parse Python output.'));
+      }
+    });
+  });
+
+  try {
+    const text = await runPython('python3');
+    await fs.unlink(tempFilePath).catch(() => {});
+    return text;
+  } catch {
+    try {
+      const text = await runPython('python');
+      await fs.unlink(tempFilePath).catch(() => {});
+      return text;
+    } catch (err: any) {
+      await fs.unlink(tempFilePath).catch(() => {});
+      throw new Error(`Python OCR failed: ${err.message}`);
+    }
+  }
 }
 
+// ─── Main Route ───────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -62,7 +111,6 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Detect MIME type - default to jpeg for images
     const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
     const mimeMap: Record<string, string> = {
       jpg: 'image/jpeg', jpeg: 'image/jpeg',
@@ -71,21 +119,22 @@ export async function POST(req: NextRequest) {
     };
     const mimeType = mimeMap[ext] || 'image/jpeg';
 
+    const mobile = isMobileRequest(req);
     let extractedText = '';
 
-    // 1. Try Gemini Vision first (fast, accurate, handles handwriting well)
-    try {
-      console.log('[analyze-local] Using Gemini Vision API...');
+    if (mobile) {
+      // ── Mobile: Use Gemini Vision (cloud, fast, handles handwriting) ──
+      console.log('[analyze-local] Mobile request → Using Gemini Vision API');
       extractedText = await extractTextWithGemini(buffer, mimeType, type);
-      console.log('[analyze-local] Gemini extraction successful. Length:', extractedText.length);
-    } catch (geminiErr: any) {
-      // 2. Fall back to Tesseract.js if Gemini fails
-      console.warn('[analyze-local] Gemini failed, falling back to Tesseract.js:', geminiErr.message);
+    } else {
+      // ── Desktop: Use Python + Tesseract (local, private, offline) ──
+      console.log('[analyze-local] Desktop request → Using Python/Tesseract OCR');
       try {
-        extractedText = await extractTextWithTesseract(buffer);
-        console.log('[analyze-local] Tesseract.js extraction done. Length:', extractedText.length);
-      } catch (tessErr: any) {
-        throw new Error(`OCR failed: ${tessErr.message}`);
+        extractedText = await extractTextWithPython(buffer, ext, type);
+      } catch (pyErr: any) {
+        // Desktop fallback: try Gemini if Python fails
+        console.warn('[analyze-local] Python failed, falling back to Gemini:', pyErr.message);
+        extractedText = await extractTextWithGemini(buffer, mimeType, type);
       }
     }
 
