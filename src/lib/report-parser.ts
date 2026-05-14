@@ -1542,7 +1542,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'FSH',
     category: 'Reproductive',
-    regex: [/fsh/i, /follicle stimulating hormone/i],
+    regex: [/fsh/i, /folicle stimulating hormone/i],
     unit: 'mIU/mL',
     range: [1.5, 12.4],
     meanings: {
