@@ -33,7 +33,17 @@ export async function POST(req: NextRequest) {
     const result = await new Promise((resolve, reject) => {
       // Use python3 on Linux (Render) and python on Windows
       const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
-      const pythonProcess = spawn(pythonCmd, [scriptPath, tempFilePath, type]);
+      
+      // Ensure Python can find the modules we installed in python_lib (for Render)
+      const pythonPath = path.join(process.cwd(), 'python_lib');
+      const env = { 
+        ...process.env, 
+        PYTHONPATH: process.env.PYTHONPATH 
+          ? `${pythonPath}:${process.env.PYTHONPATH}` 
+          : pythonPath 
+      };
+
+      const pythonProcess = spawn(pythonCmd, [scriptPath, tempFilePath, type], { env });
       
       let dataString = '';
       let errorString = '';
