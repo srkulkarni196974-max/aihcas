@@ -39,11 +39,12 @@ export default function ReportsPage() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  // ─── Analyze via API (Python Backend) ───────────────────────────────────────────────
+  const [engine, setEngine] = useState<'python' | 'gemini'>('python');
+  // ─── Analyze via API (Python + Gemini Fallback) ──────────────────────────────────────
   const analyzeFile = useCallback(async (file: File) => {
     setStage('scanning');
     setProgress(10);
-    setProgressLabel('Sending to Python Engine...');
+    setProgressLabel('Sending to Python + Tesseract Engine...');
     setErrorMsg(null);
 
     try {
@@ -52,7 +53,7 @@ export default function ReportsPage() {
       formData.append('type', 'report');
 
       setProgress(40);
-      setProgressLabel('Python & Tesseract extracting lab values (this may take a moment)...');
+      setProgressLabel('Extracting lab values with OCR (this may take a moment)...');
 
       const res = await fetch('/api/analyze-local', {
         method: 'POST',
@@ -65,13 +66,14 @@ export default function ReportsPage() {
       const json = await res.json();
 
       if (!res.ok || !json.success) {
-        throw new Error(json.error || 'Analysis failed. Make sure Python and Tesseract are installed.');
+        throw new Error(json.error || 'Analysis failed.');
       }
 
       setProgress(100);
       setProgressLabel('Done!');
       const data = json.data as AnalysisResult;
       setAnalysisResult(data);
+      setEngine(json.engine === 'gemini' ? 'gemini' : 'python');
       
       // Save to Supabase
       if (user?.userId) {
@@ -143,7 +145,7 @@ export default function ReportsPage() {
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,0.5)', padding: '6px 14px', borderRadius: 100, border: '1px solid var(--border)' }}>
             <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-              🐍 Powered by Python
+              {stage === 'results' && engine === 'gemini' ? '🤖 Powered by Gemini AI' : '🐍 Powered by Python OCR'}
             </span>
           </div>
         </div>
@@ -337,7 +339,7 @@ export default function ReportsPage() {
           {/* AI Summary */}
           <div className="glass-card" style={{ padding: 28, background: 'rgba(124,92,252,0.05)', border: '1px solid rgba(124,92,252,0.15)' }}>
             <h4 style={{ fontWeight: 700, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span>🐍</span> Python Clinical Summary
+              <span>{engine === 'gemini' ? '🤖' : '🐍'}</span> {engine === 'gemini' ? 'AI Clinical Summary (Gemini)' : 'Python Clinical Summary'}
             </h4>
             <p style={{ fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.7 }}>
               {analysisResult.summary}
