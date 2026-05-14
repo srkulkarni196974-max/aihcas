@@ -52,10 +52,10 @@ export default function ReportsPage() {
       formData.append('type', 'report');
 
       setProgress(40);
-      setProgressLabel('Python & Tesseract extracting lab values (this may take a moment)...');
+      setProgressLabel('AI Vision extracting lab values...');
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 40000);
+      const timeoutId = setTimeout(() => controller.abort(), 60000);
 
       const res = await fetch('/api/analyze-local', {
         method: 'POST',
@@ -70,7 +70,7 @@ export default function ReportsPage() {
       const json = await res.json();
 
       if (!res.ok || !json.success) {
-        throw new Error(json.error || 'Analysis failed. The engine might still be warming up.');
+        throw new Error(json.error || 'Analysis failed. Please try again.');
       }
 
       setProgress(100);
@@ -94,7 +94,7 @@ export default function ReportsPage() {
       console.error('OCR error:', err);
       let msg = err?.message || 'Could not analyze. Check your connection.';
       if (err.name === 'AbortError') {
-        msg = "Analysis timed out. The server is likely starting up. Please wait 1 minute and try again.";
+        msg = "Analysis timed out (60s). Please try again in a moment.";
       }
       setErrorMsg(msg);
       setStage('upload');
