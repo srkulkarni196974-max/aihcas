@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "postinstall": "pip3 install -t ./python_lib -r requirements.txt || echo 'Pip not found, skipping python install'"
+    "lint": "eslint"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.3",
