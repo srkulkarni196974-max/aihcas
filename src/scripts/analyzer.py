@@ -15,7 +15,11 @@ def extract_text(file_path):
     
     if ext == 'pdf':
         try:
-            import fitz # PyMuPDF
+            try:
+                import pymupdf as fitz
+            except ImportError:
+                import fitz # PyMuPDF fallback
+            
             doc = fitz.open(file_path)
             for page in doc:
                 text += page.get_text("text") + "\n"

@@ -17,9 +17,9 @@ COPY package*.json ./
 RUN npm install
 
 # Copy requirements.txt and install Python dependencies
-# Using --break-system-packages for newer Debian/Ubuntu Python versions in containers
 COPY requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt --break-system-packages || pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir --upgrade pip --break-system-packages && \
+    pip3 install --no-cache-dir -r requirements.txt --break-system-packages
 
 # Copy the rest of the application
 COPY . .
