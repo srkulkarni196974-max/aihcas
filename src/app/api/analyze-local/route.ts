@@ -31,9 +31,19 @@ export async function POST(req: NextRequest) {
     const scriptPath = path.join(process.cwd(), 'src', 'scripts', 'analyzer.py');
 
     const result = await new Promise((resolve, reject) => {
-      // Use python3 on Linux (Docker/Render) and python on Windows
+      // Use python3 on Linux (Render) and python on Windows
       const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
-      const pythonProcess = spawn(pythonCmd, [scriptPath, tempFilePath, type]);
+
+      // Ensure Python can find the modules we installed in python_lib (for Render)
+      const pythonPath = path.join(process.cwd(), 'python_lib');
+      const env = {
+        ...process.env,
+        PYTHONPATH: process.env.PYTHONPATH
+          ? `${pythonPath}:${process.env.PYTHONPATH}`
+          : pythonPath
+      };
+
+      const pythonProcess = spawn(pythonCmd, [scriptPath, tempFilePath, type], { env });
 
       let dataString = '';
       let errorString = '';
@@ -68,25 +78,77 @@ export async function POST(req: NextRequest) {
 
     const typedResult = result as any;
 
-    if (typedResult.error) {
-      throw new Error(typedResult.error);
+    // If Python returned an error, check if we can fall back to Gemini
+    let extractedText = typedResult.extracted_text || '';
+    let pythonError = typedResult.error || '';
+
+    if (pythonError) {
+      // If it's a "fatal" error (like file not found), throw it.
+      // If it's an "extraction" error, we'll try to fall back.
+      if (pythonError.includes('Extraction Error') || pythonError.includes('OCR Error') || pythonError.includes('Tesseract')) {
+        extractedText = pythonError; // This will trigger isOCRError below
+      } else {
+        throw new Error(pythonError);
+      }
     }
 
-    const extractedText = typedResult.extracted_text || '';
+    // ─── Cloud Fallback Logic ──────────────────────────────────────────────────
+    // If local OCR fails (missing modules, missing Tesseract, or no text extracted),
+    // we use Gemini as a seamless fallback for BOTH prescriptions and reports.
+    const isOCRError = extractedText.includes('tesseract is not installed') || 
+                       extractedText.includes('OCR Error') ||
+                       extractedText.includes('Extraction Error') ||
+                       extractedText.length < 5;
 
-    if (extractedText.startsWith('[Image OCR Error:') || extractedText.startsWith('[PDF Extraction Error:')) {
-       throw new Error(extractedText);
+    if (isOCRError) {
+      console.log(`[analyze-local] Local OCR failed for ${type}. Falling back to Gemini...`);
+      
+      try {
+        const genAI = new (require('@google/generative-ai').GoogleGenerativeAI)(process.env.GEMINI_API_KEY);
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        
+        const fileBuffer = await fs.readFile(tempFilePath);
+        const base64 = fileBuffer.toString('base64');
+        
+        const prompt = type === 'prescription' 
+          ? "You are an expert clinical pharmacist. Analyze this prescription image and return a JSON object with medications, dosages, timings, duration, purpose, drugClass, warnings, and instructions. Return ONLY raw JSON."
+          : "You are an expert clinical pathologist. Analyze this medical lab report image. Extract all parameters, values, units, and reference ranges. Return a JSON object with results (array), summary, risks, recommendations, alerts, and urgency. Return ONLY raw JSON.";
+
+        const mimeType = ext === 'pdf' ? 'application/pdf' : `image/${ext}`;
+
+        const geminiResult = await model.generateContent([
+          prompt,
+          { inlineData: { data: base64, mimeType } }
+        ]);
+
+        const responseText = geminiResult.response.text().replace(/```json|```/g, '').trim();
+        const parsedData = JSON.parse(responseText);
+
+        return NextResponse.json({ 
+          success: true, 
+          data: parsedData, 
+          source: 'cloud-fallback',
+          engine: 'gemini' 
+        });
+      } catch (geminiErr) {
+        console.error('[analyze-local] Cloud Fallback also failed:', geminiErr);
+        throw new Error(`Analysis failed. Local error: ${extractedText}. Cloud error: ${geminiErr instanceof Error ? geminiErr.message : 'Unknown error'}`);
+      }
     }
-
+    
+    // ─── Standard Logic (Successful Local OCR) ────────────────────────────────
     let analysisData;
-
     if (type === 'prescription') {
       analysisData = parsePrescriptionText(extractedText);
     } else {
       analysisData = parseReportText(extractedText);
     }
 
-    return NextResponse.json({ success: true, data: analysisData });
+    return NextResponse.json({ 
+      success: true, 
+      data: analysisData,
+      engine: 'python'
+    });
 
   } catch (err: any) {
     console.error('[analyze-local] Final error:', err);

@@ -15,11 +15,7 @@ def extract_text(file_path):
     
     if ext == 'pdf':
         try:
-            try:
-                import pymupdf as fitz
-            except ImportError:
-                import fitz # PyMuPDF fallback
-            
+            import fitz # PyMuPDF
             doc = fitz.open(file_path)
             for page in doc:
                 text += page.get_text("text") + "\n"
@@ -38,10 +34,10 @@ def extract_text(file_path):
                         pix = page.get_pixmap(dpi=300)
                         img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
                         text += pytesseract.image_to_string(img) + "\n"
-                except Exception as e:
-                    text += f"[OCR Error: {str(e)}]"
+                except Exception as ex:
+                    text += f"[OCR Error: {str(ex)}]"
         except Exception as e:
-            text = f"[PDF Extraction Error: {str(e)}]"
+            raise Exception(f"PDF Extraction Error: {str(e)}")
             
     elif ext in ['jpg', 'jpeg', 'png', 'webp', 'bmp']:
         try:
@@ -61,45 +57,48 @@ def extract_text(file_path):
             
             text = pytesseract.image_to_string(img)
         except Exception as e:
-            text = f"[Image OCR Error: {str(e)}]"
+            raise Exception(f"Image OCR Error: {str(e)}")
     elif ext == 'txt':
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 text = f.read()
         except Exception as e:
-            text = f"[Text Read Error: {str(e)}]"
+            raise Exception(f"Text Read Error: {str(e)}")
     else:
-        text = f"[Unsupported file type: {ext}]"
+        raise Exception(f"Unsupported file type: {ext}")
         
     return text
 
 def analyze_prescription(text):
-    # We will let the TS backend do the heavy parsing, 
-    # but we will return the extracted text.
     return {"extracted_text": text.strip()}
 
 def analyze_report(text):
     return {"extracted_text": text.strip()}
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print(json.dumps({"error": "Missing arguments. Usage: analyzer.py <filepath> <type>"}))
-        sys.exit(1)
+    try:
+        if len(sys.argv) < 3:
+            print(json.dumps({"error": "Missing arguments. Usage: analyzer.py <filepath> <type>"}))
+            sys.exit(1)
+            
+        file_path = sys.argv[1]
+        doc_type = sys.argv[2]
         
-    file_path = sys.argv[1]
-    doc_type = sys.argv[2]
-    
-    if not os.path.exists(file_path):
-        print(json.dumps({"error": f"File not found: {file_path}"}))
-        sys.exit(1)
+        if not os.path.exists(file_path):
+            print(json.dumps({"error": f"File not found: {file_path}"}))
+            sys.exit(1)
+            
+        extracted_text = extract_text(file_path)
         
-    extracted_text = extract_text(file_path)
-    
-    if doc_type == 'prescription':
-        result = analyze_prescription(extracted_text)
-    elif doc_type == 'report':
-        result = analyze_report(extracted_text)
-    else:
-        result = {"error": f"Unknown type: {doc_type}"}
-        
-    print(json.dumps(result))
+        if doc_type == 'prescription':
+            result = analyze_prescription(extracted_text)
+        elif doc_type == 'report':
+            result = analyze_report(extracted_text)
+        else:
+            result = {"error": f"Unknown type: {doc_type}"}
+            
+        print(json.dumps(result))
+    except Exception as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(0) # Exit with 0 so the JS side can parse the JSON error
+
