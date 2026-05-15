@@ -3,10 +3,12 @@ import json
 import os
 import re
 
-# Fallback paths for Tesseract OCR on Windows
+# Fallback paths for Tesseract OCR
 tesseract_paths = [
     r'C:\Program Files\Tesseract-OCR\tesseract.exe',
-    r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
+    r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe',
+    '/usr/bin/tesseract',
+    '/usr/local/bin/tesseract'
 ]
 
 def extract_text(file_path):

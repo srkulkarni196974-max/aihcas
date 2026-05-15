@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
       
       try {
         const genAI = new (require('@google/generative-ai').GoogleGenerativeAI)(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
         
         const fileBuffer = await fs.readFile(tempFilePath);
         const base64 = fileBuffer.toString('base64');
