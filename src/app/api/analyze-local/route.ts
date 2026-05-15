@@ -7,6 +7,7 @@ import { parsePrescriptionText } from '@/lib/prescription-parser';
 import { parseReportText } from '@/lib/report-parser';
 
 export async function POST(req: NextRequest) {
+  let tempFilePath = '';
   try {
     const formData = await req.formData();
     const file = formData.get('file') as File | null;
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
     // Create a temporary file with the correct extension
     const ext = file.name.split('.').pop() || 'jpg';
     const tempDir = os.tmpdir();
-    const tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
+    tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
 
     await fs.writeFile(tempFilePath, buffer);
 
@@ -57,9 +58,6 @@ export async function POST(req: NextRequest) {
       });
 
       pythonProcess.on('close', (code) => {
-        // Clean up temp file
-        fs.unlink(tempFilePath).catch(console.error);
-
         if (code !== 0) {
           console.error('[analyze-local] Python Error:', errorString);
           reject(new Error(`Python processing failed: ${errorString}`));
@@ -83,18 +81,14 @@ export async function POST(req: NextRequest) {
     let pythonError = typedResult.error || '';
 
     if (pythonError) {
-      // If it's a "fatal" error (like file not found), throw it.
-      // If it's an "extraction" error, we'll try to fall back.
       if (pythonError.includes('Extraction Error') || pythonError.includes('OCR Error') || pythonError.includes('Tesseract')) {
-        extractedText = pythonError; // This will trigger isOCRError below
+        extractedText = pythonError; 
       } else {
         throw new Error(pythonError);
       }
     }
 
     // ─── Cloud Fallback Logic ──────────────────────────────────────────────────
-    // If local OCR fails (missing modules, missing Tesseract, or no text extracted),
-    // we use Gemini as a seamless fallback for BOTH prescriptions and reports.
     const isOCRError = extractedText.includes('tesseract is not installed') || 
                        extractedText.includes('OCR Error') ||
                        extractedText.includes('Extraction Error') ||
@@ -156,6 +150,10 @@ export async function POST(req: NextRequest) {
       { error: err?.message || 'Internal server error' },
       { status: 500 }
     );
+  } finally {
+    if (tempFilePath) {
+      await fs.unlink(tempFilePath).catch(console.error);
+    }
   }
 }
 
