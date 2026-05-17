@@ -2,14 +2,26 @@ import sys
 import json
 import os
 import re
+import pytesseract
+from PIL import Image, ImageEnhance
 
-# Fallback paths for Tesseract OCR
-tesseract_paths = [
-    r'C:\Program Files\Tesseract-OCR\tesseract.exe',
-    r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe',
-    '/usr/bin/tesseract',
-    '/usr/local/bin/tesseract'
-]
+# --- Configure Tesseract Path ---
+# This ensures local Windows users and Linux/Render environments both work.
+if os.name == 'nt':
+    # Windows standard paths
+    possible_paths = [
+        r'C:\Program Files\Tesseract-OCR\tesseract.exe',
+        r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
+    ]
+    for p in possible_paths:
+        if os.path.exists(p):
+            pytesseract.pytesseract.tesseract_cmd = p
+            break
+else:
+    # Linux path (Render/Docker)
+    linux_path = '/usr/bin/tesseract'
+    if os.path.exists(linux_path):
+        pytesseract.pytesseract.tesseract_cmd = linux_path
 
 def extract_text(file_path):
     ext = file_path.lower().split('.')[-1]
@@ -26,12 +38,6 @@ def extract_text(file_path):
             if len(text.strip()) < 20:
                 text = ""
                 try:
-                    import pytesseract
-                    from PIL import Image
-                    for p in tesseract_paths:
-                        if os.path.exists(p):
-                            pytesseract.pytesseract.tesseract_cmd = p
-                            break
                     for page in doc:
                         pix = page.get_pixmap(dpi=300)
                         img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
@@ -43,14 +49,6 @@ def extract_text(file_path):
             
     elif ext in ['jpg', 'jpeg', 'png', 'webp', 'bmp']:
         try:
-            import pytesseract
-            from PIL import Image, ImageEnhance
-            
-            for p in tesseract_paths:
-                if os.path.exists(p):
-                    pytesseract.pytesseract.tesseract_cmd = p
-                    break
-                    
             img = Image.open(file_path)
             # Basic preprocessing: convert to grayscale and increase contrast
             img = img.convert('L')
@@ -102,5 +100,4 @@ if __name__ == "__main__":
         print(json.dumps(result))
     except Exception as e:
         print(json.dumps({"error": str(e)}))
-        sys.exit(0) # Exit with 0 so the JS side can parse the JSON error
-
+        sys.exit(0) 
