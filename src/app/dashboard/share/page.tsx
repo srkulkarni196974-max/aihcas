@@ -45,10 +45,20 @@ export default function ShareDoctorPage() {
     fetch('/api/patient/share-report').then(r => r.json()).then(d => setSharedReports(d.reports || []));
   }, []);
 
-  // Fetch chat messages
+  // Fetch chat messages with real-time polling (every 3s) and cache-busting
   useEffect(() => {
     if (!selectedDoctorId || activeTab !== 'chat') return;
-    fetch(`/api/patient/messages?doctor_id=${selectedDoctorId}`).then(r => r.json()).then(d => setChatMessages(d.messages || []));
+
+    const fetchMessages = () => {
+      fetch(`/api/patient/messages?doctor_id=${selectedDoctorId}&t=${Date.now()}`)
+        .then(r => r.json())
+        .then(d => setChatMessages(d.messages || []))
+        .catch(err => console.error("Error polling messages:", err));
+    };
+
+    fetchMessages();
+    const interval = setInterval(fetchMessages, 3000);
+    return () => clearInterval(interval);
   }, [selectedDoctorId, activeTab]);
 
   const searchDoctors = async () => {

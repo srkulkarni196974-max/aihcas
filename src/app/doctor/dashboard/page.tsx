@@ -78,7 +78,7 @@ export default function DoctorDashboard() {
   // Fetch dashboard data
   useEffect(() => {
     if (!doctor) return;
-    fetch('/api/doctor/dashboard').then(r => r.json()).then(d => {
+    fetch('/api/doctor/dashboard?t=' + Date.now()).then(r => r.json()).then(d => {
       setPatients(d.patients || []);
       setReports(d.reports || []);
       setUnreadCount(d.unreadCount || 0);
@@ -86,10 +86,28 @@ export default function DoctorDashboard() {
     });
   }, [doctor]);
 
-  // Fetch chat when patient selected
+  // Fetch chat when patient selected with real-time polling (every 3s) and cache-busting
   useEffect(() => {
     if (!selectedPatientId || activeTab !== 'chat') return;
-    fetch(`/api/doctor/messages?patient_id=${selectedPatientId}`).then(r => r.json()).then(d => setChatMessages(d.messages || []));
+    
+    const fetchMessages = () => {
+      fetch(`/api/doctor/messages?patient_id=${selectedPatientId}&t=${Date.now()}`)
+        .then(r => r.json())
+        .then(d => {
+          setChatMessages(d.messages || []);
+          // Also fetch dashboard stats to update unread badge counts dynamically
+          fetch('/api/doctor/dashboard?t=' + Date.now())
+            .then(r => r.json())
+            .then(d => {
+              setUnreadMessages(d.unreadMessages || 0);
+              setUnreadCount(d.unreadCount || 0);
+            });
+        }).catch(err => console.error("Error polling messages:", err));
+    };
+
+    fetchMessages();
+    const interval = setInterval(fetchMessages, 3000);
+    return () => clearInterval(interval);
   }, [selectedPatientId, activeTab]);
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [chatMessages]);
