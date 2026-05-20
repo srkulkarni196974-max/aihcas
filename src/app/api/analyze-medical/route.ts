@@ -80,6 +80,30 @@ function sleep(ms: number) {
 
 // ─── Route Handler ────────────────────────────────────────────────────────────
 
+async function storeBiomarkerRecords(userId: string | undefined, results: any[] | undefined) {
+  if (!userId || !results || !Array.isArray(results) || results.length === 0) return;
+
+  const rows = results
+    .filter((r: any) => r.name && r.value != null && !isNaN(Number(r.value)))
+    .map((r: any) => ({
+      user_id: userId,
+      biomarker: r.name,
+      value: Number(r.value),
+      unit: r.unit || '',
+      recorded_at: new Date().toISOString(),
+    }));
+
+  if (rows.length === 0) return;
+
+  const client = supabaseAdmin || supabase;
+  const { error } = await client.from('biomarker_history').insert(rows);
+  if (error) {
+    console.error('[storeBiomarkerRecords] Insert error:', error);
+  } else {
+    console.log(`[storeBiomarkerRecords] Stored ${rows.length} biomarker records for user ${userId}`);
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -154,8 +178,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await storeBiomarkerRecords(userId, parsed.results);
-return NextResponse.json({ success: true, data: parsed });
+    // Store biomarker data only for report analyses
+    if (type === 'report') {
+      await storeBiomarkerRecords(userId, parsed.results);
+    }
+    return NextResponse.json({ success: true, data: parsed });
 
   } catch (err: any) {
     console.error('[analyze-medical] Final error:', err);
