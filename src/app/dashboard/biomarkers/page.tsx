@@ -4,7 +4,7 @@ import BiomarkerTrends from '@/components/BiomarkerTrends';
 import { supabase } from '@/lib/supabase';
 
 export default function BiomarkerDashboard() {
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState<{ biomarker: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState('');
 
