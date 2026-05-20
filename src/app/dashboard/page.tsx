@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import BiomarkerModule from '@/app/dashboard/biomarkerModule';
 import { 
   MessageSquare, 
   Mic, 
@@ -92,6 +93,7 @@ const modules = [
     tag: 'Vault Settings',
     tagColor: 'badge-blue',
   },
+BiomarkerModule,
 ];
 
 const healthTips = [

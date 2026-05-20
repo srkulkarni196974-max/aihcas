@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase, supabaseAdmin } from '@/lib/supabase';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -85,6 +86,7 @@ export async function POST(req: NextRequest) {
     const file = formData.get('file') as File | null;
     const type = formData.get('type') as 'prescription' | 'report' | null;
     const textOnly = formData.get('text') as string | null;
+    const userId = formData.get('userId') as string | undefined;
 
     if (!type) {
       return NextResponse.json({ error: 'Missing type' }, { status: 400 });
@@ -152,7 +154,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, data: parsed });
+    await storeBiomarkerRecords(userId, parsed.results);
+return NextResponse.json({ success: true, data: parsed });
 
   } catch (err: any) {
     console.error('[analyze-medical] Final error:', err);
