@@ -1,21 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
-import { jwtVerify } from 'jose';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback');
-
-async function getPatientId(req: NextRequest): Promise<string | null> {
-  const token = req.cookies.get('session')?.value;
-  if (!token) return null;
-  try {
-    const { payload } = await jwtVerify(token, JWT_SECRET);
-    return (payload as any).userId || null;
-  } catch { return null; }
+async function getPatientId(): Promise<string | null> {
+  const session = await getServerSession(authOptions);
+  return (session?.user as any)?.userId || (session?.user as any)?.id || null;
 }
 
 // GET: Fetch messages between patient and a specific doctor
 export async function GET(req: NextRequest) {
-  const patientId = await getPatientId(req);
+  const patientId = await getPatientId();
   if (!patientId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { searchParams } = new URL(req.url);
@@ -43,7 +38,7 @@ export async function GET(req: NextRequest) {
 
 // POST: Patient sends a message to a doctor
 export async function POST(req: NextRequest) {
-  const patientId = await getPatientId(req);
+  const patientId = await getPatientId();
   if (!patientId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { doctorId, message } = await req.json();

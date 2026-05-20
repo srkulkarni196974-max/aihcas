@@ -5,8 +5,9 @@ import { authenticateUser, authenticateGoogle } from '@/lib/auth';
 
 import { supabase } from '@/lib/supabase';
 
+import { NextAuthOptions } from 'next-auth';
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -77,7 +78,8 @@ const handler = NextAuth({
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET || 'aihcas-secret-2026',
-});
+};
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
 
