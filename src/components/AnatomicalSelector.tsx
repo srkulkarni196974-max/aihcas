@@ -11,7 +11,8 @@ import {
   Layers,
   ChevronRight,
   ArrowLeftRight,
-  Sparkle
+  Sparkle,
+  Eye
 } from 'lucide-react';
 
 // Front view symptom regions
@@ -92,7 +93,7 @@ const BACK_REGIONS = {
   }
 };
 
-// Combined for easy mapping
+// Combined for mapping
 const ALL_REGIONS = {
   ...FRONT_REGIONS,
   ...BACK_REGIONS
@@ -106,6 +107,7 @@ interface AnatomicalSelectorProps {
 export default function AnatomicalSelector({ onInjectSymptoms, onDirectSubmit }: AnatomicalSelectorProps) {
   const [viewMode, setViewMode] = useState<'front' | 'back'>('front');
   const [activeRegion, setActiveRegion] = useState<keyof typeof ALL_REGIONS | null>(null);
+  const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [selectedSymptoms, setSelectedSymptoms] = useState<Record<string, string[]>>({});
 
   const toggleSymptom = (region: string, symptom: string) => {
@@ -181,9 +183,18 @@ export default function AnatomicalSelector({ onInjectSymptoms, onDirectSubmit }:
     onDirectSubmit(formattedText);
   };
 
-  // Check if a specific region has any active symptoms selected
   const hasSelectedInRegion = (regionKey: string) => {
     return (selectedSymptoms[regionKey]?.length || 0) > 0;
+  };
+
+  const getRegionDisplayName = () => {
+    if (hoveredRegion) {
+      return ALL_REGIONS[hoveredRegion as keyof typeof ALL_REGIONS]?.title || hoveredRegion;
+    }
+    if (activeRegion) {
+      return ALL_REGIONS[activeRegion as keyof typeof ALL_REGIONS]?.title || activeRegion;
+    }
+    return null;
   };
 
   return (
@@ -267,201 +278,264 @@ export default function AnatomicalSelector({ onInjectSymptoms, onDirectSubmit }:
       {/* Main Selector Grid Layout */}
       <div className="stack-mobile" style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
         
-        {/* Left Side: Glowing 3D Rotating SVG Human Silhouette */}
+        {/* Left Side: High-fidelity clinical anatomical figure with 3D Rotation */}
         <div style={{
-          flex: '0 0 200px',
-          height: '430px',
-          background: 'radial-gradient(circle, rgba(179,143,93,0.02) 0%, rgba(30,58,138,0.01) 100%)',
-          border: '1px solid rgba(226, 232, 240, 0.8)',
-          borderRadius: 20,
+          flex: '0 0 210px',
+          height: '450px',
+          background: 'radial-gradient(circle at center, rgba(30,58,138,0.02) 0%, rgba(179,143,93,0.01) 100%)',
+          border: '1.5px solid rgba(226, 232, 240, 0.85)',
+          borderRadius: 24,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
-          padding: '10px',
+          padding: '12px',
           overflow: 'hidden',
-          perspective: '1000px' // Enables the 3D rotating perspective
+          perspective: '1000px'
         }}>
-          {/* Subtle medical scanning grid backdrop */}
-          <div style={{ position: 'absolute', inset: 0, opacity: 0.05, backgroundImage: 'linear-gradient(to right, #B38F5D 1px, transparent 1px), linear-gradient(to bottom, #B38F5D 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+          {/* Holographic Circular HUD Backdrop Scanning Rings */}
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+            <div style={{ width: '220px', height: '220px', borderRadius: '50%', border: '1px dashed rgba(179, 143, 93, 0.05)', position: 'absolute', animation: 'spin 40s linear infinite' }} />
+            <div style={{ width: '170px', height: '170px', borderRadius: '50%', border: '1px solid rgba(30, 58, 138, 0.03)', position: 'absolute', animation: 'spin 20s linear infinite reverse' }} />
+          </div>
 
           {/* 3D Flippable Container */}
           <motion.div
             style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d', position: 'relative' }}
             animate={{ rotateY: viewMode === 'front' ? 0 : 180 }}
-            transition={{ type: 'spring', damping: 22, stiffness: 120 }}
+            transition={{ type: 'spring', damping: 24, stiffness: 130 }}
           >
             
-            {/* FRONT ANATOMICAL SILHOUETTE */}
+            {/* HIGH-FIDELITY FRONT ANATOMICAL SILHOUETTE */}
             <motion.div
               style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               <svg viewBox="0 0 220 460" style={{ width: '100%', height: '100%', cursor: 'pointer' }}>
                 <defs>
-                  <linearGradient id="bodyGradFront" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.08" />
-                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.04" />
+                  <linearGradient id="glowBodyFront" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.09" />
+                    <stop offset="50%" stopColor="#2A437E" stopOpacity="0.06" />
+                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.05" />
                   </linearGradient>
-                  <linearGradient id="activeGradFront" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.35" />
-                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.25" />
+                  <linearGradient id="activeRegionGradFront" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.3" />
                   </linearGradient>
                 </defs>
 
-                {/* Base Body Path */}
-                <path 
-                  d="M110,35 C122,35 130,42 130,52 C130,62 122,70 110,70 C98,70 90,62 90,52 C90,42 98,35 110,35 Z M102,70 L102,86 L118,86 L118,70 Z M76,86 C64,130 52,180 50,225 C49,235 60,235 62,225 C68,180 74,138 78,110 L78,225 C78,290 82,350 82,425 C82,435 94,435 94,425 C95,350 96,290 98,225 L102,225 C104,290 105,350 106,425 C106,435 118,435 118,425 C118,350 122,290 122,225 L122,110 C126,138 132,180 138,225 C140,235 151,235 150,225 C148,180 136,130 124,86 Z" 
-                  fill="url(#bodyGradFront)" 
-                  stroke="rgba(148, 163, 184, 0.25)" 
-                  strokeWidth="1.5" 
-                />
+                {/* Highly Proportioned Organic Human Body Outline Grid */}
+                <g fill="url(#glowBodyFront)" stroke="rgba(148, 163, 184, 0.2)" strokeWidth="1.2">
+                  {/* Proportioned organic muscle paths */}
+                  {/* Head & Neck */}
+                  <ellipse cx="110" cy="50" rx="17" ry="21" />
+                  <path d="M103,71 L103,84 A7,7 0 0 0 110,87 A7,7 0 0 0 117,84 L117,71 Z" />
+                  {/* Clavicle & Torso */}
+                  <path d="M76,92 L144,92 C140,118 135,145 132,158 L88,158 C85,145 80,118 76,92 Z" />
+                  {/* Abdomen & Core */}
+                  <path d="M88,158 L132,158 C128,185 125,210 122,230 L98,230 C95,210 92,185 88,158 Z" />
+                  {/* Left Arm */}
+                  <path d="M76,92 L62,158 L52,225 A6,6 0 0 0 62,227 L72,158 L84,102 Z" />
+                  {/* Right Arm */}
+                  <path d="M144,92 L158,158 L168,225 A6,6 0 0 1 158,227 L148,158 L136,102 Z" />
+                  {/* Left Leg */}
+                  <path d="M98,230 L94,325 L92,425 A6,6 0 0 0 102,425 L104,325 L110,230 Z" />
+                  {/* Right Leg */}
+                  <path d="M122,230 L126,325 L128,425 A6,6 0 0 1 118,425 L116,325 L110,230 Z" />
+                </g>
 
-                {/* Regions */}
+                {/* Embedded soft dashed Cardio/Lungs Diagnostic grids (premium clinical detail) */}
+                <g stroke="rgba(179,143,93,0.12)" strokeWidth="1" fill="none" strokeDasharray="2 3">
+                  <path d="M98,110 Q110,125 122,110" />
+                  <path d="M96,120 Q110,135 124,120" />
+                  <path d="M100,130 Q110,142 120,130" />
+                  <circle cx="110" cy="115" r="8" />
+                </g>
+
+                {/* HIGH-FIDELITY CLICKABLE REGIONS OVERLAYS WITH DELICATE INNER BORDERS */}
+                
                 {/* Head & Neck Front */}
                 <path 
-                  d="M110,25 C125,25 133,35 133,48 C133,62 125,72 110,72 C95,72 87,62 87,48 C87,35 95,25 110,25 Z M100,72 L100,86 L120,86 L120,72 Z"
-                  fill={activeRegion === 'head_front' ? 'url(#activeGradFront)' : hasSelectedInRegion('head_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'head_front' ? 'var(--accent-deep)' : hasSelectedInRegion('head_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M93,50 C93,31 100,29 110,29 C120,29 127,31 127,50 C127,65 120,71 110,71 C100,71 93,65 93,50 Z M102,71 L102,86 L118,86 L118,71 Z"
+                  fill={activeRegion === 'head_front' ? 'url(#activeRegionGradFront)' : hoveredRegion === 'head_front' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('head_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'head_front' ? 'var(--accent-deep)' : hoveredRegion === 'head_front' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('head_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('head_front')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('head_front')}
                 />
 
                 {/* Chest Front */}
                 <path 
-                  d="M80,86 L140,86 C136,115 132,142 130,155 L90,155 C88,142 84,115 80,86 Z"
-                  fill={activeRegion === 'chest_front' ? 'url(#activeGradFront)' : hasSelectedInRegion('chest_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'chest_front' ? 'var(--accent-deep)' : hasSelectedInRegion('chest_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M78,92 L142,92 C138,118 134,145 132,158 L88,158 C86,145 82,118 78,92 Z"
+                  fill={activeRegion === 'chest_front' ? 'url(#activeRegionGradFront)' : hoveredRegion === 'chest_front' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('chest_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'chest_front' ? 'var(--accent-deep)' : hoveredRegion === 'chest_front' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('chest_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('chest_front')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('chest_front')}
                 />
 
                 {/* Abdomen Front */}
                 <path 
-                  d="M90,155 L130,155 C127,180 124,205 122,225 L98,225 C96,205 93,180 90,155 Z"
-                  fill={activeRegion === 'abdomen_front' ? 'url(#activeGradFront)' : hasSelectedInRegion('abdomen_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'abdomen_front' ? 'var(--accent-deep)' : hasSelectedInRegion('abdomen_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M88,158 L132,158 C128,185 125,210 122,230 L98,230 C96,210 92,185 88,158 Z"
+                  fill={activeRegion === 'abdomen_front' ? 'url(#activeRegionGradFront)' : hoveredRegion === 'abdomen_front' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('abdomen_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'abdomen_front' ? 'var(--accent-deep)' : hoveredRegion === 'abdomen_front' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('abdomen_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('abdomen_front')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('abdomen_front')}
                 />
 
                 {/* Arms Front */}
                 <path 
-                  d="M78,86 C68,125 58,165 52,210 C50,225 61,225 63,212 C69,172 73,138 76,108 Z M142,86 C152,125 162,165 168,210 C170,225 159,225 157,212 C151,172 147,138 144,108 Z"
-                  fill={activeRegion === 'arms_front' ? 'url(#activeGradFront)' : hasSelectedInRegion('arms_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'arms_front' ? 'var(--accent-deep)' : hasSelectedInRegion('arms_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M76,92 L62,158 L52,225 A6,6 0 0 0 62,227 L72,158 L84,102 Z M144,92 L158,158 L168,225 A6,6 0 1 0 158,227 L148,158 L136,102 Z"
+                  fill={activeRegion === 'arms_front' ? 'url(#activeRegionGradFront)' : hoveredRegion === 'arms_front' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('arms_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'arms_front' ? 'var(--accent-deep)' : hoveredRegion === 'arms_front' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('arms_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('arms_front')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('arms_front')}
                 />
 
                 {/* Legs Front */}
                 <path 
-                  d="M78,225 L98,225 C96,285 94,345 92,425 C92,434 82,434 82,425 C82,345 80,285 78,225 Z M122,225 L142,225 C140,285 138,345 138,425 C138,434 128,434 128,425 C128,345 125,285 122,225 Z"
-                  fill={activeRegion === 'legs_front' ? 'url(#activeGradFront)' : hasSelectedInRegion('legs_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'legs_front' ? 'var(--accent-deep)' : hasSelectedInRegion('legs_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M98,230 L94,325 L92,425 A6,6 0 0 0 102,425 L104,325 L110,230 Z M122,230 L126,325 L128,425 A6,6 0 1 0 118,425 L116,325 L110,230 Z"
+                  fill={activeRegion === 'legs_front' ? 'url(#activeRegionGradFront)' : hoveredRegion === 'legs_front' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('legs_front') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'legs_front' ? 'var(--accent-deep)' : hoveredRegion === 'legs_front' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('legs_front') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('legs_front')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('legs_front')}
                 />
 
-                {/* Joint Nodes Front */}
-                <g onClick={() => setActiveRegion('joints_front')}>
-                  <circle cx="78" cy="94" r="6" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="142" cy="94" r="6" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="65" cy="155" r="5" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="155" cy="155" r="5" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="86" cy="320" r="6" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="134" cy="320" r="6" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
+                {/* Elegant Concentric Joint Nodes (Conveying scanner targets) */}
+                <g onClick={() => setActiveRegion('joints_front')} onMouseEnter={() => setHoveredRegion('joints_front')} onMouseLeave={() => setHoveredRegion(null)}>
+                  {/* Shoulders */}
+                  <circle cx="78" cy="94" r="7" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="142" cy="94" r="7" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  {/* Elbows */}
+                  <circle cx="63" cy="155" r="6" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="157" cy="155" r="6" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  {/* Knees */}
+                  <circle cx="86" cy="320" r="7" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="134" cy="320" r="7" fill={activeRegion === 'joints_front' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_front') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
                 </g>
 
-                {/* Skin Front Icon */}
-                <g onClick={() => setActiveRegion('skin_front')}>
-                  <circle cx="180" cy="50" r="14" fill={activeRegion === 'skin_front' ? 'url(#activeGradFront)' : hasSelectedInRegion('skin_front') ? 'rgba(179,143,93,0.15)' : 'rgba(255,255,255,0.7)'} stroke={activeRegion === 'skin_front' ? 'var(--accent-deep)' : hasSelectedInRegion('skin_front') ? '#B38F5D' : 'var(--border)'} strokeWidth="1.5" />
+                {/* Skin Front Node Icon */}
+                <g onClick={() => setActiveRegion('skin_front')} onMouseEnter={() => setHoveredRegion('skin_front')} onMouseLeave={() => setHoveredRegion(null)}>
+                  <circle cx="180" cy="50" r="14" fill={activeRegion === 'skin_front' ? 'url(#activeRegionGradFront)' : hasSelectedInRegion('skin_front') ? 'rgba(179,143,93,0.15)' : 'rgba(255,255,255,0.75)'} stroke={activeRegion === 'skin_front' ? 'var(--accent-deep)' : hasSelectedInRegion('skin_front') ? '#B38F5D' : 'var(--border)'} strokeWidth="1.5" />
                   <text x="180" y="54" fontSize="12" textAnchor="middle">✨</text>
                 </g>
               </svg>
             </motion.div>
 
-            {/* BACK ANATOMICAL SILHOUETTE */}
+            {/* HIGH-FIDELITY BACK ANATOMICAL SILHOUETTE */}
             <motion.div
               style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotateY(180deg)' }}
             >
               <svg viewBox="0 0 220 460" style={{ width: '100%', height: '100%', cursor: 'pointer' }}>
                 <defs>
-                  <linearGradient id="bodyGradBack" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.08" />
-                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.04" />
+                  <linearGradient id="glowBodyBack" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.09" />
+                    <stop offset="50%" stopColor="#2A437E" stopOpacity="0.06" />
+                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.05" />
                   </linearGradient>
-                  <linearGradient id="activeGradBack" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.35" />
-                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.25" />
+                  <linearGradient id="activeRegionGradBack" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#B38F5D" stopOpacity="0.3" />
                   </linearGradient>
                 </defs>
 
-                {/* Base Silhouette Path (Slightly adjusted shoulders/neck for back view) */}
-                <path 
-                  d="M110,35 C122,35 130,42 130,52 C130,62 122,70 110,70 C98,70 90,62 90,52 C90,42 98,35 110,35 Z M102,70 L102,86 L118,86 L118,70 Z M76,86 C64,130 52,180 50,225 C49,235 60,235 62,225 C68,180 74,138 78,110 L78,225 C78,290 82,350 82,425 C82,435 94,435 94,425 C95,350 96,290 98,225 L102,225 C104,290 105,350 106,425 C106,435 118,435 118,425 C118,350 122,290 122,225 L122,110 C126,138 132,180 138,225 C140,235 151,235 150,225 C148,180 136,130 124,86 Z" 
-                  fill="url(#bodyGradBack)" 
-                  stroke="rgba(148, 163, 184, 0.25)" 
-                  strokeWidth="1.5" 
-                />
+                {/* Proportioned Organic Human Body Outline (Back view neck/spine modifications) */}
+                <g fill="url(#glowBodyBack)" stroke="rgba(148, 163, 184, 0.2)" strokeWidth="1.2">
+                  <ellipse cx="110" cy="50" rx="17" ry="21" />
+                  <path d="M103,71 L103,84 A7,7 0 0 0 110,87 A7,7 0 0 0 117,84 L117,71 Z" />
+                  <path d="M76,92 L144,92 C140,118 135,145 132,158 L88,158 C85,145 80,118 76,92 Z" />
+                  <path d="M88,158 L132,158 C128,185 125,210 122,230 L98,230 C95,210 92,185 88,158 Z" />
+                  <path d="M76,92 L62,158 L52,225 A6,6 0 0 0 62,227 L72,158 L84,102 Z" />
+                  <path d="M144,92 L158,158 L168,225 A6,6 0 1 0 158,227 L148,158 L136,102 Z" />
+                  <path d="M98,230 L94,325 L92,425 A6,6 0 0 0 102,425 L104,325 L110,230 Z" />
+                  <path d="M122,230 L126,325 L128,425 A6,6 0 1 0 118,425 L116,325 L110,230 Z" />
+                </g>
 
+                {/* Embedded Spine guideline indicators (conveys back alignment scanning) */}
+                <g stroke="rgba(30,58,138,0.08)" strokeWidth="1.5" fill="none">
+                  <path d="M110,87 L110,230" strokeDasharray="3 4" />
+                  <circle cx="110" cy="120" r="3" fill="rgba(30,58,138,0.15)" stroke="none" />
+                  <circle cx="110" cy="150" r="3" fill="rgba(30,58,138,0.15)" stroke="none" />
+                  <circle cx="110" cy="180" r="3" fill="rgba(30,58,138,0.15)" stroke="none" />
+                </g>
+
+                {/* Back clickable region overlays */}
+                
                 {/* Head & Neck Back */}
                 <path 
-                  d="M110,25 C125,25 133,35 133,48 C133,62 125,72 110,72 C95,72 87,62 87,48 C87,35 95,25 110,25 Z M100,72 L100,86 L120,86 L120,72 Z"
-                  fill={activeRegion === 'head_back' ? 'url(#activeGradBack)' : hasSelectedInRegion('head_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'head_back' ? 'var(--accent-deep)' : hasSelectedInRegion('head_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M93,50 C93,31 100,29 110,29 C120,29 127,31 127,50 C127,65 120,71 110,71 C100,71 93,65 93,50 Z M102,71 L102,86 L118,86 L118,71 Z"
+                  fill={activeRegion === 'head_back' ? 'url(#activeRegionGradBack)' : hoveredRegion === 'head_back' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('head_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'head_back' ? 'var(--accent-deep)' : hoveredRegion === 'head_back' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('head_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('head_back')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('head_back')}
                 />
 
                 {/* Upper Back */}
                 <path 
-                  d="M80,86 L140,86 C136,115 132,142 130,155 L90,155 C88,142 84,115 80,86 Z"
-                  fill={activeRegion === 'upper_back' ? 'url(#activeGradBack)' : hasSelectedInRegion('upper_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'upper_back' ? 'var(--accent-deep)' : hasSelectedInRegion('upper_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M78,92 L142,92 C138,118 134,145 132,158 L88,158 C86,145 82,118 78,92 Z"
+                  fill={activeRegion === 'upper_back' ? 'url(#activeRegionGradBack)' : hoveredRegion === 'upper_back' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('upper_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'upper_back' ? 'var(--accent-deep)' : hoveredRegion === 'upper_back' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('upper_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('upper_back')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('upper_back')}
                 />
 
                 {/* Lower Back & Pelvis */}
                 <path 
-                  d="M90,155 L130,155 C127,180 124,205 122,225 L98,225 C96,205 93,180 90,155 Z"
-                  fill={activeRegion === 'lower_back' ? 'url(#activeGradBack)' : hasSelectedInRegion('lower_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'lower_back' ? 'var(--accent-deep)' : hasSelectedInRegion('lower_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M88,158 L132,158 C128,185 125,210 122,230 L98,230 C96,210 92,185 88,158 Z"
+                  fill={activeRegion === 'lower_back' ? 'url(#activeRegionGradBack)' : hoveredRegion === 'lower_back' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('lower_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'lower_back' ? 'var(--accent-deep)' : hoveredRegion === 'lower_back' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('lower_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('lower_back')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('lower_back')}
                 />
 
                 {/* Arms Back */}
                 <path 
-                  d="M78,86 C68,125 58,165 52,210 C50,225 61,225 63,212 C69,172 73,138 76,108 Z M142,86 C152,125 162,165 168,210 C170,225 159,225 157,212 C151,172 147,138 144,108 Z"
-                  fill={activeRegion === 'arms_back' ? 'url(#activeGradBack)' : hasSelectedInRegion('arms_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'arms_back' ? 'var(--accent-deep)' : hasSelectedInRegion('arms_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M76,92 L62,158 L52,225 A6,6 0 0 0 62,227 L72,158 L84,102 Z M144,92 L158,158 L168,225 A6,6 0 1 0 158,227 L148,158 L136,102 Z"
+                  fill={activeRegion === 'arms_back' ? 'url(#activeRegionGradBack)' : hoveredRegion === 'arms_back' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('arms_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'arms_back' ? 'var(--accent-deep)' : hoveredRegion === 'arms_back' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('arms_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('arms_back')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('arms_back')}
                 />
 
                 {/* Legs Back */}
                 <path 
-                  d="M78,225 L98,225 C96,285 94,345 92,425 C92,434 82,434 82,425 C82,345 80,285 78,225 Z M122,225 L142,225 C140,285 138,345 138,425 C138,434 128,434 128,425 C128,345 125,285 122,225 Z"
-                  fill={activeRegion === 'legs_back' ? 'url(#activeGradBack)' : hasSelectedInRegion('legs_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
-                  stroke={activeRegion === 'legs_back' ? 'var(--accent-deep)' : hasSelectedInRegion('legs_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
-                  strokeWidth="2"
+                  d="M98,230 L94,325 L92,425 A6,6 0 0 0 102,425 L104,325 L110,230 Z M122,230 L126,325 L128,425 A6,6 0 1 0 118,425 L116,325 L110,230 Z"
+                  fill={activeRegion === 'legs_back' ? 'url(#activeRegionGradBack)' : hoveredRegion === 'legs_back' ? 'rgba(30, 58, 138, 0.08)' : hasSelectedInRegion('legs_back') ? 'rgba(30, 58, 138, 0.15)' : 'transparent'}
+                  stroke={activeRegion === 'legs_back' ? 'var(--accent-deep)' : hoveredRegion === 'legs_back' ? 'rgba(30, 58, 138, 0.25)' : hasSelectedInRegion('legs_back') ? 'rgba(30, 58, 138, 0.4)' : 'transparent'}
+                  strokeWidth="1.5"
+                  onMouseEnter={() => setHoveredRegion('legs_back')}
+                  onMouseLeave={() => setHoveredRegion(null)}
                   onClick={() => setActiveRegion('legs_back')}
                 />
 
                 {/* Joint Nodes Back */}
-                <g onClick={() => setActiveRegion('joints_back')}>
-                  <circle cx="78" cy="94" r="6" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="142" cy="94" r="6" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="65" cy="155" r="5" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="155" cy="155" r="5" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="86" cy="320" r="6" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
-                  <circle cx="134" cy="320" r="6" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.2)'} stroke="white" strokeWidth="1" />
+                <g onClick={() => setActiveRegion('joints_back')} onMouseEnter={() => setHoveredRegion('joints_back')} onMouseLeave={() => setHoveredRegion(null)}>
+                  <circle cx="78" cy="94" r="7" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="142" cy="94" r="7" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="63" cy="155" r="6" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="157" cy="155" r="6" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="86" cy="320" r="7" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
+                  <circle cx="134" cy="320" r="7" fill={activeRegion === 'joints_back' ? 'var(--accent-deep)' : hasSelectedInRegion('joints_back') ? '#B38F5D' : 'rgba(30, 58, 138, 0.15)'} stroke="white" strokeWidth="1" />
                 </g>
 
                 {/* Skin Back Icon */}
-                <g onClick={() => setActiveRegion('skin_back')}>
-                  <circle cx="180" cy="50" r="14" fill={activeRegion === 'skin_back' ? 'url(#activeGradBack)' : hasSelectedInRegion('skin_back') ? 'rgba(179,143,93,0.15)' : 'rgba(255,255,255,0.7)'} stroke={activeRegion === 'skin_back' ? 'var(--accent-deep)' : hasSelectedInRegion('skin_back') ? '#B38F5D' : 'var(--border)'} strokeWidth="1.5" />
+                <g onClick={() => setActiveRegion('skin_back')} onMouseEnter={() => setHoveredRegion('skin_back')} onMouseLeave={() => setHoveredRegion(null)}>
+                  <circle cx="180" cy="50" r="14" fill={activeRegion === 'skin_back' ? 'url(#activeRegionGradBack)' : hasSelectedInRegion('skin_back') ? 'rgba(179,143,93,0.15)' : 'rgba(255,255,255,0.75)'} stroke={activeRegion === 'skin_back' ? 'var(--accent-deep)' : hasSelectedInRegion('skin_back') ? '#B38F5D' : 'var(--border)'} strokeWidth="1.5" />
                   <text x="180" y="54" fontSize="12" textAnchor="middle">✨</text>
                 </g>
               </svg>
@@ -469,13 +543,46 @@ export default function AnatomicalSelector({ onInjectSymptoms, onDirectSubmit }:
 
           </motion.div>
 
+          {/* Glowing HUD active region display tag (Floating label) */}
+          <AnimatePresence>
+            {getRegionDisplayName() && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                style={{ 
+                  position: 'absolute', 
+                  top: '16px', 
+                  left: '12px', 
+                  right: '12px', 
+                  background: 'rgba(30, 58, 138, 0.9)', 
+                  color: 'white', 
+                  padding: '6px 12px', 
+                  borderRadius: 100, 
+                  fontSize: '0.68rem', 
+                  fontWeight: 800, 
+                  textAlign: 'center', 
+                  boxShadow: '0 4px 12px rgba(30, 58, 138, 0.25)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 4,
+                  pointerEvents: 'none'
+                }}
+              >
+                <Eye className="w-3 h-3 text-[#B38F5D]" />
+                <span style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>{getRegionDisplayName()}</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Perspective Rotating HUD overlay */}
-          <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, display: 'flex', flexDirection: 'column', gap: 4, background: 'rgba(255,255,255,0.9)', padding: '6px 10px', borderRadius: 10, border: '1px solid var(--border)', fontSize: '0.68rem', pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, display: 'flex', flexDirection: 'column', gap: 4, background: 'rgba(255,255,255,0.92)', padding: '6px 10px', borderRadius: 10, border: '1px solid var(--border)', fontSize: '0.68rem', pointerEvents: 'none' }}>
             <span style={{ fontWeight: 800, color: 'var(--text-dark)', textTransform: 'uppercase', letterSpacing: '0.02em', display: 'flex', alignItems: 'center', gap: 4 }}>
               <ArrowLeftRight className="w-3.5 h-3.5 text-[#B38F5D] animate-pulse" />
               <span>{viewMode === 'front' ? 'FRONT PANEL' : 'BACK PANEL'}</span>
             </span>
-            <span style={{ color: 'var(--text-muted)' }}>Persists active selections on both views.</span>
+            <span style={{ color: 'var(--text-muted)' }}>Hover sections to highlight; tap to select.</span>
           </div>
         </div>
 
