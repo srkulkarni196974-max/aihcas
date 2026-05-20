@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyDoctorToken, DOCTOR_COOKIE_NAME } from '@/lib/doctor-auth';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 
 // PUT: Update doctor's profile fields
 export async function PUT(req: NextRequest) {
@@ -17,7 +17,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'Name, specialization, hospital, and license ID are required.' }, { status: 400 });
     }
 
-    const { data: doctor, error } = await supabase
+    const { data: doctor, error } = await supabaseAdmin
       .from('doctors')
       .update({
         name,

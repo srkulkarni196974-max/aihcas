@@ -2,7 +2,7 @@
  * Doctor authentication utilities
  * Separate from patient auth — doctors have their own JWT session
  */
-import { supabase } from './supabase';
+import { supabase, supabaseAdmin } from './supabase';
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 
@@ -34,7 +34,7 @@ export async function registerDoctor(data: {
   bio?: string;
 }) {
   // Check if email already exists
-  const { data: existing } = await supabase
+  const { data: existing } = await supabaseAdmin
     .from('doctors')
     .select('id')
     .eq('email', data.email)
@@ -44,7 +44,7 @@ export async function registerDoctor(data: {
 
   const passwordHash = await bcrypt.hash(data.password, 12);
 
-  const { data: doctor, error } = await supabase
+  const { data: doctor, error } = await supabaseAdmin
     .from('doctors')
     .insert({
       name: data.name,
@@ -70,7 +70,7 @@ export async function registerDoctor(data: {
 
 // ── Login a doctor ─────────────────────────────────────────────
 export async function loginDoctor(email: string, password: string) {
-  const { data: doctor, error } = await supabase
+  const { data: doctor, error } = await supabaseAdmin
     .from('doctors')
     .select('*')
     .eq('email', email)
