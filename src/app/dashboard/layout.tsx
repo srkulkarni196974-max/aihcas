@@ -15,7 +15,9 @@ import {
   LogOut, 
   Menu, 
   X,
-  Sparkles
+  Sparkles,
+  Scan,
+  Share2
 } from 'lucide-react';
 
 const navItems = [
@@ -24,6 +26,8 @@ const navItems = [
   { icon: <Mic className="w-4 h-4" />, label: 'Voice Call', href: '/dashboard/voice' },
   { icon: <Pill className="w-4 h-4" />, label: 'Prescription', href: '/dashboard/prescription' },
   { icon: <FileSpreadsheet className="w-4 h-4" />, label: 'Report Analysis', href: '/dashboard/reports' },
+  { icon: <Scan className="w-4 h-4" />, label: 'Skin Analysis', href: '/dashboard/skin' },
+  { icon: <Share2 className="w-4 h-4" />, label: 'Share with Doctor', href: '/dashboard/share' },
   { icon: <PhoneCall className="w-4 h-4" />, label: 'Emergency', href: '/dashboard/emergency' },
   { icon: <User className="w-4 h-4" />, label: 'Health Profile', href: '/dashboard/profile' },
 ];
