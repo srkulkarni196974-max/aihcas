@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   if (!doctorId) return NextResponse.json({ error: 'doctor_id required' }, { status: 400 });
 
   // Mark doctor messages as read
-  await supabase
+  await supabaseAdmin
     .from('consultation_messages')
     .update({ is_read: true })
     .eq('patient_id', patientId)
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     .eq('sender_role', 'doctor')
     .eq('is_read', false);
 
-  const { data } = await supabase
+  const { data } = await supabaseAdmin
     .from('consultation_messages')
     .select('*')
     .eq('patient_id', patientId)
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
   const { doctorId, message } = await req.json();
   if (!doctorId || !message) return NextResponse.json({ error: 'doctorId and message required' }, { status: 400 });
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('consultation_messages')
     .insert({
       patient_id: patientId,

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Verify the link exists
-  const { data: link } = await supabase
+  const { data: link } = await supabaseAdmin
     .from('patient_doctor_links')
     .select('id')
     .eq('patient_id', patientId)
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
   if (!link) return NextResponse.json({ error: 'You are not connected to this doctor.' }, { status: 403 });
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('shared_reports')
     .insert({
       patient_id: patientId,
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
   const patientId = await getPatientId();
   if (!patientId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { data } = await supabase
+  const { data } = await supabaseAdmin
     .from('shared_reports')
     .select('*, doctors:doctor_id(name, specialization, hospital_name)')
     .eq('patient_id', patientId)

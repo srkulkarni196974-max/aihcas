@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   if (!doctorId) return NextResponse.json({ error: 'doctorId is required' }, { status: 400 });
 
   // Check doctor exists and is approved
-  const { data: doctor } = await supabase
+  const { data: doctor } = await supabaseAdmin
     .from('doctors')
     .select('id, name')
     .eq('id', doctorId)
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   if (!doctor) return NextResponse.json({ error: 'Doctor not found or not approved.' }, { status: 404 });
 
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from('patient_doctor_links')
     .upsert({
       patient_id: patientId,
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
   const patientId = await getPatientId();
   if (!patientId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { data } = await supabase
+  const { data } = await supabaseAdmin
     .from('patient_doctor_links')
     .select('doctor_id, status, linked_at, doctors:doctor_id(id, name, specialization, hospital_name, city, avatar_url)')
     .eq('patient_id', patientId)
