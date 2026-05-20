@@ -38,19 +38,67 @@ export const authOptions: NextAuthOptions = {
     signIn: '/auth',
   },
   callbacks: {
-    async signIn({ user, account, profile: googleProfile }) {
+    async signIn({ user, account }) {
       if (account?.provider === 'google') {
-        const { data: existingUser, error } = await supabase
+        // 1. Resolve canonical usr_... ID using authenticateGoogle
+        const result = await authenticateGoogle(user.email || '', user.name || '');
+        const canonicalId = result.user.userId;
+        const legacyId = user.id; // Google numeric ID
+
+        // Update the user object's ID so NextAuth uses the canonical ID
+        user.id = canonicalId;
+
+        // 2. Load profiles to check if we need to migrate/upsert
+        const { data: canonicalProfile } = await supabase
           .from('profiles')
           .select('*')
-          .eq('id', user.id)
-          .single();
+          .eq('id', canonicalId)
+          .maybeSingle();
 
-        if (!existingUser) {
-          // New Google user, profile will be created by the Supabase trigger if configured, 
-          // but we'll do it manually here to be safe and include extra info.
+        const { data: legacyProfile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', legacyId)
+          .maybeSingle();
+
+        if (legacyProfile) {
+          if (!canonicalProfile) {
+            // Update the legacy profile to use the canonical ID
+            await supabase
+              .from('profiles')
+              .update({ id: canonicalId, updated_at: new Date().toISOString() })
+              .eq('id', legacyId);
+          } else {
+            // Both exist. Merge clinical data if canonical is empty, and delete legacy
+            const mergedHistory = [canonicalProfile.medical_history, legacyProfile.medical_history]
+              .filter(Boolean)
+              .join(', ');
+            
+            await supabase
+              .from('profiles')
+              .update({
+                medical_history: mergedHistory || undefined,
+                age: canonicalProfile.age || legacyProfile.age || undefined,
+                gender: canonicalProfile.gender || legacyProfile.gender || undefined,
+                blood_group: canonicalProfile.blood_group || legacyProfile.blood_group || undefined,
+                height: canonicalProfile.height || legacyProfile.height || undefined,
+                weight: canonicalProfile.weight || legacyProfile.weight || undefined,
+                allergies: canonicalProfile.allergies || legacyProfile.allergies || undefined,
+                emergency_contact_name: canonicalProfile.emergency_contact_name || legacyProfile.emergency_contact_name || undefined,
+                emergency_contact_phone: canonicalProfile.emergency_contact_phone || legacyProfile.emergency_contact_phone || undefined,
+                updated_at: new Date().toISOString()
+              })
+              .eq('id', canonicalId);
+
+            await supabase
+              .from('profiles')
+              .delete()
+              .eq('id', legacyId);
+          }
+        } else if (!canonicalProfile) {
+          // No profile at all, create a new one under canonical ID
           await supabase.from('profiles').upsert({
-            id: user.id,
+            id: canonicalId,
             full_name: user.name,
             username: user.email?.split('@')[0],
             avatar_url: user.image,
@@ -61,9 +109,15 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        token.userId = user.id;
+        if (account?.provider === 'google') {
+          // Double-check we use the canonical ID for Google sign-in
+          const result = await authenticateGoogle(user.email || '', user.name || '');
+          token.userId = result.user.userId;
+        } else {
+          token.userId = user.id;
+        }
       }
       return token;
     },
