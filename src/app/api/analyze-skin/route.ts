@@ -18,8 +18,8 @@ export async function POST(req: NextRequest) {
     const base64Image = Buffer.from(imageBytes).toString('base64');
     const mimeType = imageFile.type as 'image/jpeg' | 'image/png' | 'image/webp';
 
-    // Use gemini-1.5-flash for vision analysis
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // Use gemini-2.5-flash for vision analysis
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `You are a dermatology AI assistant integrated into a clinical healthcare platform. 
 Analyze this skin image carefully and provide a structured dermatological observation report.
