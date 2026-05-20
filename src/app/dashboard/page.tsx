@@ -20,8 +20,10 @@ import {
   Calendar,
   Lock,
   ArrowRight,
-  ShieldAlert
+  ShieldAlert,
+  FileDown
 } from 'lucide-react';
+
 
 const modules = [
   {
@@ -218,6 +220,29 @@ export default function DashboardPage() {
           ))}
         </div>
       </section>
+
+      {/* Premium Clinical Summary Panel */}
+      <div className="glass-card animate-fadeInUp" style={{ background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.04), rgba(179, 143, 93, 0.04))', border: '1.5px solid rgba(30, 58, 138, 0.12)', borderRadius: 20, padding: '28px 32px', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, flex: '1 1 500px' }}>
+          <div style={{ width: 52, height: 52, borderRadius: '12px', background: 'white', border: '1.5px solid rgba(30, 58, 138, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(30, 58, 138, 0.05)' }}>
+            <FileDown className="w-6 h-6 text-[#1E3A8A]" />
+          </div>
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontWeight: 850, fontSize: '1.15rem', color: '#1E3A8A', display: 'flex', alignItems: 'center', gap: 8 }}>
+              Generate Clinical Summary Report
+              <span className="badge" style={{ background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', color: 'white', fontWeight: 800, padding: '3px 8px', fontSize: '0.65rem', borderRadius: 100, textTransform: 'uppercase', letterSpacing: '0.5px' }}>New Feature</span>
+            </div>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.86rem', marginTop: 4, lineHeight: 1.5 }}>
+              Combine your profile demographics, recent chat triage history, prescriptions, and pathology lab findings into a secure clinical-grade summary PDF. Save it to your vault, print it, or share it directly with connected doctors.
+            </p>
+          </div>
+        </div>
+        <div>
+          <Link href="/dashboard/share?triggerReport=true" className="btn btn-primary animate-hover" style={{ borderRadius: 100, fontWeight: 700, background: 'linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%)', border: 'none', padding: '12px 24px', boxShadow: '0 4px 14px rgba(30, 58, 138, 0.25)', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <Sparkles className="w-4 h-4 text-[#B38F5D]" /> Launch PDF Generator
+          </Link>
+        </div>
+      </div>
 
       {/* Emergency Assistance Segment */}
       <div style={{ background: 'linear-gradient(135deg, rgba(220,38,38,0.04), rgba(220,38,38,0.01))', border: '1.5px solid rgba(220,38,38,0.15)', borderRadius: 20, padding: '24px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>

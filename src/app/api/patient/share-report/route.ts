@@ -53,6 +53,23 @@ export async function POST(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+  // Automatically post a notification in consultation_messages
+  try {
+    const displayType = reportType === 'full_summary' ? 'Full Summary' : reportType.replace(/_/g, ' ');
+    const notificationText = `System Notification: I have shared a new clinical report: "${title}" (${displayType}). Please review it in the Shared Reports tab.`;
+    await supabaseAdmin
+      .from('consultation_messages')
+      .insert({
+        patient_id: patientId,
+        doctor_id: doctorId,
+        sender_role: 'patient',
+        message: notificationText,
+        sent_at: new Date().toISOString(),
+      });
+  } catch (msgErr) {
+    console.error("Error creating automated consultation message notification:", msgErr);
+  }
+
   return NextResponse.json({ success: true, report: data });
 }
 

@@ -3,8 +3,11 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Search, UserPlus, CheckCircle, Stethoscope, Building, MapPin,
-  Send, FileText, MessageSquare, Heart, ChevronRight, Clock, X, Share2
+  Send, FileText, MessageSquare, Heart, ChevronRight, Clock, X, Share2, FileDown, Sparkles
 } from 'lucide-react';
+import { generateSummaryAction } from '@/app/actions';
+import MedicalSummaryPDF from '@/components/MedicalSummaryPDF';
+
 
 interface Doctor { id: string; name: string; specialization: string; hospital_name: string; city?: string; avatar_url?: string; }
 interface LinkedDoctor { doctor_id: string; status: string; linked_at: string; doctors: Doctor; }
@@ -38,6 +41,97 @@ export default function ShareDoctorPage() {
   const [shareNotes, setShareNotes] = useState('');
   const [sharing, setSharing] = useState(false);
   const [shareSuccess, setShareSuccess] = useState('');
+
+  // PDF Generator States
+  const [showPDFGenerator, setShowPDFGenerator] = useState(false);
+  const [generatingPDFData, setGeneratingPDFData] = useState(false);
+  const [pdfData, setPdfData] = useState<any | null>(null);
+  const [sharePDFDoctorId, setSharePDFDoctorId] = useState<string>('');
+  const [pdfShareSuccess, setPdfShareSuccess] = useState('');
+  const [pdfShareError, setPdfShareError] = useState('');
+
+  const handleOpenGenerator = async () => {
+    setShowPDFGenerator(true);
+    setGeneratingPDFData(true);
+    setPdfShareSuccess('');
+    setPdfShareError('');
+    try {
+      const res = await generateSummaryAction();
+      if (res.success && res.data) {
+        setPdfData(res.data);
+        if (linkedDoctors.length > 0) {
+          setSharePDFDoctorId(linkedDoctors[0].doctor_id);
+        }
+      } else {
+        setPdfShareError(res.error || "Failed to compile summary report.");
+      }
+    } catch (err: any) {
+      setPdfShareError(err.message || "An unexpected error occurred.");
+    } finally {
+      setGeneratingPDFData(false);
+    }
+  };
+
+  const handleSharePDFWithDoctor = async () => {
+    if (!sharePDFDoctorId || !pdfData) return;
+    setSharing(true);
+    setPdfShareSuccess('');
+    setPdfShareError('');
+    try {
+      const res = await fetch('/api/patient/share-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          doctorId: sharePDFDoctorId,
+          reportType: 'full_summary',
+          title: `Clinical Health Summary - ${new Date().toLocaleDateString()}`,
+          summary: pdfData.synthesis || 'No clinical synthesis compiled.',
+          aiAnalysis: pdfData.synthesis || 'No clinical synthesis compiled.',
+          triageLevel: pdfData.triageLevel || 'consult',
+          severity: pdfData.triageLevel === 'emergency' ? 'CRITICAL' : pdfData.triageLevel === 'consult' ? 'MODERATE' : 'LOW',
+          patientNotes: 'Auto-compiled clinical report summary including profile demographics, prescriptions, pathology parameters and active triage checklists.'
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to share report.');
+      setPdfShareSuccess('Summary report successfully synchronized and shared with doctor! A direct notification has been sent inside your consultation chat.');
+      const refreshed = await fetch('/api/patient/share-report').then(r => r.json());
+      setSharedReports(refreshed.reports || []);
+    } catch (err: any) {
+      setPdfShareError(err.message || 'Failed to share report.');
+    } finally {
+      setSharing(false);
+    }
+  };
+
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById('report-pdf-content');
+    if (!element) return;
+    try {
+      const html2pdf = (await import('html2pdf.js')).default;
+      const opt = {
+        margin:       10,
+        filename:     `aihcas-clinical-summary-${Date.now()}.pdf`,
+        image:        { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm' as const, format: 'letter' as const, orientation: 'portrait' as const }
+      };
+      html2pdf().set(opt).from(element).save();
+    } catch (err) {
+      console.error("Failed to generate PDF:", err);
+      setPdfShareError("Failed to generate PDF download.");
+    }
+  };
+
+  // Trigger report generator if query param is set
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('triggerReport') === 'true') {
+        handleOpenGenerator();
+      }
+    }
+  }, [linkedDoctors.length > 0]);
 
   // Fetch linked doctors
   useEffect(() => {
@@ -152,6 +246,25 @@ export default function ShareDoctorPage() {
       {/* ── MY DOCTORS TAB ─────────────────────────────────── */}
       {activeTab === 'doctors' && (
         <div>
+          {/* Premium Clinical Summary Section */}
+          <div className="glass-card animate-fadeInUp" style={{ background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.04), rgba(179, 143, 93, 0.04))', border: '1.5px solid rgba(30, 58, 138, 0.12)', borderRadius: 20, padding: '24px 28px', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: '1 1 500px' }}>
+              <div style={{ width: 46, height: 46, borderRadius: '10px', background: 'white', border: '1.5px solid rgba(30, 58, 138, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <FileText className="w-5 h-5 text-[#1E3A8A]" />
+              </div>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  Generate &amp; Export Medical Summary
+                  <span className="badge" style={{ background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', color: 'white', fontWeight: 800, padding: '2px 6px', fontSize: '0.6rem', borderRadius: 100, textTransform: 'uppercase', letterSpacing: '0.5px' }}>NEW</span>
+                </div>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: 2 }}>Compile profile parameters, prescriptions, pathology metrics and active triage records into a premium clinical PDF report.</div>
+              </div>
+            </div>
+            <button className="btn btn-primary" onClick={handleOpenGenerator} style={{ borderRadius: 100, fontWeight: 700, padding: '10px 20px', display: 'flex', alignItems: 'center', gap: 6, background: 'linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%)', border: 'none' }}>
+              <Sparkles className="w-3.5 h-3.5 text-[#B38F5D]" /> Generate Summary PDF
+            </button>
+          </div>
+
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
             <h2 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--text-dark)' }}>Connected Doctors ({linkedDoctors.length})</h2>
             <button className="btn btn-primary btn-sm" onClick={() => setShowSearch(!showSearch)} style={{ borderRadius: 100, fontWeight: 700 }}>
@@ -381,6 +494,87 @@ export default function ShareDoctorPage() {
                 {sharing ? 'Sharing...' : 'Share with Doctor'} <Send className="w-4 h-4" />
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── PDF GENERATOR PREVIEW MODAL ───────────────────── */}
+      {showPDFGenerator && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.4)', backdropFilter: 'blur(8px)', zIndex: 110, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+          <div className="glass-card animate-fadeInUp" style={{ width: '100%', maxWidth: 860, height: '90vh', display: 'flex', flexDirection: 'column', background: 'white', border: '1.5px solid var(--border)', overflow: 'hidden', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
+            {/* Modal Header */}
+            <div style={{ padding: '16px 24px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#F8FAFC' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <FileText className="w-5 h-5 text-[#1E3A8A]" />
+                <div>
+                  <h3 style={{ fontWeight: 850, fontSize: '1.05rem', color: '#1E3A8A', margin: 0 }}>AIHCAS Clinical Report Preview</h3>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>Verify clinical data integration prior to export or sharing</span>
+                </div>
+              </div>
+              <button onClick={() => setShowPDFGenerator(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-light)', padding: 4 }}><X className="w-5 h-5" /></button>
+            </div>
+
+            {/* Modal Content Scrollable Area */}
+            <div style={{ flex: 1, overflowY: 'auto', background: '#F1F5F9', padding: '24px 16px', display: 'flex', justifyContent: 'center' }}>
+              {generatingPDFData ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, padding: 48 }}>
+                  <div style={{ width: 40, height: 40, border: '3px solid rgba(30,58,138,0.1)', borderTopColor: '#1E3A8A', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 700 }}>Aggregating physical, pharmaceutical & clinical pathology metrics...</p>
+                </div>
+              ) : pdfShareError && !pdfData ? (
+                <div style={{ textAlign: 'center', padding: 48 }}>
+                  <p style={{ color: '#DC2626', fontWeight: 700, fontSize: '0.9rem' }}>⚠️ {pdfShareError}</p>
+                  <button className="btn btn-secondary btn-sm" onClick={handleOpenGenerator} style={{ marginTop: 12, borderRadius: 100 }}>Retry Generation</button>
+                </div>
+              ) : pdfData ? (
+                /* PDF Render Shell */
+                <div style={{ boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', borderRadius: '4px', overflow: 'hidden' }}>
+                  <MedicalSummaryPDF data={pdfData} />
+                </div>
+              ) : null}
+            </div>
+
+            {/* Modal Controls Panel */}
+            {pdfData && !generatingPDFData && (
+              <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border)', background: '#F8FAFC', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+                {/* Sharing actions */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  {linkedDoctors.length > 0 ? (
+                    <>
+                      <select className="input-field" value={sharePDFDoctorId} onChange={e => setSharePDFDoctorId(e.target.value)} style={{ borderRadius: 100, fontSize: '0.78rem', padding: '6px 12px', width: 200, background: 'white' }}>
+                        {linkedDoctors.map(link => (
+                          <option key={link.doctor_id} value={link.doctor_id}>Dr. {link.doctors.name} ({link.doctors.specialization})</option>
+                        ))}
+                      </select>
+                      <button className="btn btn-primary" onClick={handleSharePDFWithDoctor} disabled={sharing || !sharePDFDoctorId} style={{ borderRadius: 100, fontWeight: 800, fontSize: '0.78rem', padding: '8px 16px', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                        <Share2 className="w-3.5 h-3.5" /> {sharing ? 'Sharing...' : 'Share with Doctor'}
+                      </button>
+                    </>
+                  ) : (
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-light)', fontWeight: 600 }}>⚠️ Connect with a doctor in the portal to share report.</span>
+                  )}
+                </div>
+
+                {/* Local actions */}
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button className="btn btn-secondary" onClick={handleDownloadPDF} style={{ borderRadius: 100, fontWeight: 700, fontSize: '0.78rem', padding: '8px 16px', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                    <FileDown className="w-3.5 h-3.5" /> Download Summary PDF
+                  </button>
+                  <button className="btn btn-secondary" onClick={() => setShowPDFGenerator(false)} style={{ borderRadius: 100, fontWeight: 700, fontSize: '0.78rem', padding: '8px 16px' }}>
+                    Close Preview
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Notification indicators inside modal */}
+            {(pdfShareSuccess || pdfShareError) && (
+              <div style={{ padding: '8px 24px', background: pdfShareSuccess ? '#ECFDF5' : '#FEF2F2', borderTop: '1px solid var(--border)' }}>
+                <p style={{ fontSize: '0.73rem', color: pdfShareSuccess ? '#059669' : '#DC2626', fontWeight: 700, margin: 0 }}>
+                  {pdfShareSuccess ? `✓ ${pdfShareSuccess}` : `⚠️ ${pdfShareError}`}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}
