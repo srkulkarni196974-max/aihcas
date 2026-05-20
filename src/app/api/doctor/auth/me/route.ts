@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   // Fetch fresh doctor record from DB
   const { data: doctor } = await supabase
     .from('doctors')
-    .select('id, name, email, specialization, hospital_name, city, bio, avatar_url, is_approved, is_active, license_id')
+    .select('id, name, email, specialization, hospital_name, city, bio, avatar_url, is_approved, is_active, license_id, organization_id')
     .eq('id', session.doctorId)
     .single();
 

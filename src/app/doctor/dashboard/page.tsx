@@ -3,10 +3,24 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Heart, Users, FileText, MessageSquare, AlertTriangle, LogOut,
-  ChevronRight, Clock, Send, Activity, Eye, Inbox, Bell, Stethoscope
+  ChevronRight, Clock, Send, Activity, Eye, Inbox, Bell, Stethoscope,
+  User, Upload, CheckCircle, ShieldAlert
 } from 'lucide-react';
 
-interface Doctor { id: string; name: string; email: string; specialization: string; hospital_name: string; is_approved: boolean; avatar_url?: string; }
+interface Doctor { 
+  id: string; 
+  name: string; 
+  email: string; 
+  specialization: string; 
+  hospital_name: string; 
+  is_approved: boolean; 
+  avatar_url?: string; 
+  phone?: string;
+  city?: string;
+  bio?: string;
+  license_id?: string;
+  organization_id?: string;
+}
 interface Patient { id: string; name: string; email: string; age?: number; gender?: string; blood_group?: string; chronic_conditions?: string; allergies?: string; }
 interface Report { id: string; patient_id: string; report_type: string; title: string; summary?: string; ai_analysis?: any; anatomical_regions?: any; triage_level?: string; severity?: string; is_read_by_doctor: boolean; shared_at: string; }
 interface Msg { id: string; patient_id: string; doctor_id: string; sender_role: string; message: string; is_read: boolean; sent_at: string; }
@@ -19,12 +33,25 @@ export default function DoctorDashboard() {
   const [reports, setReports] = useState<Report[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [unreadMessages, setUnreadMessages] = useState(0);
-  const [activeTab, setActiveTab] = useState<'patients' | 'reports' | 'chat'>('patients');
+  const [activeTab, setActiveTab] = useState<'patients' | 'reports' | 'chat' | 'profile'>('patients');
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
   const [chatMessages, setChatMessages] = useState<Msg[]>([]);
   const [chatInput, setChatInput] = useState('');
   const [sendingChat, setSendingChat] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Profile Edit fields
+  const [profileName, setProfileName] = useState('');
+  const [profileSpecialization, setProfileSpecialization] = useState('');
+  const [profileHospital, setProfileHospital] = useState('');
+  const [profilePhone, setProfilePhone] = useState('');
+  const [profileCity, setProfileCity] = useState('');
+  const [profileBio, setProfileBio] = useState('');
+  const [profileLicenseId, setProfileLicenseId] = useState('');
+  const [profileOrganizationId, setProfileOrganizationId] = useState('');
+  const [saveProfileSuccess, setSaveProfileSuccess] = useState('');
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [profileError, setProfileError] = useState('');
 
   // Fetch doctor session
   useEffect(() => {
@@ -33,6 +60,20 @@ export default function DoctorDashboard() {
       setDoctor(d.doctor);
     }).catch(() => router.push('/doctor/auth')).finally(() => setLoading(false));
   }, [router]);
+
+  // Load profile values when doctor is loaded
+  useEffect(() => {
+    if (doctor) {
+      setProfileName(doctor.name || '');
+      setProfileSpecialization(doctor.specialization || '');
+      setProfileHospital(doctor.hospital_name || '');
+      setProfilePhone(doctor.phone || '');
+      setProfileCity(doctor.city || '');
+      setProfileBio(doctor.bio || '');
+      setProfileLicenseId(doctor.license_id || '');
+      setProfileOrganizationId(doctor.organization_id || '');
+    }
+  }, [doctor]);
 
   // Fetch dashboard data
   useEffect(() => {
@@ -66,6 +107,36 @@ export default function DoctorDashboard() {
   const handleLogout = async () => {
     await fetch('/api/doctor/auth/logout', { method: 'POST' });
     router.push('/doctor/auth');
+  };
+
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingProfile(true); setSaveProfileSuccess(''); setProfileError('');
+    try {
+      const res = await fetch('/api/doctor/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: profileName,
+          specialization: profileSpecialization,
+          hospitalName: profileHospital,
+          phone: profilePhone,
+          city: profileCity,
+          bio: profileBio,
+          licenseId: profileLicenseId,
+          organizationId: profileOrganizationId,
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setSaveProfileSuccess(data.message);
+      setDoctor(prev => prev ? { ...prev, ...data.doctor } : null);
+      setTimeout(() => setSaveProfileSuccess(''), 3000);
+    } catch (err: any) {
+      setProfileError(err.message || 'Failed to update profile.');
+    } finally {
+      setSavingProfile(false);
+    }
   };
 
   const selectedPatient = patients.find(p => p.id === selectedPatientId);
@@ -119,6 +190,7 @@ export default function DoctorDashboard() {
             { key: 'patients' as const, icon: <Users className="w-4 h-4" />, label: 'My Patients', badge: patients.length },
             { key: 'reports' as const, icon: <FileText className="w-4 h-4" />, label: 'Shared Reports', badge: unreadCount },
             { key: 'chat' as const, icon: <MessageSquare className="w-4 h-4" />, label: 'Messages', badge: unreadMessages },
+            { key: 'profile' as const, icon: <User className="w-4 h-4" />, label: 'My Profile', badge: 0 },
           ].map(item => (
             <button key={item.key} onClick={() => setActiveTab(item.key)} style={{
               width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 10, marginBottom: 4,
@@ -332,6 +404,99 @@ export default function DoctorDashboard() {
                   </div>
                 )}
               </div>
+            </div>
+          )}
+
+          {/* ── DOCTOR PROFILE TAB ──────────────────────────────── */}
+          {activeTab === 'profile' && (
+            <div className="glass-card animate-fadeInUp" style={{ padding: 32, background: 'white', border: '1.5px solid var(--border)', position: 'relative' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28, flexWrap: 'wrap' }}>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', color: 'white', fontWeight: 800 }}>
+                  {doctor.name.charAt(0)}
+                </div>
+                <div style={{ flex: 1, textAlign: 'left', minWidth: 200 }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 850, color: 'var(--text-dark)' }}>Dr. {doctor.name}</div>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: 2 }}>{doctor.email}</div>
+                  <div style={{ display: 'flex', gap: 6, marginTop: 8, flexWrap: 'wrap' }}>
+                    <span style={{ padding: '2px 10px', borderRadius: 100, fontSize: '0.7rem', fontWeight: 800, background: 'rgba(30,58,138,0.06)', color: 'var(--primary-deep)', border: '1px solid rgba(30,58,138,0.1)' }}>
+                      {doctor.specialization}
+                    </span>
+                    <span style={{ padding: '2px 10px', borderRadius: 100, fontSize: '0.7rem', fontWeight: 800, background: doctor.is_approved ? 'rgba(13,148,136,0.06)' : 'rgba(217,119,6,0.06)', color: doctor.is_approved ? '#0D9488' : '#D97706', border: `1px solid ${doctor.is_approved ? 'rgba(13,148,136,0.15)' : 'rgba(217,119,6,0.15)'}` }}>
+                      {doctor.is_approved ? '✓ Verified Account' : '⏳ Pending Admin Review'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {saveProfileSuccess && (
+                <div style={{ padding: '10px 14px', background: 'rgba(13,148,136,0.06)', border: '1px solid rgba(13,148,136,0.15)', borderRadius: 10, marginBottom: 20 }}>
+                  <p style={{ fontSize: '0.8rem', color: '#0D9488', fontWeight: 700, display: 'flex', gap: 6, alignItems: 'center' }}>
+                    <CheckCircle className="w-4 h-4" /> {saveProfileSuccess}
+                  </p>
+                </div>
+              )}
+
+              {profileError && (
+                <div style={{ padding: '10px 14px', background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.15)', borderRadius: 10, marginBottom: 20 }}>
+                  <p style={{ fontSize: '0.8rem', color: '#DC2626', fontWeight: 700 }}>
+                    {profileError}
+                  </p>
+                </div>
+              )}
+
+              <form onSubmit={handleSaveProfile} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="stack-mobile">
+                  <div>
+                    <label className="input-label" style={{ textAlign: 'left' }}><User className="w-3 h-3 inline mr-1" />Doctor Name *</label>
+                    <input className="input-field" value={profileName} onChange={e => setProfileName(e.target.value)} required style={{ borderRadius: 10, background: '#F8FAFC' }} />
+                  </div>
+                  <div>
+                    <label className="input-label" style={{ textAlign: 'left' }}><Activity className="w-3 h-3 inline mr-1" />Specialization *</label>
+                    <input className="input-field" value={profileSpecialization} onChange={e => setProfileSpecialization(e.target.value)} required style={{ borderRadius: 10, background: '#F8FAFC' }} />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="stack-mobile">
+                  <div>
+                    <label className="input-label" style={{ textAlign: 'left' }}><Stethoscope className="w-3 h-3 inline mr-1" />Hospital / Clinic Name *</label>
+                    <input className="input-field" value={profileHospital} onChange={e => setProfileHospital(e.target.value)} required style={{ borderRadius: 10, background: '#F8FAFC' }} />
+                  </div>
+                  <div>
+                    <label className="input-label" style={{ textAlign: 'left' }}><Clock className="w-3 h-3 inline mr-1" />License ID *</label>
+                    <input className="input-field" value={profileLicenseId} onChange={e => setProfileLicenseId(e.target.value)} required style={{ borderRadius: 10, background: '#F8FAFC' }} />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }} className="stack-mobile">
+                  <div>
+                    <label className="input-label" style={{ textAlign: 'left' }}>Organization ID / Affiliate ID</label>
+                    <input className="input-field" value={profileOrganizationId} onChange={e => setProfileOrganizationId(e.target.value)} style={{ borderRadius: 10, background: '#F8FAFC' }} />
+                  </div>
+                  <div>
+                    <label className="input-label" style={{ textAlign: 'left' }}>Contact Phone</label>
+                    <input className="input-field" value={profilePhone} onChange={e => setProfilePhone(e.target.value)} style={{ borderRadius: 10, background: '#F8FAFC' }} />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="input-label" style={{ textAlign: 'left' }}>City</label>
+                  <input className="input-field" value={profileCity} onChange={e => setProfileCity(e.target.value)} style={{ borderRadius: 10, background: '#F8FAFC' }} />
+                </div>
+
+                <div>
+                  <label className="input-label" style={{ textAlign: 'left' }}>Professional Bio / Clinical Focus</label>
+                  <textarea className="input-field" rows={3} value={profileBio} onChange={e => setProfileBio(e.target.value)} placeholder="Tell patients about your clinical focus, background, and research..." style={{ resize: 'none', borderRadius: 12, background: '#F8FAFC', fontSize: '0.85rem' }} />
+                </div>
+
+                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10, flexWrap: 'wrap', gap: 12 }}>
+                  <button className="btn btn-danger btn-sm" type="button" onClick={handleLogout} style={{ borderRadius: 100, fontWeight: 700 }}>
+                    <LogOut className="w-4 h-4 text-white inline mr-1" /> Sign Out Session
+                  </button>
+                  <button className="btn btn-primary" type="submit" disabled={savingProfile} style={{ borderRadius: 100, fontWeight: 700 }}>
+                    <Upload className="w-4 h-4" /> {savingProfile ? 'Saving Changes...' : 'Save Professional Profile'}
+                  </button>
+                </div>
+              </form>
             </div>
           )}
 
