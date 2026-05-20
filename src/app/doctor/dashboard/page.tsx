@@ -105,6 +105,10 @@ export default function DoctorDashboard() {
   };
 
   const handleLogout = async () => {
+    if (typeof window !== 'undefined') {
+      localStorage.clear();
+      sessionStorage.clear();
+    }
     await fetch('/api/doctor/auth/logout', { method: 'POST' });
     router.push('/doctor/auth');
   };

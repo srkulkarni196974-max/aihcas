@@ -91,6 +91,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
+    if (typeof window !== 'undefined') {
+      localStorage.clear();
+      sessionStorage.clear();
+    }
     await nextAuthSignOut({ callbackUrl: '/auth' });
   };
 

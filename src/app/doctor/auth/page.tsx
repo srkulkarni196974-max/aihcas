@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Heart, Mail, Lock, User, Building, Award, Phone, MapPin, FileText, ArrowRight, ChevronRight } from 'lucide-react';
 
@@ -7,6 +7,17 @@ export default function DoctorAuthPage() {
   const router = useRouter();
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [loading, setLoading] = useState(false);
+
+  // Sync mode with URL query parameter
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const modeParam = params.get('mode');
+      if (modeParam === 'login' || modeParam === 'register') {
+        setMode(modeParam);
+      }
+    }
+  }, []);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
