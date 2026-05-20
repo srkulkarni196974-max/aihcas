@@ -2,12 +2,25 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { UserStorage, StorageKeys } from '@/lib/storage';
+import { 
+  Mic, 
+  Square, 
+  VolumeX, 
+  Play, 
+  Trash2, 
+  Sparkles, 
+  Bot, 
+  Volume2, 
+  Heart,
+  ChevronRight,
+  ShieldAlert
+} from 'lucide-react';
 
 type Speaker = 'user' | 'ai';
 type Transcript = { speaker: Speaker; text: string; time: string };
 type CallPhase = 'idle' | 'greeting' | 'listening' | 'processing' | 'speaking' | 'ended';
 
-// ─── Speech helpers ────────────────────────────────────────────────────────────
+// Speech helpers
 function stripForSpeech(text: string): string {
   return text
     .replace(/[\u{1F000}-\u{1FFFF}]/gu, '')
@@ -20,7 +33,6 @@ function stripForSpeech(text: string): string {
     .trim();
 }
 
-// ─── Component ─────────────────────────────────────────────────────────────────
 export default function VoicePage() {
   const { user } = useAuth();
 
@@ -55,7 +67,7 @@ export default function VoicePage() {
     return () => clearInterval(id);
   }, [phase]);
 
-  // ─── TTS speak ──────────────────────────────────────────────────────────────
+  // TTS speak
   const speak = useCallback((text: string, onDone?: () => void) => {
     window.speechSynthesis.cancel();
     setPhase('speaking');
@@ -90,7 +102,7 @@ export default function VoicePage() {
     utterance.onend = () => { clearTimeout(guard); finish(); };
   }, []);
 
-  // ─── Speech Recognition ─────────────────────────────────────────────────────
+  // Speech Recognition
   const startListening = useCallback(() => {
     if (typeof window === 'undefined') return;
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -149,7 +161,7 @@ export default function VoicePage() {
     try { recog.start(); } catch (e) { console.error('recog.start error', e); }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ─── AI Processing ───────────────────────────────────────────────────────────
+  // AI Processing
   const handleUserInput = useCallback(async (text: string) => {
     const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const updated: Transcript[] = [...transcriptsRef.current, { speaker: 'user', text, time }];
@@ -190,7 +202,7 @@ export default function VoicePage() {
     }
   }, [speak, startListening, user?.userId]);
 
-  // ─── Call Controls ───────────────────────────────────────────────────────────
+  // Call Controls
   const startCall = useCallback(() => {
     setTranscripts([]);
     setPhase('greeting');
@@ -228,146 +240,187 @@ export default function VoicePage() {
     speechRateRef.current = next;
   }, [speechRate]);
 
-  // ─── Derived state for UI ────────────────────────────────────────────────────
+  // Derived state for UI
   const isActive = phase !== 'idle' && phase !== 'ended';
   const statusLabel = phase === 'idle' ? 'Standby'
-    : phase === 'greeting' ? 'Starting...'
+    : phase === 'greeting' ? 'Initializing...'
     : phase === 'listening' ? '🎙 Listening...'
     : phase === 'processing' ? '⚡ Processing...'
     : phase === 'speaking' ? '🔊 Speaking...'
-    : 'Call Ended';
+    : 'Session Ended';
 
-  const statusBg = !isActive ? '#EAF6FF'
-    : phase === 'speaking' ? '#E6FFF5'
-    : phase === 'processing' ? '#FFFBEA'
-    : '#FFD6D6';
+  const statusBg = !isActive ? 'rgba(30, 58, 138, 0.05)'
+    : phase === 'speaking' ? 'rgba(13, 148, 136, 0.05)'
+    : phase === 'processing' ? 'rgba(217, 119, 6, 0.05)'
+    : 'rgba(220, 38, 38, 0.05)';
 
-  const statusColor = !isActive ? '#4DA6E8'
-    : phase === 'speaking' ? '#178A6A'
-    : phase === 'processing' ? '#92400E'
-    : '#E53E3E';
+  const statusColor = !isActive ? 'var(--primary-deep)'
+    : phase === 'speaking' ? 'var(--secondary-deep)'
+    : phase === 'processing' ? 'var(--warning-deep)'
+    : 'var(--danger-deep)';
 
   return (
-    <div className="page-fade voice-container stack-mobile">
-      {/* Left – Controls */}
-
+    <div className="page-fade voice-container stack-mobile" style={{ gap: '32px' }}>
+      {/* Left – Controls Panel */}
       <div className="full-width-mobile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: '0 0 360px', gap: '28px' }}>
-
         <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '10px' }}>
-            AI <span className="text-gradient">Voice Consultation</span>
+          <h1 style={{ fontSize: '2rem', fontWeight: 850, letterSpacing: '-0.02em', marginBottom: '10px', color: 'var(--text-dark)' }}>
+            AI <span style={{ background: 'linear-gradient(135deg, #1E3A8A 30%, #B38F5D 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Voice Consultation</span>
           </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: 300 }}>
-            Talk naturally. Dr. AIHCAS will ask you questions and then give you a tailored solution.
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', maxWidth: 300, lineHeight: 1.5 }}>
+            Hands-free spoken consultation. Dr. AIHCAS is configured to guide you through a clinical symptoms mapping.
           </p>
         </div>
 
-        {/* Mic Button */}
-        <div style={{ position: 'relative', width: 200, height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Dynamic Mic Wave Button */}
+        <div style={{ position: 'relative', width: 190, height: 190, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {isActive && (
             <>
-              <div className="mic-ripple" style={{ animationDelay: '0s' }} />
-              <div className="mic-ripple" style={{ animationDelay: '0.7s' }} />
-              <div className="mic-ripple" style={{ animationDelay: '1.4s' }} />
+              <div className="mic-ripple" style={{ animationDelay: '0s', background: 'rgba(30, 58, 138, 0.08)' }} />
+              <div className="mic-ripple" style={{ animationDelay: '0.7s', background: 'rgba(179, 143, 93, 0.06)' }} />
+              <div className="mic-ripple" style={{ animationDelay: '1.4s', background: 'rgba(13, 148, 136, 0.05)' }} />
             </>
           )}
           <button
             id="btn-voice-toggle"
             onClick={toggleCall}
             className={`mic-button ${isActive ? 'active' : ''}`}
-            style={{ width: 130, height: 130, fontSize: '3.2rem' }}
+            style={{ 
+              width: 120, 
+              height: 120, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              background: isActive ? 'linear-gradient(135deg, var(--danger-deep), #B91C1C)' : 'linear-gradient(135deg, var(--primary-deep), #2A437E)',
+              boxShadow: isActive ? '0 12px 36px rgba(220, 38, 38, 0.2)' : '0 12px 36px rgba(30, 58, 138, 0.15)',
+              border: 'none',
+              borderRadius: '50%',
+              cursor: 'pointer',
+              transition: 'all 0.3s var(--transition)'
+            }}
           >
-            {isActive ? '⏹' : '🎤'}
+            {isActive ? <Square className="w-8 h-8 text-white fill-white" /> : <Mic className="w-8 h-8 text-white" />}
           </button>
         </div>
 
-        {/* Status */}
+        {/* Dynamic Status Section */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
           <span style={{
-            padding: '8px 22px', borderRadius: 100,
-            fontWeight: 700, fontSize: '0.88rem',
-            textTransform: 'uppercase', letterSpacing: '0.05em',
+            padding: '8px 24px', borderRadius: 100,
+            fontWeight: 800, fontSize: '0.8rem',
+            textTransform: 'uppercase', letterSpacing: '0.06em',
             background: statusBg, color: statusColor,
             transition: 'all 0.3s ease',
+            border: `1px solid ${statusColor}15`
           }}>
             {statusLabel}
           </span>
 
-          {/* Waveform */}
-          <div className="waveform" style={{ height: 48 }}>
+          {/* Sound Bars Waveform */}
+          <div className="waveform" style={{ height: 42, display: 'flex', gap: 4, alignItems: 'center' }}>
             {waveHeights.map((h, i) => (
               <div key={i} className="wave-bar" style={{
-                height: `${h}px`, width: 5,
+                height: `${h}px`, width: 4.5,
+                background: isActive ? 'linear-gradient(to top, var(--primary-deep), var(--accent-deep))' : 'var(--text-light)',
+                borderRadius: '99px',
                 animationName: isActive ? 'waveBar' : 'none',
                 animationDuration: `${0.6 + i * 0.05}s`,
                 animationTimingFunction: 'ease-in-out',
                 animationIterationCount: 'infinite',
                 animationDelay: `${i * 0.07}s`,
                 opacity: isActive ? 1 : 0.2,
+                transition: 'all 0.2s'
               }} />
             ))}
           </div>
         </div>
 
-        {/* Tip card */}
-        <div className="glass-card" style={{ padding: '14px 18px', textAlign: 'center', maxWidth: 300 }}>
-          <p style={{ fontSize: '0.82rem', fontStyle: 'italic', color: 'var(--text-muted)' }}>
-            💡 Try: <em>&quot;I have a headache and mild fever since yesterday.&quot;</em>
+        {/* Tip Instruction Card */}
+        <div className="glass-card" style={{ padding: '14px 20px', textAlign: 'center', maxWidth: 300, border: '1px solid var(--border)' }}>
+          <p style={{ fontSize: '0.8rem', fontStyle: 'italic', color: 'var(--text-muted)', lineHeight: 1.5, display: 'flex', gap: 6, justifyContent: 'center' }}>
+            <Sparkles className="w-4 h-4 text-[#B38F5D] flex-shrink-0" />
+            <span>Try saying: <em>"I have joint aches and fatigue since walking."</em></span>
           </p>
         </div>
 
-        {/* Controls */}
-        <div style={{ display: 'flex', gap: 14 }}>
-          {/* Speed button */}
+        {/* Session Playback Controls */}
+        <div style={{ display: 'flex', gap: 10 }}>
           <button
             className="btn btn-secondary btn-icon"
-            title="Playback Speed"
+            title="Adjust Spoken Speech Rate"
             onClick={toggleSpeed}
-            style={{ minWidth: 52 }}
+            style={{ width: 50, height: 50, borderRadius: '50%', border: '1.5px solid var(--border)', background: 'white' }}
           >
-            <span style={{ fontSize: '0.78rem', fontWeight: 800 }}>{speechRate.toFixed(1)}x</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 850, color: 'var(--primary-deep)' }}>{speechRate.toFixed(1)}x</span>
           </button>
-          <button className="btn btn-secondary btn-icon" title="Mute" onClick={() => window.speechSynthesis.pause()}>🔇</button>
-          <button className="btn btn-secondary btn-icon" title="Resume" onClick={() => window.speechSynthesis.resume()}>▶️</button>
-          <button className="btn btn-secondary btn-icon" title="Clear" onClick={() => setTranscripts([])}>🗑️</button>
+          <button className="btn btn-secondary btn-icon" title="Pause Spoken Output" onClick={() => window.speechSynthesis.pause()} style={{ width: 50, height: 50, borderRadius: '50%', border: '1.5px solid var(--border)', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <VolumeX className="w-4 h-4 text-slate-700" />
+          </button>
+          <button className="btn btn-secondary btn-icon" title="Resume Spoken Output" onClick={() => window.speechSynthesis.resume()} style={{ width: 50, height: 50, borderRadius: '50%', border: '1.5px solid var(--border)', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Play className="w-4 h-4 text-slate-700" />
+          </button>
+          <button className="btn btn-secondary btn-icon" title="Clear Vocal Logs" onClick={() => setTranscripts([])} style={{ width: 50, height: 50, borderRadius: '50%', border: '1.5px solid var(--border)', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Trash2 className="w-4 h-4 text-slate-700" />
+          </button>
         </div>
       </div>
 
-      {/* Right – Transcript */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'rgba(245,248,255,0.5)', borderRadius: 24, border: '1px solid var(--border)', overflow: 'hidden' }}>
-        {/* Header */}
-        <div style={{ padding: '18px 22px', borderBottom: '1px solid var(--border)', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      {/* Right – Transcript Dashboard */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'white', borderRadius: 24, border: '1.5px solid var(--border)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+        {/* Module Header */}
+        <div style={{ padding: '18px 24px', borderBottom: '1px solid var(--border)', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem' }}>🤖</div>
-            <div>
-              <div style={{ fontWeight: 700 }}>AI Health Assistant</div>
-              <div style={{ fontSize: '0.75rem', color: isActive ? '#2EC4A0' : 'var(--text-light)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ width: 7, height: 7, borderRadius: '50%', background: isActive ? '#2EC4A0' : 'var(--text-light)', display: 'inline-block' }} />
-                {isActive ? 'Active' : 'Standby'}
+            <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+              <Bot className="w-5 h-5 text-white" />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-dark)' }}>AI Voice Consultation</div>
+              <div style={{ fontSize: '0.72rem', color: isActive ? 'var(--secondary-deep)' : 'var(--text-light)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: isActive ? 'var(--secondary-deep)' : 'var(--text-light)', display: 'inline-block' }} />
+                {isActive ? 'Voice session active' : 'Consultation standby'}
               </div>
             </div>
           </div>
-          <span className="badge badge-blue">{transcripts.length} messages</span>
+          <span className="badge" style={{ background: 'var(--primary)', color: 'var(--primary-deep)', fontWeight: 800, padding: '4px 10px', fontSize: '0.72rem', borderRadius: 100 }}>
+            {transcripts.length} vocal logs
+          </span>
         </div>
 
-        {/* Messages */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {/* Vocal Log Items */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
           {transcripts.length === 0 ? (
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textAlign: 'center', gap: 12 }}>
-              <div style={{ fontSize: '3.5rem' }}>🎤</div>
-              <p style={{ fontWeight: 600 }}>Press the mic to start your voice consultation</p>
-              <p style={{ fontSize: '0.85rem' }}>Dr. AIHCAS will guide you through a focused Q&amp;A and then provide a solution.</p>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', textAlign: 'center', gap: 14, padding: '40px 20px' }}>
+              <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(179, 143, 93, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(179, 143, 93, 0.1)' }}>
+                <Mic className="w-7 h-7 text-[#B38F5D]" />
+              </div>
+              <p style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.98rem' }}>Awaiting Spoken Input</p>
+              <p style={{ fontSize: '0.83rem', color: 'var(--text-muted)', maxWidth: 300, lineHeight: 1.6 }}>
+                Click the primary microphone button to authorize clinical voice recording and start your session.
+              </p>
             </div>
           ) : (
             transcripts.map((t, i) => (
               <div
                 key={i}
                 className={`message-bubble ${t.speaker === 'user' ? 'message-user' : 'message-ai'}`}
-                style={{ maxWidth: '78%', whiteSpace: 'pre-wrap' }}
+                style={{ 
+                  maxWidth: '78%', 
+                  whiteSpace: 'pre-wrap',
+                  background: t.speaker === 'user' ? 'linear-gradient(135deg, var(--primary-deep), #2A437E)' : '#F8FAFC',
+                  color: t.speaker === 'user' ? 'white' : 'var(--text-dark)',
+                  border: t.speaker === 'user' ? 'none' : '1px solid rgba(226, 232, 240, 0.8)',
+                  borderRadius: t.speaker === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                  boxShadow: '0 4px 16px rgba(15, 23, 42, 0.01)',
+                  padding: '12px 18px',
+                  fontSize: '0.85rem',
+                  lineHeight: 1.55,
+                  alignSelf: t.speaker === 'user' ? 'flex-end' : 'flex-start',
+                  textAlign: 'left'
+                }}
               >
                 {t.text}
-                <div style={{ fontSize: '0.65rem', marginTop: 6, textAlign: 'right', opacity: 0.7 }}>
-                  {t.speaker === 'user' ? '🎙 You' : '🤖 AI'} • {t.time}
+                <div style={{ fontSize: '0.62rem', marginTop: 8, textAlign: 'right', opacity: 0.65, display: 'flex', gap: 4, justifyContent: 'flex-end', borderTop: `1px solid ${t.speaker === 'user' ? 'rgba(255,255,255,0.1)' : 'rgba(226, 232, 240, 0.6)'}`, paddingTop: 6 }}>
+                  <strong>{t.speaker === 'user' ? '🎙️ Patient Voice' : '🤖 Dr. AIHCAS'}</strong> • {t.time}
                 </div>
               </div>
             ))

@@ -1,23 +1,37 @@
 'use client';
 import { useState } from 'react';
+import { 
+  PhoneCall, 
+  ShieldAlert, 
+  Search, 
+  Heart, 
+  User, 
+  AlertTriangle,
+  MapPin,
+  Sparkles,
+  Info,
+  Calendar,
+  Layers,
+  ArrowRight
+} from 'lucide-react';
 
 const emergencyData = [
-  { id: 1, name: 'National Health Helpline', number: '1800-180-1104', type: 'General', city: 'National', icon: '📞' },
-  { id: 2, name: 'National Emergency Number', number: '112', type: 'All-in-One', city: 'National', icon: '🚨' },
-  { id: 3, name: 'Ambulance Service', number: '102', type: 'Emergency', city: 'National', icon: '🚑' },
-  { id: 4, name: 'Mental Health Helpline (KIRAN)', number: '1800-599-0019', type: 'Psychology', city: 'National', icon: '🧠' },
-  { id: 5, name: 'Women Helpline', number: '181', type: 'Safety', city: 'National', icon: '👩' },
-  { id: 6, name: 'Senior Physician Consult', number: '1075', type: 'Consultation', city: 'National', icon: '👨‍⚕️' },
-  { id: 7, name: 'Blood Bank Information', number: '104', type: 'Resource', city: 'State-wise', icon: '🩸' },
-  { id: 8, name: 'Poison Control Centre (AIIMS)', number: '011-26593677', type: 'Toxicology', city: 'Delhi', icon: '🧪' },
-  { id: 9, name: 'AIIMS Hospital', number: '011-26588500', type: 'Hospital', city: 'Delhi', icon: '🏥' },
-  { id: 10, name: 'Max Super Speciality', number: '011-26515050', type: 'Hospital', city: 'Delhi', icon: '🏥' },
-  { id: 11, name: 'Tata Memorial Hospital', number: '022-24177000', type: 'Oncology', city: 'Mumbai', icon: '🏥' },
-  { id: 12, name: 'KEM Hospital', number: '022-24107000', type: 'Hospital', city: 'Mumbai', icon: '🏥' },
-  { id: 13, name: 'NIMHANS', number: '080-26995000', type: 'Mental Health', city: 'Bangalore', icon: '🏥' },
-  { id: 14, name: 'Fortis Hospital', number: '080-66214444', type: 'Hospital', city: 'Bangalore', icon: '🏥' },
-  { id: 15, name: 'Apollo Hospitals', number: '044-28293333', type: 'Hospital', city: 'Chennai', icon: '🏥' },
-  { id: 16, name: 'AMRI Hospitals', number: '033-66800000', type: 'Hospital', city: 'Kolkata', icon: '🏥' },
+  { id: 1, name: 'National Health Helpline', number: '1800-180-1104', type: 'General Support', city: 'National', icon: <PhoneCall className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 2, name: 'National Emergency Number', number: '112', type: 'All-in-One Emergency', city: 'National', icon: <ShieldAlert className="w-5 h-5 text-[#DC2626]" /> },
+  { id: 3, name: 'Ambulance Service', number: '102', type: 'Medical Transit', city: 'National', icon: <Heart className="w-5 h-5 text-[#0D9488]" /> },
+  { id: 4, name: 'Mental Health Helpline (KIRAN)', number: '1800-599-0019', type: 'Psychology Support', city: 'National', icon: <Sparkles className="w-5 h-5 text-[#B38F5D]" /> },
+  { id: 5, name: 'Women Helpline', number: '181', type: 'Safety Line', city: 'National', icon: <User className="w-5 h-5 text-[#D97706]" /> },
+  { id: 6, name: 'Senior Physician Consult', number: '1075', type: 'Clinical Consultation', city: 'National', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 7, name: 'Blood Bank Information', number: '104', type: 'Resource Coordination', city: 'State-wise', icon: <Layers className="w-5 h-5 text-[#0D9488]" /> },
+  { id: 8, name: 'Poison Control Centre (AIIMS)', number: '011-26593677', type: 'Toxicology Unit', city: 'Delhi', icon: <ShieldAlert className="w-5 h-5 text-[#DC2626]" /> },
+  { id: 9, name: 'AIIMS Hospital', number: '011-26588500', type: 'Apex Hospital', city: 'Delhi', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 10, name: 'Max Super Speciality', number: '011-26515050', type: 'Apex Hospital', city: 'Delhi', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 11, name: 'Tata Memorial Hospital', number: '022-24177000', type: 'Oncology Specialist', city: 'Mumbai', icon: <Heart className="w-5 h-5 text-[#B38F5D]" /> },
+  { id: 12, name: 'KEM Hospital', number: '022-24107000', type: 'Apex Hospital', city: 'Mumbai', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 13, name: 'NIMHANS', number: '080-26995000', type: 'Neuro/Psychiatry', city: 'Bangalore', icon: <Sparkles className="w-5 h-5 text-[#B38F5D]" /> },
+  { id: 14, name: 'Fortis Hospital', number: '080-66214444', type: 'Apex Hospital', city: 'Bangalore', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 15, name: 'Apollo Hospitals', number: '044-28293333', type: 'Apex Hospital', city: 'Chennai', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 16, name: 'AMRI Hospitals', number: '033-66800000', type: 'Apex Hospital', city: 'Kolkata', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
 ];
 
 export default function EmergencyPage() {
@@ -35,99 +49,115 @@ export default function EmergencyPage() {
   return (
     <div className="page-fade" style={{ maxWidth: '1000px', margin: '0 auto' }}>
       <header style={{ marginBottom: '40px' }}>
-         <div className="badge badge-red" style={{ marginBottom: '16px', fontSize: '0.9rem', padding: '8px 16px' }}>🚨 Emergency Care Hub</div>
-         <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '12px' }}>
-            <span className="text-gradient">Indian</span> Emergency Services
+         <div className="badge" style={{ marginBottom: '16px', fontSize: '0.78rem', padding: '6px 16px', border: '1.5px solid rgba(220, 38, 38, 0.15)', background: '#FFF5F5', color: '#DC2626', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', display: 'inline-flex', alignItems: 'center', gap: 6, borderRadius: 100 }}>
+           <ShieldAlert className="w-3.5 h-3.5 text-[#DC2626]" /> Emergency Care Hub
+         </div>
+         <h1 style={{ fontSize: '2.1rem', fontWeight: 850, letterSpacing: '-0.02em', marginBottom: '12px', color: 'var(--text-dark)' }}>
+            <span style={{ background: 'linear-gradient(135deg, #1E3A8A 30%, #B38F5D 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>National</span> Emergency Services
          </h1>
-         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>
-            Quick access to essential healthcare helplines and emergency resources across India.
+         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+            Instant single-tap access to primary clinical helplines, suicide portals, and state coordinators across India.
          </p>
       </header>
 
-      <div className="glass-card" style={{ padding: '24px', marginBottom: '40px', background: 'white' }}>
+      {/* Filter and Search Bar */}
+      <div className="glass-card" style={{ padding: '24px', marginBottom: '40px', background: 'white', border: '1.5px solid var(--border)' }}>
          <div className="stack-mobile" style={{ display: 'flex', gap: '16px' }}>
             <div style={{ flex: 1, position: 'relative' }}>
                <input 
                   type="text" 
                   className="input-field" 
-                  placeholder="Search for service..." 
+                  placeholder="Search for service, category, or parameter..." 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  style={{ paddingLeft: '48px' }}
+                  style={{ paddingLeft: '44px', borderRadius: '12px', background: '#F8FAFC' }}
                />
-               <span style={{ position: 'absolute', left: '16px', top: '16px', fontSize: '1.2rem' }}>🔍</span>
+               <Search className="w-4 h-4 text-slate-400" style={{ position: 'absolute', left: '16px', top: '16px' }} />
             </div>
             <select 
                className="btn btn-secondary full-width-mobile" 
-               style={{ outline: 'none', cursor: 'pointer', appearance: 'none', paddingRight: '32px', backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%237C5CFC%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px top 50%', backgroundSize: '12px auto' }}
+               style={{ outline: 'none', cursor: 'pointer', appearance: 'none', paddingRight: '36px', borderRadius: '12px', background: 'white', border: '1.5px solid var(--border)', fontSize: '0.85rem', fontWeight: 700, paddingLeft: '16px', color: 'var(--text-dark)', backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23B38F5D%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 14px top 50%', backgroundSize: '10px auto' }}
                value={selectedCity}
                onChange={(e) => setSelectedCity(e.target.value)}
             >
                {['All', ...Array.from(new Set(emergencyData.map(e => e.city)))].map(city => (
-                  <option key={city} value={city}>{city === 'All' ? 'Filter by City (All)' : city}</option>
+                  <option key={city} value={city}>{city === 'All' ? 'Filter by City (All)' : `Filter: ${city}`}</option>
                ))}
             </select>
          </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '20px' }}>
-
+      {/* Emergency Cards Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 310px), 1fr))', gap: '20px' }}>
          {filteredData.length > 0 ? (
            filteredData.map((contact, i) => (
-             <div key={contact.id} className="emergency-card glass-card animate-fadeInUp" style={{ animationDelay: `${i * 0.05}s`, background: 'white' }}>
-                <div style={{ width: '60px', height: '60px', borderRadius: '16px', background: 'var(--danger)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem' }}>
+             <div key={contact.id} className="emergency-card glass-card animate-fadeInUp" style={{ animationDelay: `${i * 0.05}s`, background: 'white', border: '1.5px solid var(--border)', display: 'flex', alignItems: 'center', gap: 16, padding: '20px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(220, 38, 38, 0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(220, 38, 38, 0.1)' }}>
                    {contact.icon}
                 </div>
-                <div style={{ flex: 1 }}>
-                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                      <span className="badge badge-blue" style={{ fontSize: '0.65rem' }}>{contact.type}</span>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-light)' }}>{contact.city}</span>
+                <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                      <span className="badge" style={{ fontSize: '0.65rem', background: 'var(--primary)', color: 'var(--primary-deep)', fontWeight: 800, padding: '2px 8px', borderRadius: 100 }}>{contact.type}</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-light)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                        <MapPin className="w-3 h-3" />
+                        {contact.city}
+                      </span>
                    </div>
-                   <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '4px' }}>{contact.name}</h3>
-                   <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--danger-deep)', letterSpacing: '0.05em' }}>{contact.number}</div>
+                   <h3 style={{ fontSize: '0.98rem', fontWeight: 800, marginBottom: '6px', color: 'var(--text-dark)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{contact.name}</h3>
+                   <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--danger-deep)', letterSpacing: '-0.01em' }}>{contact.number}</div>
                 </div>
                 <button 
                   className="btn btn-danger btn-icon" 
-                  style={{ borderRadius: '12px', padding: '16px' }}
+                  style={{ borderRadius: '50%', width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0 }}
                   onClick={() => window.location.href = `tel:${contact.number}`}
+                  title={`Dial ${contact.name}`}
                 >
-                   📞
+                   <PhoneCall className="w-4 h-4 text-white" />
                 </button>
              </div>
            ))
          ) : (
            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '64px', color: 'var(--text-muted)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🏜️</div>
-              <p>No results found for your search.</p>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#F8FAFC', border: '1.5px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <Search className="w-5 h-5 text-slate-400" />
+              </div>
+              <p style={{ fontWeight: 700, color: 'var(--text-dark)' }}>No parameters detected</p>
+              <p style={{ fontSize: '0.83rem', color: 'var(--text-light)', marginTop: 4 }}>Refine your keyword search or change city filter parameters.</p>
            </div>
          )}
       </div>
 
+      {/* Action Advice Segment */}
       <div style={{ marginTop: '64px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '24px' }}>🛡️ Immediate Action Tips</h2>
-          <div className="grid-3">
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#0F172A', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'left' }}>
+            <Sparkles className="w-5 h-5 text-[#B38F5D]" /> First-Response Action Tips
+          </h2>
+          <div className="grid-3" style={{ gap: '20px' }}>
              {[
-               { title: 'Stay Calm', desc: 'Regulate your breathing. Panic can cloud judgment in emergencies.' },
-               { title: 'Track Time', desc: 'Note the exact time symptoms started or the incident occurred.' },
-               { title: 'Gather Info', desc: 'Keep allergies, blood group, and current medications ready for responders.' }
+               { title: 'Maintain Composure', desc: 'Regulate your breathing. Panic clouds clinical details when talking to responders.' },
+               { title: 'Log Onset Timings', desc: 'Note the exact time symptoms triggered. This is critical diagnostic info for clinical staff.' },
+               { title: 'Compile Health Cards', desc: 'Have active allergies, current pharmaceutical records, and blood group parameters ready.' }
              ].map((tip, i) => (
-               <div key={i} className="glass-card" style={{ padding: '24px' }}>
-                  <h4 style={{ fontWeight: 700, marginBottom: '10px', color: 'var(--primary-deep)' }}>{tip.title}</h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>{tip.desc}</p>
-               </div>
+                <div key={i} className="glass-card" style={{ padding: '24px', background: 'white', border: '1.5px solid var(--border)', textAlign: 'left' }}>
+                  <h4 style={{ fontWeight: 800, marginBottom: '10px', color: 'var(--primary-deep)', fontSize: '0.92rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <Info className="w-4 h-4 text-[#1E3A8A]" /> {tip.title}
+                  </h4>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>{tip.desc}</p>
+                </div>
              ))}
           </div>
       </div>
 
-      <footer style={{ marginTop: '80px', padding: '40px', background: 'rgba(229,62,62,0.05)', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(229,62,62,0.1)' }}>
-         <h4 style={{ marginBottom: '12px', fontWeight: 700 }}>Is this a life-threatening situation?</h4>
-         <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>Do not wait. Dial 112 or your local ambulance service immediately.</p>
+      {/* Primary Life Threat Disclaimer */}
+      <footer style={{ marginTop: '80px', padding: '40px', background: 'linear-gradient(135deg, rgba(220,38,38,0.04), rgba(220,38,38,0.01))', borderRadius: '24px', textAlign: 'center', border: '1.5px solid rgba(220,38,38,0.15)' }}>
+         <h4 style={{ marginBottom: '12px', fontWeight: 800, color: 'var(--text-dark)', fontSize: '1.15rem' }}>Active Life-Threatening Crisis?</h4>
+         <p style={{ color: 'var(--text-muted)', marginBottom: '24px', fontSize: '0.88rem' }}>Do not delay diagnostic scans. Call 112 for direct dispatch of regional rescue vehicles immediately.</p>
          <button 
             className="btn btn-danger btn-lg" 
-            style={{ padding: '18px 64px' }}
+            style={{ padding: '16px 48px', borderRadius: 100, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8 }}
             onClick={() => window.location.href = `tel:112`}
-         >
-            ⚡ Call Emergency (112)
+          >
+            ⚡ Trigger Emergency 112
          </button>
       </footer>
     </div>

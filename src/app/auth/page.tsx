@@ -3,6 +3,20 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { 
+  Heart, 
+  Lock, 
+  Activity, 
+  Globe, 
+  Award, 
+  ShieldAlert, 
+  ArrowLeft,
+  CheckCircle,
+  Eye,
+  EyeOff,
+  Sparkles,
+  LockKeyhole
+} from 'lucide-react';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -106,30 +120,33 @@ export default function AuthPage() {
         position: 'relative',
         overflow: 'hidden',
         minHeight: '100vh',
-      }}>
-        {/* Decorative orbs */}
-        <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(77,166,232,0.22) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '-5%', right: '-5%', width: 350, height: 350, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,92,252,0.2) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
+      }} className="hide-mobile">
+        {/* Decorative clinical orbs */}
+        <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: 450, height: 450, borderRadius: '50%', background: 'radial-gradient(circle, rgba(179,143,93,0.04) 0%, transparent 70%)', filter: 'blur(50px)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '-5%', right: '-5%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(30,58,138,0.03) 0%, transparent 70%)', filter: 'blur(50px)', pointerEvents: 'none' }} />
 
-        <div className="animate-float" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: '6rem', marginBottom: 32 }}>🏥</div>
-          <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: 16, maxWidth: 420, lineHeight: 1.3 }}>
-            Your Health Journey <span className="text-gradient">Starts Here</span>
+        <div className="animate-float" style={{ textAlign: 'center', position: 'relative', zIndex: 1, maxWidth: '460px' }}>
+          <div style={{ width: 68, height: 68, borderRadius: '20px', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', margin: '0 auto 32px', color: 'white', justifyContent: 'center' }}>
+            <Heart className="w-8 h-8 text-white" />
+          </div>
+          <h2 style={{ fontSize: '2.1rem', fontWeight: 850, marginBottom: 18, color: '#0F172A', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
+            Pristine Clinical Intelligence <br />
+            <span style={{ background: 'linear-gradient(135deg, #1E3A8A 30%, #B38F5D 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Starts Here</span>
           </h2>
-          <p style={{ color: 'var(--text-muted)', maxWidth: 380, lineHeight: 1.75, fontSize: '0.95rem' }}>
-            Join millions of users who trust AIHCAS for intelligent symptom analysis, prescription understanding, and real-time health guidance.
+          <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, fontSize: '0.95rem', marginBottom: 40 }}>
+            Join millions of users who rely on AIHCAS for structured prescription decoding, out-of-range diagnostics analysis, and secure clinical vaults.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 40, maxWidth: 400 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             {[
-              { icon: '🔒', text: 'Secure Auth' },
-              { icon: '⚡', text: 'Real-Time AI' },
-              { icon: '🇮🇳', text: 'India-Specific Data' },
-              { icon: '🏆', text: '98% Satisfaction' },
+              { icon: <Lock className="w-5 h-5 text-[#B38F5D]" />, text: 'Data Isolation' },
+              { icon: <Activity className="w-5 h-5 text-[#1E3A8A]" />, text: 'Real-Time Triage' },
+              { icon: <Globe className="w-5 h-5 text-[#0D9488]" />, text: 'Localized Medical KB' },
+              { icon: <Award className="w-5 h-5 text-[#D97706]" />, text: 'Clinician Oversight' },
             ].map((item, i) => (
-              <div key={i} className="glass" style={{ padding: '14px 18px', borderRadius: 14, textAlign: 'left', animationDelay: `${i * 0.15}s` }}>
-                <div style={{ fontSize: '1.4rem', marginBottom: 6 }}>{item.icon}</div>
-                <div style={{ fontSize: '0.83rem', fontWeight: 600 }}>{item.text}</div>
+              <div key={i} className="glass-card" style={{ padding: '16px 20px', borderRadius: 16, textAlign: 'left', border: '1.5px solid rgba(255,255,255,0.95)', background: 'rgba(255,255,255,0.65)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div>{item.icon}</div>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-dark)' }}>{item.text}</div>
               </div>
             ))}
           </div>
@@ -139,31 +156,35 @@ export default function AuthPage() {
       {/* Right Form Panel */}
       <div style={{
         width: '480px',
-        background: 'rgba(255,255,255,0.92)',
-        backdropFilter: 'blur(30px)',
+        background: 'rgba(255,255,255,0.85)',
+        backdropFilter: 'blur(32px)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '48px',
-        borderLeft: '1px solid var(--border)',
+        borderLeft: '1.5px solid var(--border)',
         minHeight: '100vh',
-      }}>
-        <div style={{ width: '100%', maxWidth: 380 }} className="animate-scaleIn">
-          {/* Logo */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 40 }}>
-            <div className="logo-icon">🏥</div>
-            <span style={{ fontSize: '1.3rem', fontWeight: 800 }}>AIHCAS</span>
-          </div>
+      }} className="full-width-mobile">
+        <div style={{ width: '100%', maxWidth: 360 }} className="animate-scaleIn">
+          {/* Header Logo */}
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, marginBottom: 36 }}>
+            <div style={{ background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', width: 30, height: 30, borderRadius: '6px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Heart className="w-3.5 h-3.5 text-white" />
+            </div>
+            <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #0F172A, #1E3A8A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              AIHCAS
+            </span>
+          </Link>
 
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: 6 }}>
-            {mode === 'login' ? 'Welcome back 👋' : mode === 'signup' ? 'Create account 🚀' : 'Reset password 🔑'}
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 850, letterSpacing: '-0.02em', marginBottom: 8, color: 'var(--text-dark)' }}>
+            {mode === 'login' ? 'Welcome back 👋' : mode === 'signup' ? 'Create workspace 🚀' : 'Reset password 🔑'}
           </h1>
-          <p style={{ color: 'var(--text-muted)', marginBottom: 32, fontSize: '0.9rem' }}>
-            {mode === 'login' ? 'Log in to your healthcare assistant' : mode === 'signup' ? 'Start your health journey today' : "Enter your email and we'll send you a link"}
+          <p style={{ color: 'var(--text-muted)', marginBottom: 28, fontSize: '0.88rem', lineHeight: 1.5 }}>
+            {mode === 'login' ? 'Log in to access your dashboard' : mode === 'signup' ? 'Start your clinical co-pilot profile' : "Enter your email for password recovery"}
           </p>
 
-          {/* Google button (only for login/signup) */}
+          {/* Google Button */}
           {mode !== 'forgot-password' && (
             <>
               <button
@@ -171,58 +192,56 @@ export default function AuthPage() {
                 onClick={handleGoogle}
                 disabled={loading}
                 className="btn btn-secondary"
-                style={{ width: '100%', justifyContent: 'center', marginBottom: 20, gap: 12, fontSize: '0.95rem' }}
+                style={{ width: '100%', justifyContent: 'center', marginBottom: 20, gap: 10, fontSize: '0.88rem', borderRadius: 100, border: '1.5px solid var(--border)' }}
               >
-                <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z"/></svg>
+                <svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z"/></svg>
                 Continue with Google
               </button>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
                 <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-light)', fontWeight: 500 }}>or continue with email</span>
+                <span style={{ fontSize: '0.72rem', color: 'var(--text-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>or use credentials</span>
                 <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
               </div>
             </>
           )}
 
-          {/* Success message */}
+          {/* Success Dialog */}
           {successMessage && (
             <div style={{ 
-              padding: '12px', 
-              background: 'var(--secondary)', 
-              border: '1px solid var(--secondary-mid)', 
-              borderRadius: '12px', 
-              color: '#178A6A', 
-              fontSize: '0.85rem', 
+              padding: '12px 16px', 
+              background: '#E6FFF5', 
+              border: '1.5px solid #2EC4A030', 
+              borderRadius: '14px', 
+              color: 'var(--secondary-deep)', 
+              fontSize: '0.83rem', 
               marginBottom: '20px', 
-              textAlign: 'center',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
               gap: '8px',
+              fontWeight: 700
             }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              <CheckCircle className="w-4 h-4 text-[#0D9488]" />
               {successMessage}
             </div>
           )}
 
-          {/* Error message */}
+          {/* Error Dialog */}
           {errors.server && (
             <div style={{ 
-              padding: '12px', 
-              background: 'var(--danger)', 
-              border: '1px solid var(--danger-deep)', 
-              borderRadius: '12px', 
+              padding: '12px 16px', 
+              background: '#FFF0F0', 
+              border: '1.5px solid #DC262630', 
+              borderRadius: '14px', 
               color: 'var(--danger-deep)', 
-              fontSize: '0.85rem', 
+              fontSize: '0.83rem', 
               marginBottom: '20px', 
-              textAlign: 'center',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
               gap: '8px',
+              fontWeight: 700
             }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <ShieldAlert className="w-4 h-4 text-[#DC2626]" />
               {errors.server}
             </div>
           )}
@@ -288,23 +307,10 @@ export default function AuthPage() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      transition: 'color 0.2s',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--primary-deep)')}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-light)')}
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showPassword ? (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                        <line x1="1" y1="1" x2="23" y2="23"/>
-                      </svg>
-                    ) : (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                      </svg>
-                    )}
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 {errors.password && <p style={{ color: 'var(--danger-deep)', fontSize: '0.78rem', marginTop: 4 }}>{errors.password}</p>}
@@ -316,7 +322,7 @@ export default function AuthPage() {
                 <button
                   type="button"
                   onClick={() => switchMode('forgot-password')}
-                  style={{ background: 'none', border: 'none', fontSize: '0.83rem', color: 'var(--primary-deep)', fontWeight: 600, cursor: 'pointer' }}
+                  style={{ background: 'none', border: 'none', fontSize: '0.8rem', color: '#B38F5D', fontWeight: 700, cursor: 'pointer' }}
                 >
                   Forgot password?
                 </button>
@@ -328,26 +334,26 @@ export default function AuthPage() {
               type="submit"
               disabled={loading}
               className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center', marginTop: 4, fontSize: '0.97rem', opacity: loading ? 0.8 : 1 }}
+              style={{ width: '100%', justifyContent: 'center', marginTop: 4, fontSize: '0.9rem', borderRadius: 100 }}
             >
               {loading ? (
                 <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <svg style={{ animation: 'spin 1s linear infinite' }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-                  Processing...
+                  <svg style={{ animation: 'spin 1s linear infinite' }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  Processing Workspace...
                 </span>
               ) : (
-                mode === 'login' ? '🔐 Log In' : mode === 'signup' ? '🚀 Create Account' : '✉️ Send Reset Link'
+                mode === 'login' ? '🔐 Authorized Log In' : mode === 'signup' ? '🚀 Register Account' : '✉️ Request Recovery Link'
               )}
             </button>
           </form>
 
-          <p style={{ textAlign: 'center', marginTop: 24, fontSize: '0.87rem', color: 'var(--text-muted)' }}>
+          <p style={{ textAlign: 'center', marginTop: 24, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             {mode === 'login' && (
               <>
                 Don&apos;t have an account?{' '}
                 <button
                   onClick={() => switchMode('signup')}
-                  style={{ background: 'none', border: 'none', color: 'var(--primary-deep)', fontWeight: 700, cursor: 'pointer', fontSize: '0.87rem' }}
+                  style={{ background: 'none', border: 'none', color: '#B38F5D', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}
                 >
                   Sign up free
                 </button>
@@ -358,7 +364,7 @@ export default function AuthPage() {
                 Already have an account?{' '}
                 <button
                   onClick={() => switchMode('login')}
-                  style={{ background: 'none', border: 'none', color: 'var(--primary-deep)', fontWeight: 700, cursor: 'pointer', fontSize: '0.87rem' }}
+                  style={{ background: 'none', border: 'none', color: '#B38F5D', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}
                 >
                   Log in
                 </button>
@@ -367,22 +373,16 @@ export default function AuthPage() {
             {mode === 'forgot-password' && (
               <button
                 onClick={() => switchMode('login')}
-                style={{ background: 'none', border: 'none', color: 'var(--primary-deep)', fontWeight: 700, cursor: 'pointer', fontSize: '0.87rem' }}
+                style={{ background: 'none', border: 'none', color: '#B38F5D', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}
               >
                 Back to log in
               </button>
             )}
           </p>
 
-          <p style={{ textAlign: 'center', marginTop: 16, fontSize: '0.75rem', color: 'var(--text-light)' }}>
-            By continuing, you agree to our{' '}
-            <a href="#" style={{ color: 'var(--primary-deep)', textDecoration: 'none' }}>Terms</a> &amp;{' '}
-            <a href="#" style={{ color: 'var(--primary-deep)', textDecoration: 'none' }}>Privacy Policy</a>
-          </p>
-
-          <div style={{ marginTop: 24, textAlign: 'center' }}>
-            <Link href="/" style={{ color: 'var(--text-light)', fontSize: '0.82rem', textDecoration: 'none' }}>
-              ← Back to homepage
+          <div style={{ marginTop: 28, textAlign: 'center' }}>
+            <Link href="/" style={{ color: 'var(--text-light)', fontSize: '0.8rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <ArrowLeft className="w-3.5 h-3.5" /> Return to homepage
             </Link>
           </div>
         </div>
@@ -392,13 +392,13 @@ export default function AuthPage() {
       {showGoogleSelector && (
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          zIndex: 1000, padding: 20
+          background: 'rgba(15, 23, 42, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1000, padding: 20, backdropFilter: 'blur(8px)'
         }} onClick={() => setShowGoogleSelector(false)}>
           <div style={{
-            background: 'white', borderRadius: 12, width: '100%', maxWidth: 400,
-            padding: '24px 0', boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
-            animation: 'scaleIn 0.25s ease-out', position: 'relative'
+            background: 'white', borderRadius: 20, width: '100%', maxWidth: 380,
+            padding: '24px 0', boxShadow: 'var(--shadow-lg)',
+            animation: 'scaleIn 0.25s ease-out', position: 'relative', border: '1.5px solid var(--border)'
           }} onClick={e => e.stopPropagation()}>
             <div style={{ textAlign: 'center', marginBottom: 24, padding: '0 32px' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" style={{ marginBottom: 12 }}>
@@ -407,8 +407,8 @@ export default function AuthPage() {
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
               </svg>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 500, margin: 0 }}>Choose an account</h2>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: 8 }}>to continue to AIHCAS</p>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: 'var(--text-dark)' }}>Verify Identity</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: 6 }}>Choose a verified Google record</p>
             </div>
 
             <div style={{ maxHeight: 300, overflowY: 'auto' }}>
@@ -427,13 +427,13 @@ export default function AuthPage() {
                 >
                   <div style={{
                     width: 32, height: 32, borderRadius: '50%',
-                    background: i === 0 ? '#4DA6E8' : i === 1 ? '#7C5CFC' : '#2EC4A0',
+                    background: i === 0 ? '#1E3A8A' : i === 1 ? '#B38F5D' : '#0D9488',
                     color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontWeight: 600, fontSize: '0.9rem'
+                    fontWeight: 800, fontSize: '0.82rem'
                   }}>{acc.avatar}</div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#3c4043' }}>{acc.name}</div>
-                    <div style={{ fontSize: '0.78rem', color: '#70757a' }}>{acc.email}</div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3c4043' }}>{acc.name}</div>
+                    <div style={{ fontSize: '0.75rem', color: '#70757a' }}>{acc.email}</div>
                   </div>
                 </button>
               ))}
@@ -454,15 +454,15 @@ export default function AuthPage() {
             >
               <div style={{
                 width: 32, height: 32, borderRadius: '50%',
-                border: '1px solid var(--border)',
+                border: '1.5px solid var(--border)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: '#3c4043', fontSize: '1rem'
               }}>+</div>
-              <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#3c4043' }}>Use another account</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#3c4043' }}>Use another email</div>
             </button>
 
-            <div style={{ padding: '24px 32px 8px', fontSize: '0.75rem', color: '#70757a', lineHeight: 1.5 }}>
-              To continue, Google will share your name, email address, language preference, and profile picture with AIHCAS.
+            <div style={{ padding: '20px 32px 4px', fontSize: '0.72rem', color: '#70757a', lineHeight: 1.5 }}>
+              By selecting an account, you authorize Google to sync your basic profile elements securely with AIHCAS.
             </div>
           </div>
         </div>

@@ -2,7 +2,21 @@
 import { useState, useRef, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
-
+import { 
+  FileSpreadsheet, 
+  Upload, 
+  CheckCircle, 
+  AlertTriangle, 
+  ShieldAlert, 
+  Cpu, 
+  Bot, 
+  Layers, 
+  ChevronRight, 
+  Heart,
+  TrendingUp,
+  Activity,
+  Briefcase
+} from 'lucide-react';
 
 interface ReportResult {
   name: string;
@@ -24,9 +38,9 @@ interface AnalysisResult {
 }
 
 const urgencyConfig = {
-  routine: { color: '#2EC4A0', bg: 'rgba(46,196,160,0.08)', label: '✅ Routine Follow-up' },
-  soon:    { color: '#F59E0B', bg: 'rgba(245,158,11,0.08)', label: '🟡 See Doctor Soon' },
-  urgent:  { color: '#E53E3E', bg: 'rgba(229,62,62,0.08)',  label: '🔴 Urgent Attention' },
+  routine: { color: '#0D9488', bg: 'rgba(13, 148, 136, 0.05)', label: 'Routine Follow-up', icon: <CheckCircle className="w-4 h-4 text-[#0D9488]" /> },
+  soon:    { color: '#D97706', bg: 'rgba(217, 119, 6, 0.05)', label: 'Consult Clinician Soon', icon: <AlertTriangle className="w-4 h-4 text-[#D97706]" /> },
+  urgent:  { color: '#DC2626', bg: 'rgba(220, 38, 38, 0.05)', label: 'Urgent Medical Attention', icon: <ShieldAlert className="w-4 h-4 text-[#DC2626]" /> },
 };
 
 export default function ReportsPage() {
@@ -40,7 +54,8 @@ export default function ReportsPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [engine, setEngine] = useState<'python' | 'gemini'>('python');
-  // ─── Analyze via API (Python + Gemini Fallback) ──────────────────────────────────────
+
+  // Analyze via API (Python + Gemini Fallback)
   const analyzeFile = useCallback(async (file: File) => {
     setStage('scanning');
     setProgress(10);
@@ -94,7 +109,6 @@ export default function ReportsPage() {
     }
   }, [user?.userId]);
 
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -135,29 +149,37 @@ export default function ReportsPage() {
 
   return (
     <div className="page-fade" style={{ maxWidth: 1000, margin: '0 auto' }}>
-      <header style={{ marginBottom: 40 }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: 8 }}>
-          <span className="text-gradient">Report</span> Analysis
+      <header style={{ marginBottom: 28 }}>
+        <h1 style={{ fontSize: '2.1rem', fontWeight: 855, letterSpacing: '-0.02em', marginBottom: 8, color: '#0F172A' }}>
+          <span style={{ background: 'linear-gradient(135deg, #1E3A8A 30%, #B38F5D 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Report</span> Analysis
         </h1>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <p style={{ color: 'var(--text-muted)' }}>
-            Upload any medical lab report — Our AI extracts and interprets every parameter accurately.
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+            Upload medical pathology or lab results — our offline sandboxed OCR extracts and explains parameters.
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,0.5)', padding: '6px 14px', borderRadius: 100, border: '1px solid var(--border)' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-              {stage === 'results' && engine === 'gemini' ? '🤖 Powered by Gemini AI' : '🐍 Powered by Python OCR'}
-            </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.85)', padding: '6px 14px', borderRadius: 100, border: '1.5px solid var(--border)', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-dark)' }}>
+            {stage === 'results' && engine === 'gemini' ? (
+              <>
+                <Bot className="w-3.5 h-3.5 text-[#1E3A8A]" />
+                <span>Gemini Diagnostics</span>
+              </>
+            ) : (
+              <>
+                <Cpu className="w-3.5 h-3.5 text-[#0D9488]" />
+                <span>Python OCR Engine</span>
+              </>
+            )}
           </div>
         </div>
       </header>
 
-      {/* Error banner */}
+      {/* Error dialog banner */}
       {errorMsg && (
-        <div style={{ padding: '14px 20px', borderRadius: 14, background: 'rgba(229,62,62,0.08)', border: '1.5px solid rgba(229,62,62,0.3)', marginBottom: 20, display: 'flex', gap: 10, alignItems: 'center' }}>
-          <span style={{ fontSize: '1.2rem' }}>⚠️</span>
-          <div>
-            <p style={{ fontWeight: 700, color: 'var(--danger-deep)', marginBottom: 2 }}>Analysis Failed</p>
-            <p style={{ fontSize: '0.87rem', color: 'var(--danger-deep)' }}>{errorMsg}</p>
+        <div style={{ padding: '14px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262630', marginBottom: 24, display: 'flex', gap: 12, alignItems: 'center' }}>
+          <ShieldAlert className="w-5 h-5 text-[#DC2626]" />
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ fontWeight: 800, color: 'var(--danger-deep)', fontSize: '0.88rem', marginBottom: 2 }}>Analysis Failed</p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--danger-deep)' }}>{errorMsg}</p>
           </div>
           <button onClick={() => setErrorMsg(null)} style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', color: 'var(--danger-deep)' }}>✕</button>
         </div>
@@ -165,10 +187,18 @@ export default function ReportsPage() {
 
       {/* Upload Stage */}
       {stage === 'upload' && (
-        <div className="grid-2">
+        <div className="grid-2" style={{ gap: '24px' }}>
           <div
             className="upload-zone animate-fadeInUp"
-            style={{ padding: '64px 32px', textAlign: 'center' }}
+            style={{
+              border: '2px dashed var(--border)',
+              background: 'rgba(255, 255, 255, 0.65)',
+              borderRadius: '20px',
+              padding: '64px 32px',
+              textAlign: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s var(--transition)'
+            }}
             onDragOver={e => e.preventDefault()}
             onDrop={handleDrop}
           >
@@ -179,42 +209,46 @@ export default function ReportsPage() {
               style={{ display: 'none' }}
               accept="image/*,.pdf"
             />
-            <div style={{ fontSize: '4.5rem', marginBottom: 24 }}>📊</div>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: 700, marginBottom: 12 }}>Upload Medical Report</h3>
-            <p style={{ color: 'var(--text-muted)', marginBottom: 32, fontSize: '1.05rem' }}>
-              Blood test, CBC, Glucose, Thyroid, LFT, KFT, Lipid profile and more
+            <div style={{ width: 68, height: 68, borderRadius: '50%', background: 'white', border: '1.5px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 4px 12px rgba(0,0,0,0.01)' }}>
+              <FileSpreadsheet className="w-6 h-6 text-[#B38F5D]" />
+            </div>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: 8 }}>Load Pathology Report</h3>
+            <p style={{ color: 'var(--text-muted)', marginBottom: 24, fontSize: '0.85rem', lineHeight: 1.5 }}>
+              Blood tests, HbA1c panels, Liver function, Kidney function, Lipid panels, or Thyroid parameters.
             </p>
             <button 
-              className="btn btn-primary btn-lg" 
-              style={{ width: '100%', maxWidth: 280 }}
+              className="btn btn-primary" 
+              style={{ borderRadius: 100, fontWeight: 700 }}
               onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
             >
-              Select File
+              <Upload className="w-4 h-4" /> Choose Report File
             </button>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: 16 }}>
-              Processed entirely offline on your device via Python
+            <p style={{ fontSize: '0.72rem', color: 'var(--text-light)', marginTop: 16, fontWeight: 600 }}>
+              Scanned internally via Python local engines
             </p>
           </div>
 
-
-          {/* Sidebar */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div className="glass-card" style={{ padding: 20 }}>
-              <h3 style={{ fontWeight: 700, marginBottom: 12, fontSize: '0.95rem' }}>📋 Supported Reports</h3>
-              {['Complete Blood Count (CBC)', 'Blood Glucose / HbA1c', 'Liver Function Test (LFT)', 'Kidney Function Test (KFT)', 'Thyroid (TSH, T3, T4)', 'Lipid Profile', 'Vitamin D / B12', 'Urine Routine'].map((r, i) => (
-                <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8, fontSize: '0.83rem', color: 'var(--text-muted)' }}>
-                  <span style={{ color: '#2EC4A0', fontWeight: 700 }}>✓</span> {r}
-                </div>
-              ))}
+          {/* Sidebar info */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div className="glass-card" style={{ padding: 24, background: 'white', border: '1.5px solid var(--border)' }}>
+              <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: '0.95rem', color: 'var(--text-dark)', textAlign: 'left' }}>Supported Panels</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left' }}>
+                {['Complete Blood Count (CBC)', 'Blood Glucose / HbA1c', 'Liver Function Test (LFT)', 'Kidney Function Test (KFT)', 'Thyroid Profiles (TSH, T3, T4)', 'Lipid Profile Panels'].map((r, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    <CheckCircle className="w-4 h-4 text-[#0D9488]" /> {r}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="glass-card" style={{ padding: 20, background: 'rgba(124,92,252,0.06)' }}>
-              <p style={{ fontSize: '0.82rem', fontWeight: 700, marginBottom: 6 }}>✨ AI Advantages</p>
-              <ul style={{ paddingLeft: 16, fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                <li>Reads all values & reference ranges</li>
-                <li>Flags high/low/critical values</li>
-                <li>Groups by test category</li>
-                <li>Gives actionable recommendations</li>
-                <li>Works with scanned or photo reports</li>
+            <div className="glass-card" style={{ padding: 24, background: 'rgba(179,143,93,0.03)', border: '1px solid rgba(179,143,93,0.12)', borderRadius: 20, textAlign: 'left' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#B38F5D', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+                <TrendingUp className="w-4 h-4 text-[#B38F5D]" /> AI Benefits
+              </span>
+              <ul style={{ paddingLeft: 16, fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.7, listStyleType: 'disc' }}>
+                <li>Auto-detects reference ranges</li>
+                <li>Highlights abnormal test markers</li>
+                <li>Categorizes diagnostic modules</li>
+                <li>Preserves private offline workflows</li>
               </ul>
             </div>
           </div>
@@ -223,17 +257,19 @@ export default function ReportsPage() {
 
       {/* Scanning Stage */}
       {stage === 'scanning' && (
-        <div className="glass-card animate-fadeInUp" style={{ padding: 64, textAlign: 'center' }}>
-          <div style={{ fontSize: '3.5rem', marginBottom: 24, animation: 'pulse 1.5s infinite' }}>🐍</div>
-          <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: 8 }}>Python Engine Scanning</h3>
-          <p style={{ color: 'var(--text-muted)', marginBottom: 32 }}>{progressLabel}</p>
-          <div style={{ maxWidth: 400, margin: '0 auto', background: 'var(--primary)', borderRadius: 100, height: 10, overflow: 'hidden' }}>
-            <div style={{ height: '100%', borderRadius: 100, background: 'linear-gradient(to right, #4DA6E8, #7C5CFC)', width: `${progress}%`, transition: 'width 0.5s ease' }} />
+        <div className="glass-card animate-fadeInUp" style={{ padding: 48, textAlign: 'center', background: 'white', border: '1.5px solid var(--border)' }}>
+          <div style={{ width: 68, height: 68, borderRadius: '50%', background: 'rgba(30, 58, 138, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', animation: 'pulse 1.8s infinite' }}>
+            <Cpu className="w-6 h-6 text-[#1E3A8A]" />
           </div>
-          <p style={{ marginTop: 12, fontSize: '0.85rem', color: 'var(--text-light)' }}>{progress}% complete</p>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: 8 }}>Parsing Diagnostic Parameters</h3>
+          <p style={{ color: 'var(--text-muted)', marginBottom: 28, fontSize: '0.88rem' }}>{progressLabel}</p>
+          <div style={{ maxWidth: 400, margin: '0 auto', background: 'var(--primary)', borderRadius: 100, height: 8, overflow: 'hidden' }}>
+            <div style={{ height: '100%', borderRadius: 100, background: 'linear-gradient(to right, #1E3A8A, #B38F5D)', width: `${progress}%`, transition: 'width 0.5s ease' }} />
+          </div>
+          <p style={{ marginTop: 12, fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: 700 }}>{progress}% scan complete</p>
           {previewUrl && (
-            <div style={{ marginTop: 24, maxHeight: 200, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--border)' }}>
-              <img src={previewUrl} alt="Report" style={{ width: '100%', objectFit: 'cover' }} />
+            <div style={{ marginTop: 24, maxHeight: 180, overflow: 'hidden', borderRadius: 16, border: '1.5px solid var(--border)', maxWidth: 400, margin: '24px auto 0' }}>
+              <img src={previewUrl} alt="Pathology Report" style={{ width: '100%', objectFit: 'cover' }} />
             </div>
           )}
         </div>
@@ -241,82 +277,84 @@ export default function ReportsPage() {
 
       {/* Results Stage */}
       {stage === 'results' && analysisResult && urgency && (
-        <div className="page-fade" style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-
+        <div className="page-fade" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* Critical Alerts */}
           {analysisResult.alerts && analysisResult.alerts.length > 0 && (
-            <div style={{ padding: '18px 24px', borderRadius: 16, background: 'rgba(229,62,62,0.08)', border: '2px solid rgba(229,62,62,0.35)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-              <span style={{ fontSize: '1.5rem' }}>🚨</span>
+            <div style={{ padding: '16px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262625', display: 'flex', gap: 12, alignItems: 'flex-start', textAlign: 'left' }}>
+              <ShieldAlert className="w-5 h-5 text-[#DC2626] flex-shrink-0" />
               <div>
-                <p style={{ fontWeight: 800, color: '#E53E3E', marginBottom: 6 }}>Critical Values — Consult a Doctor</p>
-                <ul style={{ paddingLeft: 16, fontSize: '0.88rem', color: '#E53E3E', lineHeight: 1.6 }}>
+                <p style={{ fontWeight: 800, color: '#DC2626', fontSize: '0.9rem', marginBottom: 4 }}>Out-of-Range Critical Values</p>
+                <ul style={{ paddingLeft: 16, fontSize: '0.82rem', color: '#DC2626', lineHeight: 1.6, listStyleType: 'disc' }}>
                   {analysisResult.alerts.map((a, i) => <li key={i}>{a}</li>)}
                 </ul>
               </div>
             </div>
           )}
 
-          {/* Stats row */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 16 }}>
-
+          {/* Quick Metrics Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 16 }}>
             {[
-              { icon: '🔴', label: 'High', val: analysisResult.results.filter(r => r.status === 'high').length },
-              { icon: '🟡', label: 'Low', val: analysisResult.results.filter(r => r.status === 'low').length },
-              { icon: '🟢', label: 'Normal', val: analysisResult.results.filter(r => r.status === 'normal').length },
-              { icon: '📊', label: 'Total Parameters', val: analysisResult.results.length },
+              { icon: <ShieldAlert className="w-5 h-5 text-[#DC2626]" />, label: 'High Markers', val: analysisResult.results.filter(r => r.status === 'high').length, c: '#DC2626' },
+              { icon: <AlertTriangle className="w-5 h-5 text-[#D97706]" />, label: 'Low Markers', val: analysisResult.results.filter(r => r.status === 'low').length, c: '#D97706' },
+              { icon: <CheckCircle className="w-5 h-5 text-[#0D9488]" />, label: 'Normal Ranges', val: analysisResult.results.filter(r => r.status === 'normal').length, c: '#0D9488' },
+              { icon: <Layers className="w-5 h-5 text-[#1E3A8A]" />, label: 'Total Parameters', val: analysisResult.results.length, c: '#1E3A8A' },
             ].map((item, i) => (
-              <div key={i} className="glass-card" style={{ padding: '20px', textAlign: 'center' }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: 4 }}>{item.icon}</div>
-                <div style={{ fontSize: '1.6rem', fontWeight: 800 }}>{item.val}</div>
-                <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase' }}>{item.label}</div>
+              <div key={i} className="glass-card" style={{ padding: '20px', background: 'white', border: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 38, height: 38, borderRadius: '10px', background: 'white', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {item.icon}
+                </div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 850, color: item.c }}>{item.val}</div>
+                <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.02em' }}>{item.label}</div>
               </div>
             ))}
           </div>
 
-          {/* Urgency badge */}
-          <div style={{ padding: '14px 24px', borderRadius: 14, background: urgency.bg, border: `1.5px solid ${urgency.color}30`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-            <span style={{ fontWeight: 700, color: urgency.color, fontSize: '1rem' }}>{urgency.label}</span>
-            <button className="btn btn-secondary btn-sm" onClick={reset}>↩ Upload Another</button>
+          {/* Urgency follow-up bar */}
+          <div style={{ padding: '14px 24px', borderRadius: 16, background: urgency.bg, border: `1px solid ${urgency.color}25`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+            <span style={{ fontWeight: 800, color: urgency.color, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+              {urgency.icon}
+              {urgency.label}
+            </span>
+            <button className="btn btn-secondary btn-sm" onClick={reset} style={{ borderRadius: 100, fontWeight: 700, border: '1px solid var(--border)' }}>↩ Scan Another Report</button>
           </div>
 
-          {/* Results grouped by category */}
+          {/* Grouped findings */}
           {analysisResult.results.length > 0 ? (
-            <div className="glass-card" style={{ padding: 28 }}>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: 24 }}>📋 Detailed Findings</h3>
+            <div className="glass-card" style={{ padding: 28, background: 'white', border: '1.5px solid var(--border)' }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: 24, textAlign: 'left' }}>📋 Pathology Findings Overview</h3>
 
               {Object.entries(groupedResults).map(([category, tests]) => (
                 <div key={category} style={{ marginBottom: 28 }}>
-                  <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12, paddingBottom: 8, borderBottom: '1px solid var(--border)' }}>
+                  <p style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12, paddingBottom: 8, borderBottom: '1px solid rgba(226,232,240,0.6)', textAlign: 'left' }}>
                     {category}
                   </p>
-                  {/* Header row - Hidden on mobile */}
-                  <div className="hide-mobile" style={{ display: 'flex', padding: '0 20px', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 8 }}>
-                    <div style={{ flex: 2 }}>Parameter</div>
-                    <div style={{ flex: 1, textAlign: 'center' }}>Result</div>
-                    <div style={{ flex: 1, textAlign: 'center' }}>Reference</div>
-                    <div style={{ flex: 1, textAlign: 'right' }}>Status</div>
+                  {/* Table headers */}
+                  <div className="hide-mobile" style={{ display: 'flex', padding: '0 20px', fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 10, letterSpacing: '0.04em' }}>
+                    <div style={{ flex: 2, textAlign: 'left' }}>Diagnostic Parameter</div>
+                    <div style={{ flex: 1, textAlign: 'center' }}>Extracted Value</div>
+                    <div style={{ flex: 1, textAlign: 'center' }}>Reference Range</div>
+                    <div style={{ flex: 1, textAlign: 'right' }}>Status Tag</div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                     {tests.map((test, i) => {
-                      const colors = { high: '#E53E3E', low: '#F59E0B', normal: '#2EC4A0' };
-                      const bgs = { high: 'rgba(229,62,62,0.04)', low: 'rgba(245,158,11,0.04)', normal: 'rgba(46,196,160,0.04)' };
+                      const colors = { high: '#DC2626', low: '#D97706', normal: '#0D9488' };
+                      const bgs = { high: 'rgba(220,38,38,0.03)', low: 'rgba(217,119,6,0.03)', normal: 'rgba(13, 148, 136, 0.03)' };
                       const c = colors[test.status];
                       return (
-                        <div key={i} className="stack-mobile" style={{ display: 'flex', alignItems: 'center', padding: '16px 20px', borderRadius: 14, background: bgs[test.status], border: `1.5px solid ${c}25`, position: 'relative', overflow: 'hidden' }}>
-
-                          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: c, borderRadius: '3px 0 0 3px' }} />
-                          <div style={{ flex: 2, paddingLeft: 8 }}>
-                            <div style={{ fontWeight: 700, fontSize: '1rem' }}>{test.name}</div>
-                            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 2 }}>{test.interpretation}</p>
+                        <div key={i} className="stack-mobile" style={{ display: 'flex', alignItems: 'center', padding: '16px 20px', borderRadius: 14, background: bgs[test.status], border: `1px solid ${c}15`, position: 'relative', overflow: 'hidden' }}>
+                          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: c }} />
+                          <div style={{ flex: 2, paddingLeft: 8, textAlign: 'left' }}>
+                            <div style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-dark)' }}>{test.name}</div>
+                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 2, lineHeight: 1.4 }}>{test.interpretation}</p>
                           </div>
-                          <div style={{ flex: 1, textAlign: 'center', fontWeight: 800, fontSize: '1.15rem', color: c }}>
-                            {test.value} <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-muted)' }}>{test.unit}</span>
+                          <div style={{ flex: 1, textAlign: 'center', fontWeight: 850, fontSize: '1.05rem', color: c }}>
+                            {test.value} <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-light)' }}>{test.unit}</span>
                           </div>
-                          <div style={{ flex: 1, textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                          <div style={{ flex: 1, textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                             {test.range[0]} – {test.range[1]}
                           </div>
                           <div style={{ flex: 1, textAlign: 'right' }}>
-                            <span style={{ padding: '4px 12px', borderRadius: 100, background: `${c}20`, color: c, fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>
+                            <span style={{ padding: '4px 12px', borderRadius: 100, background: `${c}12`, color: c, fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.04em' }}>
                               {test.status === 'high' ? '▲ HIGH' : test.status === 'low' ? '▼ LOW' : '✓ NORMAL'}
                             </span>
                           </div>
@@ -328,44 +366,52 @@ export default function ReportsPage() {
               ))}
             </div>
           ) : (
-            <div className="glass-card" style={{ padding: 48, textAlign: 'center' }}>
-              <div style={{ fontSize: '3rem', marginBottom: 16 }}>🤷‍♂️</div>
-              <p style={{ fontWeight: 600 }}>No parameters detected</p>
-              <p style={{ color: 'var(--text-muted)', marginTop: 6 }}>Try a clearer image or higher resolution scan.</p>
-              <button className="btn btn-secondary btn-sm" style={{ marginTop: 16 }} onClick={reset}>Try Again</button>
+            <div className="glass-card" style={{ padding: 40, textAlign: 'center', background: 'white', border: '1.5px solid var(--border)' }}>
+              <div style={{ width: 50, height: 50, borderRadius: '50%', background: 'rgba(220, 38, 38, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+                <AlertTriangle className="w-5 h-5 text-[#DC2626]" />
+              </div>
+              <p style={{ fontWeight: 800, color: 'var(--text-dark)' }}>No parameters parsed</p>
+              <p style={{ fontSize: '0.83rem', color: 'var(--text-muted)', marginTop: 6, maxWidth: 300, margin: '6px auto 0' }}>
+                The uploaded page may be too low contrast. Try writing in manual mode above or providing a higher resolution file.
+              </p>
+              <button className="btn btn-secondary btn-sm" style={{ marginTop: 18, borderRadius: 100, fontWeight: 700 }} onClick={reset}>
+                Try Scanning Again
+              </button>
             </div>
           )}
 
-          {/* AI Summary */}
-          <div className="glass-card" style={{ padding: 28, background: 'rgba(124,92,252,0.05)', border: '1px solid rgba(124,92,252,0.15)' }}>
-            <h4 style={{ fontWeight: 700, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span>{engine === 'gemini' ? '🤖' : '🐍'}</span> {engine === 'gemini' ? 'AI Clinical Summary (Gemini)' : 'Python Clinical Summary'}
+          {/* AI/OCR Summary */}
+          <div className="glass-card" style={{ padding: 28, background: 'rgba(179,143,93,0.03)', border: '1px solid rgba(179,143,93,0.12)', borderRadius: 20 }}>
+            <h4 style={{ fontWeight: 800, marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'left', color: '#B38F5D', fontSize: '0.92rem' }}>
+              {engine === 'gemini' ? <Bot className="w-4.5 h-4.5 text-[#B38F5D]" /> : <Cpu className="w-4.5 h-4.5 text-[#B38F5D]" />}
+              <span>{engine === 'gemini' ? 'AI Diagnostic Summary (Gemini)' : 'Python Pathology Synthesis'}</span>
             </h4>
-            <p style={{ fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: 1.7 }}>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-dark)', lineHeight: 1.65, textAlign: 'left' }}>
               {analysisResult.summary}
             </p>
 
             {analysisResult.risks && analysisResult.risks.length > 0 && (
-              <div style={{ marginTop: 20 }}>
-                <p style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--danger-deep)', textTransform: 'uppercase', marginBottom: 8 }}>Potential Health Risks</p>
-                <ul style={{ paddingLeft: 20, fontSize: '0.9rem', color: 'var(--text-dark)', lineHeight: 1.6 }}>
+              <div style={{ marginTop: 20, textAlign: 'left' }}>
+                <p style={{ fontWeight: 800, fontSize: '0.78rem', color: 'var(--danger-deep)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 8 }}>Potential Risks</p>
+                <ul style={{ paddingLeft: 20, fontSize: '0.82rem', color: 'var(--text-dark)', lineHeight: 1.6, listStyleType: 'disc' }}>
                   {analysisResult.risks.map((risk, i) => <li key={i}>{risk}</li>)}
                 </ul>
               </div>
             )}
 
             {analysisResult.recommendations && analysisResult.recommendations.length > 0 && (
-              <div style={{ marginTop: 20 }}>
-                <p style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 8 }}>Recommendations</p>
-                <ul style={{ paddingLeft: 20, fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              <div style={{ marginTop: 20, textAlign: 'left' }}>
+                <p style={{ fontWeight: 800, fontSize: '0.78rem', color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 8 }}>Recommended Actions</p>
+                <ul style={{ paddingLeft: 20, fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.6, listStyleType: 'disc' }}>
                   {analysisResult.recommendations.map((rec, i) => <li key={i}>{rec}</li>)}
                 </ul>
               </div>
             )}
           </div>
 
-          <div style={{ padding: '16px 24px', borderRadius: 16, background: 'rgba(229,62,62,0.05)', border: '1px solid rgba(229,62,62,0.1)', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            ⚕️ <strong>Disclaimer:</strong> This analysis is generated by Local Python OCR & Logic and is for informational purposes only. It is not a clinical diagnosis. Always share your full report with a qualified healthcare professional.
+          <div style={{ padding: '16px 24px', borderRadius: 16, background: 'rgba(30, 58, 138, 0.03)', border: '1px solid rgba(30, 58, 138, 0.08)', fontSize: '0.78rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
+            <Activity className="w-4 h-4 text-[#1E3A8A] flex-shrink-0" />
+            <span>Disclaimer: This analysis is generated via Local OCR engines. Always consult a certified healthcare professional before shifting dietary or prescription routines.</span>
           </div>
         </div>
       )}

@@ -2,7 +2,25 @@
 import { useState, useRef, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
-
+import { 
+  FileText, 
+  Upload, 
+  Search, 
+  AlertTriangle, 
+  Cpu, 
+  Pill, 
+  CheckCircle, 
+  HelpCircle, 
+  Plus, 
+  Trash2, 
+  ShieldAlert, 
+  ChevronDown, 
+  ChevronUp, 
+  Heart,
+  Briefcase,
+  Layers,
+  Info
+} from 'lucide-react';
 
 interface Medication {
   name: string;
@@ -38,7 +56,8 @@ export default function PrescriptionPage() {
   const [activeWarning, setActiveWarning] = useState<number | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  // ─── Analyze via API (Python Backend) ───────────────────────────────────────────────
+
+  // Analyze via API (Python Backend)
   const analyzeFile = useCallback(async (file: File) => {
     setStage('scanning');
     setProgress(10);
@@ -91,8 +110,7 @@ export default function PrescriptionPage() {
     }
   }, [user?.userId]);
 
-
-  // ─── Manual text analysis (create a text blob) ────────────────
+  // Manual text analysis
   const analyzeManualText = useCallback(async () => {
     if (!manualText.trim()) return;
 
@@ -147,7 +165,6 @@ export default function PrescriptionPage() {
     }
   }, [manualText, user?.userId]);
 
-
   const handleFile = useCallback((file: File) => {
     if (!file) return;
     const url = URL.createObjectURL(file);
@@ -180,40 +197,38 @@ export default function PrescriptionPage() {
   };
 
   const timingColor = (timing: string) => {
-    if (/twice|bd|1-0-1/i.test(timing)) return '#4DA6E8';
-    if (/thrice|tds|1-1-1/i.test(timing)) return '#7C5CFC';
-    if (/night|hs|0-0-1/i.test(timing)) return '#2EC4A0';
-    if (/morning|od|1-0-0/i.test(timing)) return '#F59E0B';
-    return '#9CA3AF';
+    if (/twice|bd|1-0-1/i.test(timing)) return '#1E3A8A';
+    if (/thrice|tds|1-1-1/i.test(timing)) return '#B38F5D';
+    if (/night|hs|0-0-1/i.test(timing)) return '#0D9488';
+    if (/morning|od|1-0-0/i.test(timing)) return '#D97706';
+    return '#64748B';
   };
 
   return (
     <div className="page-fade full-width-mobile" style={{ maxWidth: 1000, margin: '0 auto' }}>
-
       <header style={{ marginBottom: 28 }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: 8 }}>
-          <span className="text-gradient">Prescription</span> Analysis
+        <h1 style={{ fontSize: '2.1rem', fontWeight: 850, letterSpacing: '-0.02em', marginBottom: 8, color: '#0F172A' }}>
+          <span style={{ background: 'linear-gradient(135deg, #1E3A8A 30%, #B38F5D 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Prescription</span> Understanding
         </h1>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <p style={{ color: 'var(--text-muted)' }}>
-            Upload a prescription image — Our AI reads and interprets every medication accurately.
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+            Upload medication charts — our secure local engine parses handwriting and active alerts.
           </p>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,0.5)', padding: '6px 14px', borderRadius: 100, border: '1px solid var(--border)' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>
-              🐍 Powered by Python
-            </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.85)', padding: '6px 14px', borderRadius: 100, border: '1.5px solid var(--border)', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-dark)' }}>
+            <Cpu className="w-3.5 h-3.5 text-[#0D9488]" />
+            <span>Active Tesseract Backend</span>
           </div>
         </div>
       </header>
 
-      {/* Error banner */}
+      {/* Error dialog */}
       {errorMsg && (
-        <div style={{ padding: '14px 20px', borderRadius: 14, background: 'rgba(229,62,62,0.08)', border: '1.5px solid rgba(229,62,62,0.3)', marginBottom: 20, display: 'flex', gap: 10, alignItems: 'center' }}>
-          <span style={{ fontSize: '1.2rem' }}>⚠️</span>
-          <div>
-            <p style={{ fontWeight: 700, color: 'var(--danger-deep)', marginBottom: 2 }}>Analysis Failed</p>
-            <p style={{ fontSize: '0.87rem', color: 'var(--danger-deep)' }}>{errorMsg}</p>
+        <div style={{ padding: '14px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262630', marginBottom: 24, display: 'flex', gap: 12, alignItems: 'center' }}>
+          <ShieldAlert className="w-5 h-5 text-[#DC2626]" />
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ fontWeight: 800, color: 'var(--danger-deep)', fontSize: '0.88rem', marginBottom: 2 }}>Analysis Failed</p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--danger-deep)' }}>{errorMsg}</p>
           </div>
           <button onClick={() => setErrorMsg(null)} style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', color: 'var(--danger-deep)' }}>✕</button>
         </div>
@@ -221,85 +236,99 @@ export default function PrescriptionPage() {
 
       {/* Upload Stage */}
       {stage === 'upload' && (
-        <div className="grid-2">
+        <div className="grid-2" style={{ gap: '24px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-
             {/* Drop Zone */}
             <div
               className={`upload-zone animate-fadeInUp ${dragOver ? 'drag-over' : ''}`}
               onDragOver={e => { e.preventDefault(); setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
+              style={{
+                border: '2px dashed var(--border)',
+                background: 'rgba(255, 255, 255, 0.65)',
+                borderRadius: '20px',
+                padding: '48px 32px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.3s var(--transition)'
+              }}
             >
               <input ref={fileInputRef} type="file" accept="image/*,.pdf" style={{ display: 'none' }} onChange={handleFileInput} />
-              <div style={{ fontSize: '3.5rem', marginBottom: 12 }}>📋</div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: 8 }}>Upload Prescription</h3>
-              <p style={{ color: 'var(--text-muted)', marginBottom: 20, fontSize: '0.9rem' }}>
-                Drag &amp; drop or click — supports JPG, PNG, PDF and even handwritten prescriptions
+              <div style={{ width: 68, height: 68, borderRadius: '50%', background: 'white', border: '1.5px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 4px 12px rgba(0,0,0,0.01)' }}>
+                <FileText className="w-6 h-6 text-[#B38F5D]" />
+              </div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: 8 }}>Load Prescription</h3>
+              <p style={{ color: 'var(--text-muted)', marginBottom: 24, fontSize: '0.85rem', lineHeight: 1.5 }}>
+                Drag &amp; drop or click to upload — supports PNG, JPG, or PDF formats.
               </p>
               <button 
                 id="btn-upload-prescription" 
                 className="btn btn-primary" 
                 onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+                style={{ borderRadius: 100, fontWeight: 700 }}
               >
-                📁 Select File
+                <Upload className="w-4 h-4" /> Choose File Record
               </button>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-light)', marginTop: 12 }}>
-                Processed offline on your device via Python
+              <p style={{ fontSize: '0.72rem', color: 'var(--text-light)', marginTop: 16, fontWeight: 600 }}>
+                Processed fully in private client sandbox
               </p>
             </div>
 
-
-            {/* Manual Input */}
-            <div style={{ padding: 24, borderRadius: 20, border: '1px solid var(--border)', background: 'rgba(255,255,255,0.7)' }}>
-              <h3 style={{ fontWeight: 700, marginBottom: 4, fontSize: '1rem' }}>
-                ✏️ Or type prescription text manually
+            {/* Manual Entry */}
+            <div style={{ padding: 24, borderRadius: 20, border: '1.5px solid var(--border)', background: 'white', boxShadow: 'var(--shadow-sm)' }}>
+              <h3 style={{ fontWeight: 800, color: 'var(--text-dark)', marginBottom: 4, fontSize: '0.98rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Layers className="w-4 h-4 text-[#1E3A8A]" /> Manual Transcription Input
               </h3>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: 12 }}>
-                Type drug names, dosages, and timings — Python Engine will interpret them.
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 16 }}>
+                Type drug lists manually — our OCR fallback parser will interpret clinical dosages.
               </p>
               <textarea
                 className="input-field"
                 rows={4}
-                placeholder={'e.g.\nAmoxicillin 500mg 1-0-1 5 days\nParacetamol 650mg 1-1-1 SOS\nCetirizine 10mg 0-0-1'}
+                placeholder={'Amoxicillin 500mg 1-0-1 5 days\nParacetamol 650mg 1-1-1 SOS\nCetirizine 10mg 0-0-1'}
                 value={manualText}
                 onChange={e => setManualText(e.target.value)}
-                style={{ resize: 'vertical', marginBottom: 12 }}
+                style={{ resize: 'vertical', marginBottom: 16, borderRadius: '12px', fontSize: '0.85rem', background: '#F8FAFC' }}
               />
               <button
                 className="btn btn-secondary"
                 onClick={analyzeManualText}
                 disabled={!manualText.trim()}
+                style={{ width: '100%', justifyContent: 'center', borderRadius: 100, fontWeight: 700 }}
               >
-                🔍 Analyze Text
+                <Search className="w-4 h-4" /> Analyze Transcription
               </button>
             </div>
           </div>
 
           {/* Info Sidebar */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div className="glass-card" style={{ padding: 20 }}>
-              <h3 style={{ fontWeight: 700, marginBottom: 12, fontSize: '0.95rem' }}>🔍 How It Works</h3>
-              {[
-                { step: '1', text: 'Upload prescription image or PDF' },
-                { step: '2', text: 'AI Vision reads text & context' },
-                { step: '3', text: 'Medications extracted with dosage & timing' },
-                { step: '4', text: 'Drug class, warnings & instructions shown' },
-                { step: '5', text: 'AI clinical summary generated' },
-              ].map((s, i) => (
-                <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 10, alignItems: 'flex-start' }}>
-                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'linear-gradient(135deg, #4DA6E8, #7C5CFC)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 800, color: 'white', flexShrink: 0 }}>{s.step}</div>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{s.text}</span>
-                </div>
-              ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div className="glass-card" style={{ padding: 24, background: 'white', border: '1.5px solid var(--border)' }}>
+              <h3 style={{ fontWeight: 800, marginBottom: 16, fontSize: '0.95rem', color: 'var(--text-dark)' }}>Workflow Steps</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {[
+                  { step: '1', text: 'Provide physical prescription page image' },
+                  { step: '2', text: 'Tesseract OCR runs localized text scan' },
+                  { step: '3', text: 'AI clinical entities map active timings' },
+                  { step: '4', text: 'System identifies drug alerts and class' },
+                  { step: '5', text: 'Safe clinical summary is populated' },
+                ].map((s, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', textAlign: 'left' }}>
+                    <div style={{ width: 22, height: 22, borderRadius: '50%', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.72rem', fontWeight: 800, color: 'white', flexShrink: 0 }}>{s.step}</div>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>{s.text}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="glass-card" style={{ padding: 20, background: 'rgba(124,92,252,0.06)' }}>
-              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#7C5CFC' }}>🐍 Powered by Python</span>
-              <ul style={{ paddingLeft: 16, fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.7 }}>
-                <li>Reads handwritten prescriptions accurately</li>
-                <li>Understands doctor shorthand (OD, BD, TDS…)</li>
-                <li>Identifies Indian brand names</li>
-                <li>Fully offline and private</li>
+            <div className="glass-card" style={{ padding: 24, background: 'rgba(179,143,93,0.03)', border: '1px solid rgba(179,143,93,0.12)', borderRadius: 20 }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#B38F5D', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+                <Info className="w-4 h-4 text-[#B38F5D]" /> Pipeline Overview
+              </span>
+              <ul style={{ paddingLeft: 16, fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.7, listStyleType: 'disc', textAlign: 'left' }}>
+                <li>Interprets doctor abbreviations (BD, OD, HS)</li>
+                <li>Extracts Indian pharmaceutical brands</li>
+                <li>Fully sandboxed personal health record</li>
               </ul>
             </div>
           </div>
@@ -308,17 +337,19 @@ export default function PrescriptionPage() {
 
       {/* Scanning Stage */}
       {stage === 'scanning' && (
-        <div className="glass-card animate-fadeInUp" style={{ padding: 48, textAlign: 'center' }}>
-          <div style={{ fontSize: '3.5rem', marginBottom: 24, animation: 'pulse 1.5s infinite' }}>🐍</div>
-          <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: 8 }}>Python Engine Scanning</h3>
-          <p style={{ color: 'var(--text-muted)', marginBottom: 28 }}>{progressLabel}</p>
-          <div style={{ maxWidth: 400, margin: '0 auto', background: 'var(--primary)', borderRadius: 100, height: 10, overflow: 'hidden' }}>
-            <div style={{ height: '100%', borderRadius: 100, background: 'linear-gradient(to right, #4DA6E8, #7C5CFC)', width: `${progress}%`, transition: 'width 0.5s ease' }} />
+        <div className="glass-card animate-fadeInUp" style={{ padding: 48, textAlign: 'center', background: 'white', border: '1.5px solid var(--border)' }}>
+          <div style={{ width: 68, height: 68, borderRadius: '50%', background: 'rgba(30, 58, 138, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', animation: 'pulse 1.8s infinite' }}>
+            <Cpu className="w-6 h-6 text-[#1E3A8A]" />
           </div>
-          <p style={{ marginTop: 12, fontSize: '0.85rem', color: 'var(--text-light)' }}>{progress}% complete</p>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: 8 }}>Analyzing Prescription Record</h3>
+          <p style={{ color: 'var(--text-muted)', marginBottom: 28, fontSize: '0.88rem' }}>{progressLabel}</p>
+          <div style={{ maxWidth: 400, margin: '0 auto', background: 'var(--primary)', borderRadius: 100, height: 8, overflow: 'hidden' }}>
+            <div style={{ height: '100%', borderRadius: 100, background: 'linear-gradient(to right, #1E3A8A, #B38F5D)', width: `${progress}%`, transition: 'width 0.5s ease' }} />
+          </div>
+          <p style={{ marginTop: 12, fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: 700 }}>{progress}% parsing complete</p>
           {previewUrl && (
-            <div style={{ marginTop: 24, maxHeight: 200, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--border)' }}>
-              <img src={previewUrl} alt="Prescription" style={{ width: '100%', objectFit: 'cover' }} />
+            <div style={{ marginTop: 24, maxHeight: 180, overflow: 'hidden', borderRadius: 16, border: '1.5px solid var(--border)', maxWidth: 400, margin: '24px auto 0' }}>
+              <img src={previewUrl} alt="Prescription Upload" style={{ width: '100%', objectFit: 'cover' }} />
             </div>
           )}
         </div>
@@ -327,90 +358,91 @@ export default function PrescriptionPage() {
       {/* Results Stage */}
       {stage === 'parsed' && result && (
         <div className="page-fade" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-
-          {/* Allergy Alert */}
+          {/* Allergy alert flag */}
           {result.allergyAlert && (
-            <div style={{ padding: '18px 24px', borderRadius: 16, background: '#FFF0F0', border: '2px solid var(--danger-deep)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-              <span style={{ fontSize: '1.5rem' }}>⚠️</span>
-              <div>
-                <p style={{ fontWeight: 800, color: 'var(--danger-deep)', marginBottom: 4 }}>Allergy Alert</p>
-                <p style={{ fontSize: '0.9rem', color: 'var(--danger-deep)' }}>{result.allergyAlert}</p>
+            <div style={{ padding: '16px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262625', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+              <AlertTriangle className="w-5 h-5 text-[#DC2626] flex-shrink-0" />
+              <div style={{ textAlign: 'left' }}>
+                <p style={{ fontWeight: 800, color: 'var(--danger-deep)', fontSize: '0.9rem', marginBottom: 2 }}>Clinical Allergy Alert</p>
+                <p style={{ fontSize: '0.82rem', color: 'var(--danger-deep)', lineHeight: 1.5 }}>{result.allergyAlert}</p>
               </div>
             </div>
           )}
 
-          {/* Top bar */}
+          {/* Metric parameters summary */}
           <div style={{ display: 'flex', gap: 16, justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, auto)', gap: 12 }}>
               {[
-                { label: 'Medications Found', value: result.medications.length, icon: '💊' },
-                { label: 'Warnings', value: result.warnings.length, icon: '⚠️' },
-                { label: 'Analysis', value: 'Python', icon: '🐍' },
+                { label: 'Active Drugs', value: result.medications.length, icon: <Pill className="w-4 h-4 text-[#1E3A8A]" /> },
+                { label: 'Alert Highlights', value: result.warnings.length, icon: <AlertTriangle className="w-4 h-4 text-[#D97706]" /> },
+                { label: 'OCR Pipeline', value: 'Sandbox', icon: <Cpu className="w-4 h-4 text-[#0D9488]" /> },
               ].map((s, i) => (
-                <div key={i} className="glass-card" style={{ padding: '14px 20px', textAlign: 'center', minWidth: 120 }}>
-                  <div style={{ fontSize: '1.2rem' }}>{s.icon}</div>
-                  <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>{s.value}</div>
-                  <div style={{ fontSize: '0.7rem', color: 'var(--text-light)', fontWeight: 600, textTransform: 'uppercase' }}>{s.label}</div>
+                <div key={i} className="glass-card" style={{ padding: '14px 24px', textAlign: 'center', minWidth: 130, background: 'white', border: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                  <div>{s.icon}</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 850, color: 'var(--text-dark)' }}>{s.value}</div>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-light)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.02em' }}>{s.label}</div>
                 </div>
               ))}
             </div>
-            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
               {previewUrl && (
-                <img src={previewUrl} alt="Prescription" style={{ height: 60, borderRadius: 10, border: '1px solid var(--border)', objectFit: 'cover' }} />
+                <img src={previewUrl} alt="Prescription Thumbnail" style={{ height: 56, width: 56, borderRadius: 10, border: '1px solid var(--border)', objectFit: 'cover' }} />
               )}
-              <button className="btn btn-secondary btn-sm" onClick={reset}>↩ Upload Another</button>
+              <button className="btn btn-secondary btn-sm" onClick={reset} style={{ borderRadius: 100, fontWeight: 700, border: '1px solid var(--border)' }}>↩ Upload Another</button>
             </div>
           </div>
 
-          {/* Summary */}
-          <div className="glass-card" style={{ padding: 20, background: 'rgba(124,92,252,0.06)', border: '1px solid rgba(124,92,252,0.15)' }}>
-            <p style={{ fontWeight: 700, marginBottom: 6 }}>🐍 Python Clinical Summary</p>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-dark)', lineHeight: 1.65 }}>{result.summary}</p>
+          {/* Clinical summary block */}
+          <div className="glass-card" style={{ padding: 24, background: 'rgba(179,143,93,0.03)', border: '1px solid rgba(179,143,93,0.12)', borderRadius: 20 }}>
+            <p style={{ fontWeight: 800, marginBottom: 8, color: '#B38F5D', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'left' }}>
+              <Heart className="w-4 h-4 text-[#B38F5D]" /> Local Clinical Overview
+            </p>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-dark)', lineHeight: 1.65, textAlign: 'left' }}>{result.summary}</p>
           </div>
 
-          {/* Medications */}
+          {/* Medications list detected */}
           {result.medications && result.medications.length > 0 ? (
-            <div className="glass-card" style={{ padding: 28 }}>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: 20 }}>💊 Medications Detected</h3>
+            <div className="glass-card" style={{ padding: 28, background: 'white', border: '1.5px solid var(--border)' }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 800, marginBottom: 20, color: 'var(--text-dark)', textAlign: 'left' }}>💊 Detected Medications</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {result.medications.map((med, i) => (
-                  <div key={i} style={{ padding: 20, borderRadius: 16, background: 'white', border: '1.5px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: 'linear-gradient(to bottom, #4DA6E8, #7C5CFC)', borderRadius: '4px 0 0 4px' }} />
+                  <div key={i} style={{ padding: 20, borderRadius: 16, background: '#F8FAFC', border: '1px solid rgba(226, 232, 240, 0.8)', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: 'linear-gradient(to bottom, #1E3A8A, #B38F5D)' }} />
                     <div style={{ paddingLeft: 12 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, marginBottom: 10 }}>
-                        <div>
-                          <span style={{ fontWeight: 800, fontSize: '1.05rem' }}>{med.name}</span>
-                          <span style={{ marginLeft: 8, fontSize: '0.78rem', color: 'var(--text-light)', fontWeight: 600 }}>{med.drugClass}</span>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
+                        <div style={{ textAlign: 'left' }}>
+                          <span style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--text-dark)' }}>{med.name}</span>
+                          <span style={{ marginLeft: 10, fontSize: '0.72rem', color: 'var(--text-light)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{med.drugClass}</span>
                         </div>
                         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                           {med.dosage && med.dosage !== 'As prescribed' && (
-                            <span className="badge badge-blue">{med.dosage}</span>
+                            <span className="badge badge-blue" style={{ fontWeight: 700 }}>{med.dosage}</span>
                           )}
-                          <span style={{ padding: '4px 12px', borderRadius: 100, background: `${timingColor(med.timing)}22`, color: timingColor(med.timing), fontSize: '0.78rem', fontWeight: 700 }}>
+                          <span style={{ padding: '4px 12px', borderRadius: 100, background: `${timingColor(med.timing)}12`, color: timingColor(med.timing), fontSize: '0.72rem', fontWeight: 800 }}>
                             {med.timing}
                           </span>
-                          <span className="badge badge-green">{med.duration}</span>
+                          <span className="badge badge-green" style={{ fontWeight: 700 }}>{med.duration}</span>
                         </div>
                       </div>
 
-                      <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: 10 }}>
-                        <strong>For:</strong> {med.purpose}
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: 10, textAlign: 'left' }}>
+                        <strong>Diagnostic Purpose:</strong> {med.purpose}
                       </p>
 
-                      <p style={{ fontSize: '0.85rem', color: '#178A6A', background: '#E6FFF5', padding: '8px 12px', borderRadius: 8, marginBottom: 10 }}>
-                        📌 {med.instructions}
+                      <p style={{ fontSize: '0.8rem', color: 'var(--secondary-deep)', background: 'rgba(13, 148, 136, 0.04)', border: '1px solid rgba(13, 148, 136, 0.08)', padding: '10px 14px', borderRadius: 10, marginBottom: 12, textAlign: 'left' }}>
+                        📌 <strong>Instructions:</strong> {med.instructions}
                       </p>
 
                       {med.warnings && med.warnings.length > 0 && (
-                        <div>
+                        <div style={{ textAlign: 'left' }}>
                           <button
                             onClick={() => setActiveWarning(activeWarning === i ? null : i)}
-                            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--danger-deep)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'inherit', padding: 0 }}
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.78rem', color: 'var(--danger-deep)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'inherit', padding: 0 }}
                           >
-                            ⚠️ {med.warnings.length} warning{med.warnings.length > 1 ? 's' : ''} {activeWarning === i ? '▲' : '▼'}
+                            <ShieldAlert className="w-3.5 h-3.5" /> {med.warnings.length} clinical alert{med.warnings.length > 1 ? 's' : ''} {activeWarning === i ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                           </button>
                           {activeWarning === i && (
-                            <ul style={{ marginTop: 8, paddingLeft: 20, fontSize: '0.83rem', color: 'var(--danger-deep)' }}>
+                            <ul style={{ marginTop: 8, paddingLeft: 20, fontSize: '0.8rem', color: 'var(--danger-deep)', listStyleType: 'disc', lineHeight: 1.5 }}>
                               {med.warnings.map((w, j) => <li key={j} style={{ marginBottom: 4 }}>{w}</li>)}
                             </ul>
                           )}
@@ -422,26 +454,30 @@ export default function PrescriptionPage() {
               </div>
             </div>
           ) : (
-            <div className="glass-card" style={{ padding: 40, textAlign: 'center' }}>
-              <div style={{ fontSize: '3rem', marginBottom: 12 }}>🔍</div>
-              <p style={{ fontWeight: 600 }}>No medications detected</p>
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: 6 }}>
-                The image may be too blurry. Try a clearer photo or use manual text entry.
+            <div className="glass-card" style={{ padding: 40, textAlign: 'center', background: 'white', border: '1.5px solid var(--border)' }}>
+              <div style={{ width: 50, height: 50, borderRadius: '50%', background: 'rgba(220, 38, 38, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
+                <AlertTriangle className="w-5 h-5 text-[#DC2626]" />
+              </div>
+              <p style={{ fontWeight: 800, color: 'var(--text-dark)' }}>No medications parsed</p>
+              <p style={{ fontSize: '0.83rem', color: 'var(--text-muted)', marginTop: 6, maxWidth: 300, margin: '6px auto 0' }}>
+                The uploaded page may be too low contrast. Try writing in manual mode above or providing a higher resolution file.
               </p>
-              <button className="btn btn-secondary btn-sm" style={{ marginTop: 16 }} onClick={reset}>
-                Try Again
+              <button className="btn btn-secondary btn-sm" style={{ marginTop: 18, borderRadius: 100, fontWeight: 700 }} onClick={reset}>
+                Try Scanning Again
               </button>
             </div>
           )}
 
-          {/* Warnings */}
+          {/* Safe key warnings */}
           {result.warnings && result.warnings.length > 0 && (
-            <div className="glass-card" style={{ padding: 24, background: 'rgba(245,158,11,0.05)', border: '1px solid rgba(245,158,11,0.2)' }}>
-              <h3 style={{ fontWeight: 700, marginBottom: 14, fontSize: '1rem' }}>⚠️ Key Warnings for This Prescription</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div className="glass-card" style={{ padding: 24, background: 'rgba(217, 119, 6, 0.03)', border: '1px solid rgba(217, 119, 6, 0.12)', borderRadius: 20 }}>
+              <h3 style={{ fontWeight: 800, marginBottom: 14, fontSize: '0.92rem', color: '#D97706', display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'left' }}>
+                <ShieldAlert className="w-4 h-4 text-[#D97706]" /> Key Clinical Exclusions
+              </h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, textAlign: 'left' }}>
                 {result.warnings.map((w, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: '0.87rem', color: 'var(--text-dark)' }}>
-                    <span style={{ color: '#F59E0B', flexShrink: 0 }}>•</span>
+                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: '0.82rem', color: 'var(--text-dark)', lineHeight: 1.5 }}>
+                    <span style={{ color: '#D97706', fontWeight: 800 }}>•</span>
                     {w}
                   </div>
                 ))}
@@ -449,16 +485,19 @@ export default function PrescriptionPage() {
             </div>
           )}
 
-          {/* General Advice */}
+          {/* Advice details */}
           {result.generalAdvice && (
-            <div className="glass-card" style={{ padding: 20 }}>
-              <p style={{ fontWeight: 700, marginBottom: 6 }}>📋 General Advice</p>
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>{result.generalAdvice}</p>
+            <div className="glass-card" style={{ padding: 20, background: 'white', border: '1.5px solid var(--border)', textAlign: 'left' }}>
+              <p style={{ fontWeight: 800, color: 'var(--text-dark)', marginBottom: 6, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Briefcase className="w-4 h-4 text-[#1E3A8A]" /> Professional Advice
+              </p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{result.generalAdvice}</p>
             </div>
           )}
 
-          <div style={{ padding: '12px 20px', borderRadius: 12, background: 'rgba(229,62,62,0.05)', border: '1px solid rgba(229,62,62,0.1)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            ⚕️ This analysis is generated by AI/OCR. Always follow your doctor's exact instructions. Do not modify dosages based on AI output alone.
+          <div style={{ padding: '12px 20px', borderRadius: 12, background: 'rgba(30, 58, 138, 0.03)', border: '1px solid rgba(30, 58, 138, 0.08)', fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
+            <Info className="w-4 h-4 text-[#1E3A8A] flex-shrink-0" />
+            <span>This report is an automated parsing analysis. Do not adjust prescribed medication dosages without authentic clinician oversight.</span>
           </div>
         </div>
       )}

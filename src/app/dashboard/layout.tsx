@@ -3,15 +3,29 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
+import { 
+  Home, 
+  MessageSquare, 
+  Mic, 
+  Pill, 
+  FileSpreadsheet, 
+  PhoneCall, 
+  User, 
+  Heart, 
+  LogOut, 
+  Menu, 
+  X,
+  Sparkles
+} from 'lucide-react';
 
 const navItems = [
-  { icon: '🏠', label: 'Dashboard', href: '/dashboard' },
-  { icon: '💬', label: 'Text Query', href: '/dashboard/chat' },
-  { icon: '🎤', label: 'Voice Call', href: '/dashboard/voice' },
-  { icon: '💊', label: 'Prescription', href: '/dashboard/prescription' },
-  { icon: '📊', label: 'Report Analysis', href: '/dashboard/reports' },
-  { icon: '🚨', label: 'Emergency', href: '/dashboard/emergency' },
-  { icon: '👤', label: 'Health Profile', href: '/dashboard/profile' },
+  { icon: <Home className="w-4 h-4" />, label: 'Dashboard', href: '/dashboard' },
+  { icon: <MessageSquare className="w-4 h-4" />, label: 'Text Query', href: '/dashboard/chat' },
+  { icon: <Mic className="w-4 h-4" />, label: 'Voice Call', href: '/dashboard/voice' },
+  { icon: <Pill className="w-4 h-4" />, label: 'Prescription', href: '/dashboard/prescription' },
+  { icon: <FileSpreadsheet className="w-4 h-4" />, label: 'Report Analysis', href: '/dashboard/reports' },
+  { icon: <PhoneCall className="w-4 h-4" />, label: 'Emergency', href: '/dashboard/emergency' },
+  { icon: <User className="w-4 h-4" />, label: 'Health Profile', href: '/dashboard/profile' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -35,8 +49,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return (
       <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '20px', animation: 'pulse 1.5s infinite' }}>🏥</div>
-          <p style={{ fontWeight: 600, color: 'var(--text-muted)' }}>Loading your workspace...</p>
+          <div style={{ width: 56, height: 56, borderRadius: '16px', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', color: 'white', animation: 'pulse 1.8s infinite' }}>
+            <Heart className="w-6 h-6 text-white" />
+          </div>
+          <p style={{ fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.9rem', letterSpacing: '0.02em' }}>Loading Workspace...</p>
         </div>
       </div>
     );
@@ -49,67 +65,103 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         className="hamburger-btn" 
         onClick={() => setSidebarOpen(!sidebarOpen)}
         aria-label="Toggle Menu"
+        style={{ background: 'white', border: '1.5px solid var(--border)', borderRadius: '12px', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)', top: '16px', left: '16px' }}
       >
-        <span style={{ fontSize: '1.5rem' }}>{sidebarOpen ? '✕' : '☰'}</span>
+        {sidebarOpen ? <X className="w-5 h-5 text-[#0F172A]" /> : <Menu className="w-5 h-5 text-[#0F172A]" />}
       </button>
 
       {/* Sidebar Overlay */}
       <div 
         className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} 
         onClick={() => setSidebarOpen(false)}
+        style={{ backdropFilter: 'blur(4px)', background: 'rgba(15, 23, 42, 0.15)' }}
       />
 
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-logo">
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: 'var(--text-dark)' }}>
-            <div className="logo-icon">🏥</div>
-            <span style={{ fontSize: '1.15rem', fontWeight: 800 }}>AIHCAS</span>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} style={{ borderRight: '1.5px solid var(--border)', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(30px)', width: '260px' }}>
+        <div className="sidebar-logo" style={{ borderBottom: '1px solid rgba(226, 232, 240, 0.6)', padding: '24px' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+            <div style={{ background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', width: 28, height: 28, borderRadius: '6px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Heart className="w-3.5 h-3.5 text-white" />
+            </div>
+            <span style={{ fontSize: '1.1rem', fontWeight: 800, letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #0F172A, #1E3A8A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              AIHCAS
+            </span>
           </Link>
         </div>
 
-        <nav className="sidebar-nav">
-          <div style={{ padding: '0 4px', marginBottom: 8 }}>
-            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.1em', padding: '0 12px' }}>
-              Main Menu
+        <nav className="sidebar-nav" style={{ padding: '24px 16px' }}>
+          <div style={{ padding: '0 12px', marginBottom: 12 }}>
+            <span style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              Medical Services
             </span>
           </div>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`sidebar-item ${pathname === item.href ? 'active' : ''}`}
-            >
-              <span className="item-icon">{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`sidebar-item ${pathname === item.href ? 'active' : ''}`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  fontSize: '0.85rem',
+                  fontWeight: 700,
+                  transition: 'all 0.2s var(--transition)',
+                  color: pathname === item.href ? 'var(--primary-deep)' : 'var(--text-muted)',
+                  background: pathname === item.href ? 'linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(179, 143, 93, 0.03))' : 'transparent',
+                  border: `1px solid ${pathname === item.href ? 'rgba(30, 58, 138, 0.08)' : 'transparent'}`
+                }}
+              >
+                <span className="item-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {item.icon}
+                </span>
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </nav>
 
-        <div className="sidebar-footer">
-          {/* User avatar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 'var(--radius-sm)', background: 'var(--primary)', marginBottom: 8 }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #4DA6E8, #7C5CFC)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem', color: 'white', fontWeight: 700 }}>
+        <div className="sidebar-footer" style={{ padding: '20px 16px', borderTop: '1px solid rgba(226, 232, 240, 0.6)' }}>
+          {/* User avatar summary */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px', borderRadius: '12px', background: 'rgba(179, 143, 93, 0.04)', marginBottom: 10, border: '1px solid rgba(179, 143, 93, 0.1)' }}>
+            <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', color: 'white', fontWeight: 800 }}>
               {user.name.charAt(0)}
             </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.name}</div>
-              <div style={{ fontSize: '0.73rem', color: 'var(--text-light)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</div>
+            <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-dark)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.name}</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-light)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</div>
             </div>
           </div>
           <button
             onClick={logout}
             className="sidebar-item"
-            style={{ color: 'var(--danger-deep)', width: '100%', border: 'none', background: 'none' }}
+            style={{ 
+              color: 'var(--danger-deep)', 
+              width: '100%', 
+              border: 'none', 
+              background: 'none', 
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              padding: '10px 14px',
+              borderRadius: '10px',
+              fontSize: '0.85rem',
+              fontWeight: 700
+            }}
           >
-            <span className="item-icon">🚪</span>
+            <span className="item-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LogOut className="w-4 h-4" /></span>
             Sign Out
           </button>
         </div>
       </aside>
 
-      {/* Main */}
-      <main className="main-content page-fade">
+      {/* Main Container */}
+      <main className="main-content page-fade" style={{ flex: 1, padding: '36px', overflowX: 'hidden' }}>
         {children}
       </main>
     </div>

@@ -2,7 +2,25 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
-
+import { 
+  Plus, 
+  Sparkles, 
+  RotateCcw, 
+  Copy, 
+  Check, 
+  Send, 
+  Bot, 
+  Activity, 
+  PhoneCall, 
+  Pill, 
+  FileText, 
+  AlertTriangle,
+  History,
+  Heart,
+  CheckCircle,
+  ShieldAlert,
+  ChevronRight
+} from 'lucide-react';
 
 interface Message {
   id: number;
@@ -16,10 +34,10 @@ function renderMarkdown(text: string): string {
   return text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/`(.+?)`/g, '<code style="background:rgba(77,166,232,0.1);padding:2px 6px;border-radius:4px;font-size:0.9em">$1</code>')
-    .replace(/^#{3}\s+(.+)$/gm, '<h4 style="font-size:0.95rem;font-weight:700;margin:10px 0 4px">$1</h4>')
-    .replace(/^#{2}\s+(.+)$/gm, '<h3 style="font-size:1.05rem;font-weight:700;margin:12px 0 6px">$1</h3>')
-    .replace(/^[-*]\s+(.+)$/gm, '<li style="margin-left:16px;list-style:disc;margin-bottom:4px">$1</li>')
+    .replace(/`(.+?)`/g, '<code style="background:rgba(30,58,138,0.06);padding:2px 6px;border-radius:4px;font-size:0.9em;font-weight:700;color:var(--primary-deep)">$1</code>')
+    .replace(/^#{3}\s+(.+)$/gm, '<h4 style="font-size:0.95rem;font-weight:800;margin:12px 0 4px;color:var(--text-dark)">$1</h4>')
+    .replace(/^#{2}\s+(.+)$/gm, '<h3 style="font-size:1.05rem;font-weight:800;margin:14px 0 6px;color:var(--text-dark)">$1</h3>')
+    .replace(/^[-*]\s+(.+)$/gm, '<li style="margin-left:16px;list-style:disc;margin-bottom:6px;color:var(--text-muted)">$1</li>')
     .replace(/\n\n/g, '<br/><br/>')
     .replace(/\n/g, '<br/>');
 }
@@ -33,10 +51,10 @@ function detectTriage(text: string): 'self' | 'consult' | 'emergency' | null {
 }
 
 const QUICK_PROMPTS = [
-  { label: '🤒 Fever & Headache', text: 'I have a fever and headache since yesterday. What should I do?' },
-  { label: '💊 Drug Interaction', text: 'Can I take Paracetamol and Ibuprofen together?' },
-  { label: '🫀 Chest Tightness', text: 'I\'m feeling tightness in my chest and mild breathlessness.' },
-  { label: '🩺 Blood Pressure', text: 'My blood pressure reading is 140/90. Is this concerning?' },
+  { label: 'Fever & Headache', text: 'I have a fever and headache since yesterday. What should I do?', icon: <Activity className="w-3.5 h-3.5 text-[#1E3A8A]" /> },
+  { label: 'Drug Interaction', text: 'Can I take Paracetamol and Ibuprofen together?', icon: <Pill className="w-3.5 h-3.5 text-[#0D9488]" /> },
+  { label: 'Chest Tightness', text: 'I\'m feeling tightness in my chest and mild breathlessness.', icon: <AlertTriangle className="w-3.5 h-3.5 text-[#DC2626]" /> },
+  { label: 'Blood Pressure', text: 'My blood pressure reading is 140/90. Is this concerning?', icon: <Heart className="w-3.5 h-3.5 text-[#B38F5D]" /> },
 ];
 
 export default function ChatPage() {
@@ -44,7 +62,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>(() => [{
     id: 1,
     text: `Hello! I'm **Dr. AIHCAS**, your AI health assistant. I'm here to listen and help.
-
+    
 Please tell me — what's been bothering you today? Feel free to describe your symptoms in your own words, and I'll ask a few questions to better understand your situation.`,
     sender: 'ai',
     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -57,7 +75,6 @@ Please tell me — what's been bothering you today? Feel free to describe your s
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const historyRef = useRef<Message[]>([]);
-
 
   useEffect(() => {
     historyRef.current = messages;
@@ -107,7 +124,6 @@ Please tell me — what's been bothering you today? Feel free to describe your s
     }
     fetchMessages();
   }, [activeConversationId, user]);
-
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -248,36 +264,41 @@ Please tell me — what's been bothering you today? Feel free to describe your s
     }]);
   };
 
-
   return (
-    <div className="page-fade chat-container stack-mobile">
+    <div className="page-fade chat-container stack-mobile" style={{ border: '1.5px solid var(--border)', background: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
       {/* Sidebar - Hidden on mobile by default */}
-      <aside className="hide-mobile" style={{ width: 260, background: 'rgba(255,255,255,0.85)', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-
-
+      <aside className="hide-mobile" style={{ width: 260, background: 'rgba(255,255,255,0.85)', borderRight: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         <div style={{ padding: '20px 16px' }}>
-          <button className="btn btn-primary btn-sm" style={{ width: '100%', justifyContent: 'center' }} onClick={clearChat}>
-            + New Consultation
+          <button className="btn btn-primary btn-sm" style={{ width: '100%', justifyContent: 'center', borderRadius: 100, fontWeight: 700 }} onClick={clearChat}>
+            <Plus className="w-4 h-4" /> New Consultation
           </button>
         </div>
 
-        <div style={{ padding: '0 16px', marginBottom: 16 }}>
-          <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>
+        <div style={{ padding: '0 16px', marginBottom: 20 }}>
+          <div style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>
             Quick Prompts
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {QUICK_PROMPTS.map((q, i) => (
               <button
                 key={i}
                 onClick={() => sendMessage(q.text)}
                 style={{
-                  padding: '10px 12px', borderRadius: 10, background: 'var(--primary)', border: 'none',
-                  textAlign: 'left', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 500,
+                  padding: '11px 14px', borderRadius: 12, background: 'var(--primary)', border: '1px solid rgba(30, 58, 138, 0.04)',
+                  textAlign: 'left', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 700,
                   color: 'var(--primary-deep)', transition: 'all 0.2s', fontFamily: 'inherit',
+                  display: 'flex', alignItems: 'center', gap: 8
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'var(--primary-mid)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'var(--primary)')}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = 'var(--primary-mid)';
+                  e.currentTarget.style.borderColor = 'rgba(30, 58, 138, 0.1)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'var(--primary)';
+                  e.currentTarget.style.borderColor = 'rgba(30, 58, 138, 0.04)';
+                }}
               >
+                {q.icon}
                 {q.label}
               </button>
             ))}
@@ -285,8 +306,8 @@ Please tell me — what's been bothering you today? Feel free to describe your s
         </div>
 
         <div style={{ flex: 1, padding: '0 16px 16px', overflowY: 'auto' }}>
-          <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>
-            Recent Conversations
+          <div style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <History className="w-3.5 h-3.5" /> Recent Consultations
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             {conversations.map((c) => (
@@ -294,84 +315,118 @@ Please tell me — what's been bothering you today? Feel free to describe your s
                 key={c.id}
                 onClick={() => setActiveConversationId(c.id)}
                 style={{
-                  padding: '10px 12px', borderRadius: 10, background: activeConversationId === c.id ? 'var(--primary-mid)' : 'transparent', border: '1px solid',
-                  borderColor: activeConversationId === c.id ? 'var(--primary-deep)' : 'transparent',
-                  textAlign: 'left', cursor: 'pointer', fontSize: '0.82rem', fontWeight: activeConversationId === c.id ? 700 : 500,
+                  padding: '10px 14px', borderRadius: 12, 
+                  background: activeConversationId === c.id ? 'linear-gradient(135deg, rgba(30, 58, 138, 0.06), rgba(179, 143, 93, 0.03))' : 'transparent', 
+                  border: '1px solid',
+                  borderColor: activeConversationId === c.id ? 'rgba(30, 58, 138, 0.08)' : 'transparent',
+                  textAlign: 'left', cursor: 'pointer', fontSize: '0.8rem', fontWeight: activeConversationId === c.id ? 700 : 600,
                   color: activeConversationId === c.id ? 'var(--primary-deep)' : 'var(--text-muted)', transition: 'all 0.2s', fontFamily: 'inherit',
-                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
+                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                  display: 'flex', alignItems: 'center', gap: 8
                 }}
               >
-                📝 {c.title || 'Untitled Chat'}
+                <ChevronRight className="w-3.5 h-3.5 opacity-60" />
+                {c.title || 'Untitled Chat'}
               </button>
             ))}
             {conversations.length === 0 && (
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', padding: 10 }}>No history yet</div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light)', padding: 12, fontWeight: 600 }}>No previous records</div>
             )}
           </div>
         </div>
 
-        <div style={{ padding: 16, borderTop: '1px solid var(--border)' }}>
-          <div className="glass-card" style={{ padding: 14, background: 'rgba(229,62,62,0.05)' }}>
-            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              ⚠️ AI Assistant can make mistakes. Always consult a real doctor for serious symptoms.
+        <div style={{ padding: 16, borderTop: '1px solid rgba(226, 232, 240, 0.6)' }}>
+          <div className="glass-card" style={{ padding: 14, background: 'rgba(217, 119, 6, 0.04)', border: '1px solid rgba(217, 119, 6, 0.12)', borderRadius: '12px' }}>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.55, display: 'flex', gap: 6 }}>
+              <ShieldAlert className="w-4 h-4 text-[#D97706] flex-shrink-0" />
+              AI guidance is not a replacement for clinical doctor checkups.
             </p>
           </div>
         </div>
-
       </aside>
 
-      {/* Chat Main */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'rgba(245,248,255,0.3)', minWidth: 0 }}>
+      {/* Chat Main Section */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'linear-gradient(135deg, #FCFBF9, #F8FAFC)', minWidth: 0 }}>
         {/* Header */}
         <header style={{ padding: '16px 28px', borderBottom: '1px solid var(--border)', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), var(--accent))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem' }}>
-              🤖
+            <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+              <Bot className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '1rem' }}>Dr. AIHCAS</div>
-              <div style={{ fontSize: '0.78rem', color: '#2EC4A0', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#2EC4A0', display: 'inline-block' }} />
-                AI General Physician • Always Available
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontWeight: 800, fontSize: '0.98rem', color: 'var(--text-dark)' }}>Dr. AIHCAS</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--secondary-deep)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--secondary-deep)', display: 'inline-block' }} />
+                AI General Physician • Diagnostics Online
               </div>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn btn-secondary btn-sm" onClick={clearChat} title="New Chat">🔄 New Chat</button>
+            <button className="btn btn-secondary btn-sm" onClick={clearChat} title="Reset Chat Workspace" style={{ borderRadius: 100, border: '1px solid var(--border)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <RotateCcw className="w-3.5 h-3.5" /> Reset Consultation
+            </button>
           </div>
         </header>
 
-        {/* Messages */}
-        <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '28px 32px' }}>
-          <div style={{ maxWidth: 780, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* Messages list */}
+        <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '24px 32px' }}>
+          <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
             {messages.map((msg) => {
               const triage = msg.sender === 'ai' ? detectTriage(msg.text) : null;
               return (
                 <div key={msg.id} style={{ display: 'flex', flexDirection: 'column', alignItems: msg.sender === 'user' ? 'flex-end' : 'flex-start' }}>
-                  <div className={`message-bubble ${msg.sender === 'user' ? 'message-user' : 'message-ai'}`} style={{ position: 'relative', maxWidth: '82%' }}>
+                  <div className={`message-bubble ${msg.sender === 'user' ? 'message-user' : 'message-ai'}`} style={{ 
+                    position: 'relative', 
+                    maxWidth: '82%',
+                    background: msg.sender === 'user' ? 'linear-gradient(135deg, var(--primary-deep), #2A437E)' : 'white',
+                    color: msg.sender === 'user' ? 'white' : 'var(--text-dark)',
+                    border: msg.sender === 'user' ? 'none' : '1px solid rgba(226, 232, 240, 0.8)',
+                    boxShadow: '0 4px 16px rgba(15, 23, 42, 0.01)',
+                    borderRadius: msg.sender === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+                    padding: '14px 20px',
+                    textAlign: 'left'
+                  }}>
                     {msg.sender === 'ai' ? (
-                      <div dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.text) }} style={{ lineHeight: 1.65 }} />
+                      <div dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.text) }} style={{ lineHeight: 1.6, fontSize: '0.85rem' }} />
                     ) : (
-                      <span>{msg.text}</span>
+                      <span style={{ fontSize: '0.85rem' }}>{msg.text}</span>
                     )}
+
                     {triage && (
                       <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                        <span className={`triage-badge triage-${triage}`}>
-                          {triage === 'self' && '✅ Self-Care Recommended'}
-                          {triage === 'consult' && '🩺 Doctor Consultation Advised'}
-                          {triage === 'emergency' && '🚨 Emergency Action Required'}
+                        <span className="badge" style={{ 
+                          fontWeight: 800, 
+                          padding: '4px 10px', 
+                          fontSize: '0.72rem', 
+                          borderRadius: 100,
+                          background: triage === 'emergency' ? '#FFF5F5' : triage === 'consult' ? '#FAF6F0' : '#E8F5E9',
+                          color: triage === 'emergency' ? '#DC2626' : triage === 'consult' ? '#B38F5D' : '#0D9488',
+                          border: `1px solid ${triage === 'emergency' ? 'rgba(220,38,38,0.15)' : triage === 'consult' ? 'rgba(179,143,93,0.15)' : 'rgba(13,148,136,0.15)'}`
+                        }}>
+                          {triage === 'self' && '✅ Self-Care Protocol'}
+                          {triage === 'consult' && '🩺 Consult Clinician'}
+                          {triage === 'emergency' && '🚨 Critical Alert Call 112'}
                         </span>
                       </div>
                     )}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
-                      <span style={{ fontSize: '0.65rem', opacity: 0.7 }}>{msg.time}</span>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10, borderTop: `1px solid ${msg.sender === 'user' ? 'rgba(255,255,255,0.1)' : 'rgba(226, 232, 240, 0.6)'}`, paddingTop: 6 }}>
+                      <span style={{ fontSize: '0.65rem', opacity: 0.6 }}>{msg.time}</span>
                       {msg.sender === 'ai' && (
                         <button
                           onClick={() => copyText(msg.id, msg.text)}
-                          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', color: 'var(--text-light)', display: 'flex', alignItems: 'center', gap: 4, padding: '2px 6px', borderRadius: 6, transition: 'all 0.2s' }}
-                          title="Copy response"
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.72rem', color: 'var(--text-light)', display: 'flex', alignItems: 'center', gap: 4, padding: '2px 6px', borderRadius: 6, transition: 'all 0.2s', fontWeight: 700 }}
+                          title="Copy details to clipboard"
                         >
-                          {copiedId === msg.id ? '✅ Copied' : '📋 Copy'}
+                          {copiedId === msg.id ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-[#0D9488]" /> Copied
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" /> Copy Log
+                            </>
+                          )}
                         </button>
                       )}
                     </div>
@@ -381,11 +436,11 @@ Please tell me — what's been bothering you today? Feel free to describe your s
             })}
 
             {isTyping && (
-              <div className="message-bubble message-ai" style={{ alignSelf: 'flex-start', padding: '14px 20px' }}>
-                <div className="typing-indicator">
-                  <span className="typing-dot" />
-                  <span className="typing-dot" />
-                  <span className="typing-dot" />
+              <div style={{ alignSelf: 'flex-start', background: 'white', border: '1px solid rgba(226, 232, 240, 0.8)', borderRadius: '18px 18px 18px 4px', padding: '14px 20px', boxShadow: '0 4px 16px rgba(15, 23, 42, 0.01)' }}>
+                <div className="typing-indicator" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                  <span className="typing-dot" style={{ width: 6, height: 6, background: '#B38F5D', borderRadius: '50%', display: 'inline-block', animation: 'bounce 1.4s infinite ease-in-out' }} />
+                  <span className="typing-dot" style={{ width: 6, height: 6, background: '#1E3A8A', borderRadius: '50%', display: 'inline-block', animation: 'bounce 1.4s infinite ease-in-out', animationDelay: '0.2s' }} />
+                  <span className="typing-dot" style={{ width: 6, height: 6, background: '#0D9488', borderRadius: '50%', display: 'inline-block', animation: 'bounce 1.4s infinite ease-in-out', animationDelay: '0.4s' }} />
                 </div>
               </div>
             )}
@@ -394,12 +449,12 @@ Please tell me — what's been bothering you today? Feel free to describe your s
 
         {/* Input Bar */}
         <div style={{ padding: '20px 28px', borderTop: '1px solid var(--border)', background: 'white', flexShrink: 0 }}>
-          <div style={{ maxWidth: 780, margin: '0 auto', display: 'flex', alignItems: 'flex-end', gap: 10 }}>
+          <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', alignItems: 'flex-end', gap: 10 }}>
             <div style={{ flex: 1, position: 'relative' }}>
               <textarea
                 ref={textareaRef}
                 className="input-field"
-                placeholder="Describe your symptoms (e.g. I have a sore throat and headache since 2 days)..."
+                placeholder="Describe symptoms in detail (e.g., headache with sensitivity to light since morning)..."
                 rows={1}
                 value={inputValue}
                 onChange={e => setInputValue(e.target.value)}
@@ -409,9 +464,9 @@ Please tell me — what's been bothering you today? Feel free to describe your s
                     sendMessage();
                   }
                 }}
-                style={{ resize: 'none', paddingRight: 48, minHeight: 52, maxHeight: 150, lineHeight: 1.55, overflowY: 'auto' }}
+                style={{ resize: 'none', paddingRight: 48, minHeight: 52, maxHeight: 150, lineHeight: 1.55, overflowY: 'auto', border: '1.5px solid var(--border)', borderRadius: '14px', background: '#F8FAFC' }}
               />
-              <div style={{ position: 'absolute', right: 10, bottom: 10, fontSize: '0.72rem', color: 'var(--text-light)' }}>
+              <div style={{ position: 'absolute', right: 12, bottom: 16, fontSize: '0.68rem', color: 'var(--text-light)', fontWeight: 700 }}>
                 ↵ Send
               </div>
             </div>
@@ -419,13 +474,13 @@ Please tell me — what's been bothering you today? Feel free to describe your s
               className="btn btn-primary"
               onClick={() => sendMessage()}
               disabled={isTyping || !inputValue.trim()}
-              style={{ padding: '14px 22px', opacity: (isTyping || !inputValue.trim()) ? 0.6 : 1, flexShrink: 0 }}
+              style={{ padding: '14px 22px', borderRadius: '12px', opacity: (isTyping || !inputValue.trim()) ? 0.6 : 1, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 6 }}
             >
-              {isTyping ? '⏳' : '🚀'} Send
+              <Send className="w-4 h-4" /> Send
             </button>
           </div>
-          <p style={{ textAlign: 'center', fontSize: '0.72rem', color: 'var(--text-light)', marginTop: 10 }}>
-            Press <strong>Enter</strong> to send • <strong>Shift+Enter</strong> for new line
+          <p style={{ textAlign: 'center', fontSize: '0.68rem', color: 'var(--text-light)', marginTop: 8, fontWeight: 500 }}>
+            Type freely in natural language • Press <strong>Enter</strong> to submit • <strong>Shift+Enter</strong> for a new line
           </p>
         </div>
       </div>

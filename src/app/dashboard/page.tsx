@@ -3,87 +3,104 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { 
+  MessageSquare, 
+  Mic, 
+  Pill, 
+  FileSpreadsheet, 
+  PhoneCall, 
+  User, 
+  Sparkles, 
+  Droplet, 
+  Activity, 
+  Clock, 
+  Heart, 
+  Award,
+  Scale,
+  Calendar,
+  Lock,
+  ArrowRight,
+  ShieldAlert
+} from 'lucide-react';
 
 const modules = [
-
   {
     id: 'chat',
     title: 'Text Query',
-    desc: 'Describe symptoms via natural text chat with AI triage.',
-    icon: '💬',
+    desc: 'Describe symptoms via natural text chat with secure clinical triage scoring.',
+    icon: <MessageSquare className="w-6 h-6 text-[#1E3A8A]" />,
     href: '/dashboard/chat',
-    color: 'linear-gradient(135deg, #EAF6FF, #C8E8FF)',
-    border: 'rgba(77,166,232,0.25)',
+    color: 'rgba(30, 58, 138, 0.03)',
+    border: 'rgba(30, 58, 138, 0.08)',
     tag: 'Popular',
     tagColor: 'badge-blue',
   },
   {
     id: 'voice',
     title: 'Voice Consultation',
-    desc: 'Talk to AI assistant for hands-free health guidance.',
-    icon: '🎤',
+    desc: 'Talk to our diagnostic AI health assistant for hands-free clinical guidance.',
+    icon: <Mic className="w-6 h-6 text-[#B38F5D]" />,
     href: '/dashboard/voice',
-    color: 'linear-gradient(135deg, #F0EAFF, #C8B0FF)',
-    border: 'rgba(124,92,252,0.25)',
+    color: 'rgba(179, 143, 93, 0.03)',
+    border: 'rgba(179, 143, 93, 0.08)',
     tag: 'Real-Time',
     tagColor: 'badge-purple',
   },
   {
     id: 'prescription',
-    title: 'Prescription Analysis',
-    desc: 'Upload and understand medication charts easily.',
-    icon: '💊',
+    title: 'Prescription Understanding',
+    desc: 'Upload medication charts to translate dosages and active allergy alerts.',
+    icon: <Pill className="w-6 h-6 text-[#0D9488]" />,
     href: '/dashboard/prescription',
-    color: 'linear-gradient(135deg, #E6FFF5, #B2F0D8)',
-    border: 'rgba(46,196,160,0.25)',
-    tag: 'AI Powered',
+    color: 'rgba(13, 148, 136, 0.03)',
+    border: 'rgba(13, 148, 136, 0.08)',
+    tag: 'AI Parser',
     tagColor: 'badge-green',
   },
   {
     id: 'reports',
     title: 'Report Analysis',
-    desc: 'Understand lab results, X-rays, and diagnostics.',
-    icon: '📊',
+    desc: 'Interpret blood test panels, LFTs, and clinical pathology parameters.',
+    icon: <FileSpreadsheet className="w-6 h-6 text-[#D97706]" />,
     href: '/dashboard/reports',
-    color: 'linear-gradient(135deg, #FFFBEA, #FDE68A)',
-    border: 'rgba(245,158,11,0.25)',
-    tag: 'Insightful',
+    color: 'rgba(217, 119, 6, 0.03)',
+    border: 'rgba(217, 119, 6, 0.08)',
+    tag: 'Diagnostics',
     tagColor: 'badge-yellow',
   },
   {
     id: 'emergency',
     title: 'Emergency Contacts',
-    desc: 'Instant access to Indian healthcare helplines.',
-    icon: '🚨',
+    desc: 'Instant, single-tap access to localized emergency health resources.',
+    icon: <PhoneCall className="w-6 h-6 text-[#DC2626]" />,
     href: '/dashboard/emergency',
-    color: 'linear-gradient(135deg, #FFF0F0, #FEB2B2)',
-    border: 'rgba(229,62,62,0.25)',
+    color: 'rgba(220, 38, 38, 0.03)',
+    border: 'rgba(220, 38, 38, 0.08)',
     tag: 'Critical',
     tagColor: 'badge-red',
   },
   {
     id: 'profile',
     title: 'Health Profile',
-    desc: 'Manage your health info, conditions & preferences.',
-    icon: '👤',
+    desc: 'Manage your history, physical metrics, allergies, and parameters.',
+    icon: <User className="w-6 h-6 text-[#1E3A8A]" />,
     href: '/dashboard/profile',
-    color: 'linear-gradient(135deg, #F5F8FF, #E0E8FF)',
-    border: 'rgba(77,120,232,0.2)',
-    tag: 'Settings',
+    color: 'rgba(30, 58, 138, 0.03)',
+    border: 'rgba(30, 58, 138, 0.08)',
+    tag: 'Vault Settings',
     tagColor: 'badge-blue',
   },
 ];
 
 const healthTips = [
-  { icon: '💧', tip: 'Drink at least 8 glasses of water today to stay hydrated.' },
-  { icon: '🚶', tip: 'A 30-minute walk can reduce blood pressure significantly.' },
-  { icon: '😴', tip: 'Aim for 7–9 hours of sleep for optimal immune function.' },
-  { icon: '🥗', tip: 'Include leafy greens in your meals for iron and folate.' },
-  { icon: '🧘', tip: 'Practice deep breathing for 5 minutes to reduce stress.' },
+  { icon: <Droplet className="w-5 h-5 text-[#1E3A8A]" />, tip: 'Drink at least 8 glasses of water today to stay hydrated.' },
+  { icon: <Activity className="w-5 h-5 text-[#0D9488]" />, tip: 'A 30-minute walk can reduce blood pressure significantly.' },
+  { icon: <Clock className="w-5 h-5 text-[#B38F5D]" />, tip: 'Aim for 7–9 hours of sleep for optimal immune function.' },
+  { icon: <Heart className="w-5 h-5 text-[#DC2626]" />, tip: 'Include leafy greens in your meals for iron and folate.' },
+  { icon: <Sparkles className="w-5 h-5 text-[#D97706]" />, tip: 'Practice deep breathing for 5 minutes to reduce stress.' },
 ];
 
 function useTimeGreeting(name: string) {
-
   const hour = new Date().getHours();
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
   return `${greeting}, ${name}`;
@@ -94,7 +111,6 @@ export default function DashboardPage() {
   const greeting = useTimeGreeting(user?.name?.split(' ')[0] || 'User');
   const [tipIndex, setTipIndex] = useState(0);
   const [date] = useState(new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
-
   const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
@@ -123,49 +139,56 @@ export default function DashboardPage() {
   };
 
   const personalStats = [
-    { icon: '🩸', label: 'Blood Group', value: profile?.blood_group || 'Not Set', color: '#E53E3E' },
-    { icon: '⚖️', label: 'Current BMI', value: getBMI() || 'Not Set', color: '#2EC4A0' },
-    { icon: '🎂', label: 'Age', value: profile?.age ? `${profile.age} yrs` : 'Not Set', color: '#7C5CFC' },
-    { icon: '🔒', label: 'Data Privacy', value: 'Supabase Cloud', color: '#4DA6E8' },
+    { icon: <Heart className="w-5 h-5 text-[#DC2626]" />, label: 'Blood Group', value: profile?.blood_group || 'Not Set', color: '#DC2626' },
+    { icon: <Scale className="w-5 h-5 text-[#0D9488]" />, label: 'Current BMI', value: getBMI() || 'Not Set', color: '#0D9488' },
+    { icon: <Calendar className="w-5 h-5 text-[#B38F5D]" />, label: 'Age Parameters', value: profile?.age ? `${profile.age} yrs` : 'Not Set', color: '#B38F5D' },
+    { icon: <Lock className="w-5 h-5 text-[#1E3A8A]" />, label: 'Data Isolation', value: 'Active SSL', color: '#1E3A8A' },
   ];
-
 
   return (
     <div className="page-fade">
-      {/* Header */}
+      {/* Header section */}
       <header style={{ marginBottom: 40 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
           <div>
-            <p style={{ color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 4 }}>{date}</p>
-            <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: 6 }}>
-              <span className="text-gradient">{greeting}</span> 👋
+            <p style={{ color: 'var(--text-light)', fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 6 }}>{date}</p>
+            <h1 style={{ fontSize: '2.1rem', fontWeight: 850, letterSpacing: '-0.02em', marginBottom: 8, color: '#0F172A' }}>
+              <span style={{ background: 'linear-gradient(135deg, #1E3A8A 30%, #B38F5D 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{greeting}</span> 👋
             </h1>
-            <p style={{ color: 'var(--text-muted)' }}>How can I help with your health today?</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem' }}>How can I help decypher your diagnostic health records today?</p>
           </div>
-          <div className="glass-card animate-float" style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 14, minWidth: 260 }}>
-            <div style={{ fontSize: '2rem' }}>{healthTips[tipIndex].icon}</div>
+          <div className="glass-card animate-float" style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 14, minWidth: 280, border: '1.5px solid rgba(255,255,255,0.95)', background: 'rgba(255,255,255,0.85)' }}>
+            <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.01)', border: '1px solid var(--border)' }}>
+              {healthTips[tipIndex].icon}
+            </div>
             <div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 4 }}>Daily Tip</div>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-dark)', lineHeight: 1.5, maxWidth: 240, transition: 'all 0.5s' }}>{healthTips[tipIndex].tip}</p>
+              <div style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 2 }}>Daily Health Tip</div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5, maxWidth: 220, transition: 'all 0.5s' }}>{healthTips[tipIndex].tip}</p>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Quick Stats Bar */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 16, marginBottom: 40 }}>
+      {/* Quick Personal Parameters */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 18, marginBottom: 40 }}>
         {personalStats.map((stat, i) => (
-          <div key={i} className="glass-card animate-fadeInUp" style={{ padding: '18px 20px', animationDelay: `${i * 0.08}s` }}>
-            <div style={{ fontSize: '1.5rem', marginBottom: 6 }}>{stat.icon}</div>
-            <div style={{ fontSize: '1.1rem', fontWeight: 800, color: stat.color }}>{stat.value}</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: 600, marginTop: 2 }}>{stat.label}</div>
+          <div key={i} className="glass-card animate-fadeInUp" style={{ padding: '20px 24px', border: '1.5px solid rgba(255,255,255,0.95)', background: 'rgba(255,255,255,0.65)', display: 'flex', flexDirection: 'column', gap: 12, animationDelay: `${i * 0.08}s` }}>
+            <div style={{ width: 38, height: 38, borderRadius: '10px', background: 'white', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {stat.icon}
+            </div>
+            <div>
+              <div style={{ fontSize: '1.3rem', fontWeight: 850, color: 'var(--text-dark)', letterSpacing: '-0.02em' }}>{stat.value}</div>
+              <div style={{ fontSize: '0.73rem', color: 'var(--text-light)', fontWeight: 700, letterSpacing: '0.02em', marginTop: 1 }}>{stat.label}</div>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Module Grid */}
+      {/* Services Grid */}
       <section style={{ marginBottom: 48 }}>
-        <h2 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: 20 }}>🏥 Health Modules</h2>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#0F172A', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <Sparkles className="w-5 h-5 text-[#B38F5D]" /> Workspace Modules
+        </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
           {modules.map((m, i) => (
             <Link key={m.id} href={m.href} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -177,16 +200,18 @@ export default function DashboardPage() {
                 }}
               >
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 18 }}>
-                    <div style={{ fontSize: '2.4rem' }}>{m.icon}</div>
-                    <span className={`badge ${m.tagColor}`} style={{ background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(4px)' }}>{m.tag}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+                    <div style={{ width: 44, height: 44, borderRadius: '10px', background: 'white', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {m.icon}
+                    </div>
+                    <span className="badge" style={{ background: 'white', border: '1px solid var(--border)', color: 'var(--text-muted)', fontWeight: 700, padding: '4px 10px', fontSize: '0.7rem', borderRadius: 100 }}>{m.tag}</span>
                   </div>
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: 8 }}>{m.title}</h3>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.55 }}>{m.desc}</p>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: 8, color: 'var(--text-dark)' }}>{m.title}</h3>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{m.desc}</p>
                 </div>
-                <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 600, color: 'var(--primary-deep)', fontSize: '0.85rem' }}>
-                  Open Module
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                <div style={{ marginTop: 24, display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700, color: '#B38F5D', fontSize: '0.8rem' }}>
+                  Launch Service Workspace
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
             </Link>
@@ -194,21 +219,23 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* Emergency Banner */}
-      <div style={{ background: 'linear-gradient(135deg, rgba(229,62,62,0.08), rgba(229,62,62,0.04))', border: '1.5px solid rgba(229,62,62,0.15)', borderRadius: 20, padding: '20px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+      {/* Emergency Assistance Segment */}
+      <div style={{ background: 'linear-gradient(135deg, rgba(220,38,38,0.04), rgba(220,38,38,0.01))', border: '1.5px solid rgba(220,38,38,0.15)', borderRadius: 20, padding: '24px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ fontSize: '2.5rem' }}>🚨</div>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: '1rem' }}>Life-threatening emergency?</div>
-            <div style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>Don't wait. Call 112 immediately for emergency services.</div>
+          <div style={{ width: 50, height: 50, borderRadius: '50%', background: 'white', border: '1px solid rgba(220,38,38,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <ShieldAlert className="w-6 h-6 text-[#DC2626]" />
+          </div>
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontWeight: 800, fontSize: '1.02rem', color: 'var(--text-dark)' }}>Life-threatening medical emergency?</div>
+            <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: 2 }}>Do not delay. Trigger emergency support lines immediately.</div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
-          <button className="btn btn-danger btn-sm" onClick={() => window.location.href = 'tel:112'}>
-            📞 Call 112
+        <div style={{ display: 'flex', gap: 12 }}>
+          <button className="btn btn-danger btn-sm" onClick={() => window.location.href = 'tel:112'} style={{ borderRadius: 100, fontWeight: 700 }}>
+            📞 Trigger Emergency 112
           </button>
-          <Link href="/dashboard/emergency" className="btn btn-secondary btn-sm">
-            All Helplines
+          <Link href="/dashboard/emergency" className="btn btn-secondary btn-sm" style={{ borderRadius: 100, border: '1px solid var(--border)', fontWeight: 700 }}>
+            All National Hotlines
           </Link>
         </div>
       </div>
