@@ -92,7 +92,7 @@ function FloatingOrb({ style }: { style: React.CSSProperties }) {
 }
 
 export default function HomePage() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [scrollY, setScrollY] = useState(0);
   const [visible, setVisible] = useState(false);
 
@@ -130,18 +130,9 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-          <div className="nav-actions" style={{ gap: '12px', display: 'flex', alignItems: 'center' }}>
-            {user ? (
-              <>
-                <Link href="/dashboard" className="btn btn-secondary btn-sm" style={{ borderRadius: '100px', fontWeight: 600 }}>Dashboard</Link>
-                <button onClick={logout} className="btn btn-danger btn-sm" style={{ borderRadius: '100px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>Sign Out</button>
-              </>
-            ) : (
-              <>
-                <Link href="/auth" className="btn btn-secondary btn-sm" style={{ borderRadius: '100px', fontWeight: 600 }}>Log In</Link>
-                <Link href="/auth" className="btn btn-primary btn-sm" style={{ borderRadius: '100px', fontWeight: 600 }}>Get Started</Link>
-              </>
-            )}
+          <div className="nav-actions" style={{ gap: '12px' }}>
+            <Link href="/auth" className="btn btn-secondary btn-sm" style={{ borderRadius: '100px', fontWeight: 600 }}>Log In</Link>
+            <Link href="/auth" className="btn btn-primary btn-sm" style={{ borderRadius: '100px', fontWeight: 600 }}>Get Started</Link>
           </div>
         </div>
       </nav>
