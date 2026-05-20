@@ -23,11 +23,32 @@ export async function GET(req: NextRequest) {
 
   const patientIds = links.map(l => l.patient_id);
 
-  // Fetch patient profiles
-  const { data: profiles } = await supabaseAdmin
-    .from('profiles')
-    .select('id, name, email, age, gender, blood_group, chronic_conditions, allergies')
+  // Fetch patient account details (where name and email are stored for credentials & google signups)
+  const { data: users } = await supabaseAdmin
+    .from('aihcas_users')
+    .select('id, name, email')
     .in('id', patientIds);
+
+  // Fetch patient clinical profiles (where age, gender, blood group, medical history, etc. are stored)
+  const { data: healthProfiles } = await supabaseAdmin
+    .from('profiles')
+    .select('id, age, gender, blood_group, medical_history, allergies')
+    .in('id', patientIds);
+
+  // Merge the account details with health profiles
+  const patients = (users || []).map(u => {
+    const hp = (healthProfiles || []).find(h => h.id === u.id);
+    return {
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      age: hp?.age || null,
+      gender: hp?.gender || null,
+      blood_group: hp?.blood_group || null,
+      chronic_conditions: hp?.medical_history || null,
+      allergies: hp?.allergies || null,
+    };
+  });
 
   // Fetch shared reports for this doctor
   const { data: reports } = await supabaseAdmin
@@ -49,7 +70,7 @@ export async function GET(req: NextRequest) {
     .eq('is_read', false);
 
   return NextResponse.json({
-    patients: profiles || [],
+    patients: patients,
     reports: reports || [],
     unreadCount,
     unreadMessages: unreadMessages || 0,
