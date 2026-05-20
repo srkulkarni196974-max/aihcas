@@ -82,7 +82,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       />
 
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} style={{ borderRight: '1.5px solid var(--border)', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(30px)', width: '260px' }}>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} style={{ borderRight: '1.5px solid var(--border)', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(30px)', width: '260px', display: 'flex', flexDirection: 'column', height: '100vh', position: 'sticky', top: 0 }}>
         <div className="sidebar-logo" style={{ borderBottom: '1px solid rgba(226, 232, 240, 0.6)', padding: '24px' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
             <div style={{ background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', width: 28, height: 28, borderRadius: '6px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -94,7 +94,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </Link>
         </div>
 
-        <nav className="sidebar-nav" style={{ padding: '24px 16px' }}>
+        <nav className="sidebar-nav" style={{ padding: '24px 16px', flex: 1, overflowY: 'auto' }}>
           <div style={{ padding: '0 12px', marginBottom: 12 }}>
             <span style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Medical Services
@@ -165,7 +165,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main Container */}
-      <main className="main-content page-fade" style={{ flex: 1, padding: '36px', overflowX: 'hidden' }}>
+      <main className="main-content page-fade" style={{ flex: 1, padding: '36px', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        {/* Top Navbar for mobile or extra visibility */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '24px' }}>
+          <button
+            onClick={logout}
+            className="btn btn-secondary"
+            style={{ 
+              color: 'var(--danger-deep)', 
+              border: '1px solid rgba(220, 38, 38, 0.2)', 
+              background: 'rgba(220, 38, 38, 0.05)', 
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '8px 16px',
+              borderRadius: '100px',
+              fontSize: '0.85rem',
+              fontWeight: 700
+            }}
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
+        </div>
         {children}
       </main>
     </div>
