@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyDoctorToken, DOCTOR_COOKIE_NAME } from '@/lib/doctor-auth';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 
 // GET: Fetch messages between doctor and a specific patient
 export async function GET(req: NextRequest) {
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   if (!patientId) return NextResponse.json({ error: 'patient_id is required' }, { status: 400 });
 
   // Mark patient messages as read
-  await supabase
+  await supabaseAdmin
     .from('consultation_messages')
     .update({ is_read: true })
     .eq('doctor_id', session.doctorId)
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     .eq('sender_role', 'patient')
     .eq('is_read', false);
 
-  const { data: messages } = await supabase
+  const { data: messages } = await supabaseAdmin
     .from('consultation_messages')
     .select('*')
     .eq('doctor_id', session.doctorId)
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
   const { patientId, message } = await req.json();
   if (!patientId || !message) return NextResponse.json({ error: 'patientId and message are required' }, { status: 400 });
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('consultation_messages')
     .insert({
       patient_id: patientId,

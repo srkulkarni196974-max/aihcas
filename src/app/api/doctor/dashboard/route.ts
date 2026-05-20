@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyDoctorToken, DOCTOR_COOKIE_NAME } from '@/lib/doctor-auth';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 
 // GET: Fetch doctor's connected patients and their reports
 export async function GET(req: NextRequest) {
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
   // Fetch linked patients
-  const { data: links } = await supabase
+  const { data: links } = await supabaseAdmin
     .from('patient_doctor_links')
     .select('patient_id, status, linked_at')
     .eq('doctor_id', session.doctorId)
@@ -24,13 +24,13 @@ export async function GET(req: NextRequest) {
   const patientIds = links.map(l => l.patient_id);
 
   // Fetch patient profiles
-  const { data: profiles } = await supabase
+  const { data: profiles } = await supabaseAdmin
     .from('profiles')
     .select('id, name, email, age, gender, blood_group, chronic_conditions, allergies')
     .in('id', patientIds);
 
   // Fetch shared reports for this doctor
-  const { data: reports } = await supabase
+  const { data: reports } = await supabaseAdmin
     .from('shared_reports')
     .select('*')
     .eq('doctor_id', session.doctorId)
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
   const unreadCount = (reports || []).filter(r => !r.is_read_by_doctor).length;
 
   // Fetch unread message count
-  const { count: unreadMessages } = await supabase
+  const { count: unreadMessages } = await supabaseAdmin
     .from('consultation_messages')
     .select('id', { count: 'exact', head: true })
     .eq('doctor_id', session.doctorId)
