@@ -2,6 +2,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
+import { motion, AnimatePresence } from 'framer-motion';
+import AnatomicalSelector from '@/components/AnatomicalSelector';
 import { 
   Plus, 
   Sparkles, 
@@ -72,9 +74,28 @@ Please tell me — what's been bothering you today? Feel free to describe your s
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const [conversations, setConversations] = useState<any[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+  const [showBodyMap, setShowBodyMap] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const historyRef = useRef<Message[]>([]);
+
+  // Mobile layout watcher
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        setShowBodyMap(false);
+      } else {
+        setShowBodyMap(true);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     historyRef.current = messages;
@@ -265,9 +286,9 @@ Please tell me — what's been bothering you today? Feel free to describe your s
   };
 
   return (
-    <div className="page-fade chat-container stack-mobile" style={{ border: '1.5px solid var(--border)', background: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
+    <div className="page-fade chat-container stack-mobile" style={{ border: '1.5px solid var(--border)', background: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: 'var(--shadow-md)', display: 'flex', width: '100%', height: 'calc(100vh - 80px)' }}>
       {/* Sidebar - Hidden on mobile by default */}
-      <aside className="hide-mobile" style={{ width: 260, background: 'rgba(255,255,255,0.85)', borderRight: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <aside className="hide-mobile" style={{ width: 250, background: 'rgba(255,255,255,0.85)', borderRight: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         <div style={{ padding: '20px 16px' }}>
           <button className="btn btn-primary btn-sm" style={{ width: '100%', justifyContent: 'center', borderRadius: 100, fontWeight: 700 }} onClick={clearChat}>
             <Plus className="w-4 h-4" /> New Consultation
@@ -362,6 +383,15 @@ Please tell me — what's been bothering you today? Feel free to describe your s
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
+            <button 
+              className={`btn btn-sm ${showBodyMap ? 'btn-primary' : 'btn-secondary'}`} 
+              onClick={() => setShowBodyMap(!showBodyMap)} 
+              title="Toggle Anatomical Body Map" 
+              style={{ borderRadius: 100, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            >
+              <Activity className="w-3.5 h-3.5" /> 
+              <span>{isMobile ? 'Symptom Map' : showBodyMap ? 'Hide Body Map' : 'Show Body Map'}</span>
+            </button>
             <button className="btn btn-secondary btn-sm" onClick={clearChat} title="Reset Chat Workspace" style={{ borderRadius: 100, border: '1px solid var(--border)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               <RotateCcw className="w-3.5 h-3.5" /> Reset Consultation
             </button>
@@ -484,6 +514,74 @@ Please tell me — what's been bothering you today? Feel free to describe your s
           </p>
         </div>
       </div>
+
+      {/* Desktop Anatomical Selector Side Column */}
+      {showBodyMap && !isMobile && (
+        <aside style={{ width: 380, background: 'rgba(255,255,255,0.85)', borderLeft: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0, padding: 16, overflowY: 'auto' }}>
+          <AnatomicalSelector 
+            onInjectSymptoms={(text) => setInputValue(prev => prev ? `${prev}\n${text}` : text)}
+            onDirectSubmit={(text) => sendMessage(text)}
+          />
+        </aside>
+      )}
+
+      {/* Mobile Backdrop-Blurred Overlay Drawer */}
+      <AnimatePresence>
+        {showBodyMap && isMobile && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{ 
+              position: 'fixed', 
+              inset: 0, 
+              background: 'rgba(15, 23, 42, 0.4)', 
+              backdropFilter: 'blur(8px)', 
+              zIndex: 9999, 
+              display: 'flex', 
+              alignItems: 'flex-end', 
+              justifyContent: 'center' 
+            }}
+          >
+            <motion.div 
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              style={{ 
+                width: '100%', 
+                maxHeight: '90vh', 
+                background: 'white', 
+                borderRadius: '28px 28px 0 0', 
+                padding: '24px 20px', 
+                overflowY: 'auto',
+                boxShadow: '0 -10px 40px rgba(0,0,0,0.1)'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+                <div style={{ fontWeight: 850, fontSize: '1.15rem', color: 'var(--text-dark)' }}>Interactive Body Map</div>
+                <button 
+                  className="btn btn-secondary btn-sm" 
+                  onClick={() => setShowBodyMap(false)}
+                  style={{ borderRadius: 100, fontWeight: 700 }}
+                >
+                  Close Map
+                </button>
+              </div>
+              <AnatomicalSelector 
+                onInjectSymptoms={(text) => {
+                  setInputValue(prev => prev ? `${prev}\n${text}` : text);
+                  setShowBodyMap(false);
+                }}
+                onDirectSubmit={(text) => {
+                  sendMessage(text);
+                  setShowBodyMap(false);
+                }}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
