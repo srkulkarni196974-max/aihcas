@@ -488,11 +488,10 @@ section {
 }
 
 .main-content {
-  margin-left: 260px;
   flex: 1;
   padding: 32px;
   min-height: 100vh;
-  transition: margin-left 0.3s var(--transition);
+  /* No margin-left needed — sidebar uses position:sticky inside a flex container */
 }
 
 /* === MOBILE RESPONSIVENESS === */
