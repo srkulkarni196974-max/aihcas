@@ -66,6 +66,7 @@ export default function ReportsPage() {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('type', 'report');
+      if (user?.userId) formData.append('userId', user.userId);
 
       setProgress(40);
       setProgressLabel('Extracting lab values with OCR (this may take a moment)...');

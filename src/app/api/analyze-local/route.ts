@@ -5,6 +5,25 @@ import fs from 'fs/promises';
 import os from 'os';
 import { parsePrescriptionText } from '@/lib/prescription-parser';
 import { parseReportText } from '@/lib/report-parser';
+import { supabase, supabaseAdmin } from '@/lib/supabase';
+
+async function storeBiomarkerRecords(userId: string | undefined, results: any[] | undefined) {
+  if (!userId || !results || !Array.isArray(results) || results.length === 0) return;
+  const rows = results
+    .filter((r: any) => r.name && r.value != null && !isNaN(Number(r.value)))
+    .map((r: any) => ({
+      user_id: userId,
+      biomarker: r.name,
+      value: Number(r.value),
+      unit: r.unit || '',
+      recorded_at: new Date().toISOString(),
+    }));
+  if (rows.length === 0) return;
+  const client = supabaseAdmin || supabase;
+  const { error } = await client.from('biomarker_history').insert(rows);
+  if (error) console.error('[storeBiomarkerRecords] Insert error:', error);
+  else console.log(`[storeBiomarkerRecords] Stored ${rows.length} records for user ${userId}`);
+}
 
 export async function POST(req: NextRequest) {
   let tempFilePath = '';
@@ -12,6 +31,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const file = formData.get('file') as File | null;
     const type = formData.get('type') as 'prescription' | 'report' | null;
+    const userId = formData.get('userId') as string | undefined;
 
     if (!type || !file) {
       return NextResponse.json({ error: 'Missing type or file' }, { status: 400 });
@@ -118,6 +138,11 @@ export async function POST(req: NextRequest) {
         const responseText = geminiResult.response.text().replace(/```json|```/g, '').trim();
         const parsedData = JSON.parse(responseText);
 
+        // Store biomarker data for reports
+        if (type === 'report') {
+          await storeBiomarkerRecords(userId, parsedData.results);
+        }
+
         return NextResponse.json({ 
           success: true, 
           data: parsedData, 
@@ -136,6 +161,11 @@ export async function POST(req: NextRequest) {
       analysisData = parsePrescriptionText(extractedText);
     } else {
       analysisData = parseReportText(extractedText);
+    }
+
+    // Store biomarker data for reports (local OCR path)
+    if (type === 'report') {
+      await storeBiomarkerRecords(userId, (analysisData as any).results);
     }
 
     return NextResponse.json({ 
