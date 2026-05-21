@@ -173,16 +173,57 @@ export default function BiomarkerDashboard() {
     async function fetchAll() {
       if (!user?.userId) return;
       setLoading(true);
-      const { data, error } = await supabase
+
+      // 1. Try to fetch from biomarker_history first
+      const { data: bData, error: bError } = await supabase
         .from('biomarker_history')
         .select('*')
         .eq('user_id', user.userId)
         .order('recorded_at', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching biomarkers:', error);
+      if (!bError && bData && bData.length > 0) {
+        setAllData((bData as BiomarkerRow[]) || []);
+        setLoading(false);
+        return;
+      }
+
+      // 2. Fall back to parsing medical_documents
+      console.log('[BiomarkersDashboard] Falling back to medical_documents parsing...');
+      const { data: docs, error: docError } = await supabase
+        .from('medical_documents')
+        .select('*')
+        .eq('user_id', user.userId)
+        .eq('type', 'report')
+        .order('created_at', { ascending: false });
+
+      if (docError) {
+        console.error('Error fetching reports for biomarkers:', docError);
+        setAllData([]);
       } else {
-        setAllData((data as BiomarkerRow[]) || []);
+        const rows: BiomarkerRow[] = [];
+        docs?.forEach((doc: any) => {
+          const analysis = doc.analysis_json;
+          if (analysis && Array.isArray(analysis.results)) {
+            analysis.results.forEach((r: any) => {
+              if (r.name && r.value != null && !isNaN(Number(r.value))) {
+                const low = r.range && Array.isArray(r.range) && r.range[0] != null ? Number(r.range[0]) : undefined;
+                const high = r.range && Array.isArray(r.range) && r.range[1] != null ? Number(r.range[1]) : undefined;
+                
+                rows.push({
+                  id: `${doc.id}-${r.name}`,
+                  biomarker: r.name,
+                  value: Number(r.value),
+                  unit: r.unit || '',
+                  recorded_at: doc.created_at,
+                  user_id: doc.user_id,
+                  normal_low: low,
+                  normal_high: high,
+                });
+              }
+            });
+          }
+        });
+        setAllData(rows);
       }
       setLoading(false);
     }

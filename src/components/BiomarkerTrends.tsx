@@ -231,6 +231,8 @@ export default function BiomarkerTrends({ biomarker, userId }: Props) {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
+      
+      // 1. Try to fetch from biomarker_history first
       let query = supabase
         .from('biomarker_history')
         .select('*')
@@ -242,10 +244,54 @@ export default function BiomarkerTrends({ biomarker, userId }: Props) {
       }
 
       const { data: records, error } = await query;
-      if (error) {
-        console.error('Biomarker fetch error:', error);
-      } else {
+      if (!error && records && records.length > 0) {
         setData((records as BiomarkerRecord[]) || []);
+        setLoading(false);
+        return;
+      }
+
+      // 2. If it fails or is empty, fall back to parsing medical_documents
+      console.log('[BiomarkerTrends] Falling back to medical_documents parsing for:', biomarker);
+      let docQuery = supabase
+        .from('medical_documents')
+        .select('*')
+        .eq('type', 'report')
+        .order('created_at', { ascending: true });
+
+      if (userId) {
+        docQuery = docQuery.eq('user_id', userId);
+      }
+
+      const { data: docs, error: docError } = await docQuery;
+      if (docError) {
+        console.error('[BiomarkerTrends] medical_documents fetch error:', docError);
+        setData([]);
+      } else {
+        const fallbackRecords: BiomarkerRecord[] = [];
+        docs?.forEach((doc: any) => {
+          const analysis = doc.analysis_json;
+          if (analysis && Array.isArray(analysis.results)) {
+            // Find the biomarker (fuzzy or exact case-insensitive match)
+            const match = analysis.results.find(
+              (r: any) => r.name && r.name.toLowerCase() === biomarker.toLowerCase()
+            );
+            if (match && match.value != null && !isNaN(Number(match.value))) {
+              const low = match.range && Array.isArray(match.range) && match.range[0] != null ? Number(match.range[0]) : undefined;
+              const high = match.range && Array.isArray(match.range) && match.range[1] != null ? Number(match.range[1]) : undefined;
+              
+              fallbackRecords.push({
+                id: `${doc.id}-${match.name}`,
+                biomarker: match.name,
+                value: Number(match.value),
+                unit: match.unit || '',
+                recorded_at: doc.created_at,
+                normal_low: low,
+                normal_high: high,
+              });
+            }
+          }
+        });
+        setData(fallbackRecords);
       }
       setLoading(false);
     }

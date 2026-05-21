@@ -80,10 +80,13 @@ function sleep(ms: number) {
 
 // ─── Route Handler ────────────────────────────────────────────────────────────
 
-async function storeBiomarkerRecords(userId: string | undefined, results: any[] | undefined) {
+async function storeBiomarkerRecords(userId: string | undefined, results: any[] | undefined, fileName: string = 'report') {
   if (!userId || !results || !Array.isArray(results) || results.length === 0) return;
 
-  const rows = results
+  const client = supabaseAdmin || supabase;
+
+  // 1. Structure A (Legacy biomarker_history schema)
+  const rowsLegacy = results
     .filter((r: any) => r.name && r.value != null && !isNaN(Number(r.value)))
     .map((r: any) => ({
       user_id: userId,
@@ -93,14 +96,41 @@ async function storeBiomarkerRecords(userId: string | undefined, results: any[] 
       recorded_at: new Date().toISOString(),
     }));
 
-  if (rows.length === 0) return;
+  // 2. Structure B (User-requested schema: biomarker_name, biomarker_value, normal_range, etc.)
+  const rowsUser = results
+    .filter((r: any) => r.name && r.value != null && !isNaN(Number(r.value)))
+    .map((r: any) => ({
+      user_id: userId,
+      biomarker_name: r.name,
+      biomarker_value: Number(r.value),
+      normal_range: r.range ? JSON.stringify(r.range) : null,
+      report_date: new Date().toISOString(),
+      report_reference: fileName,
+    }));
 
-  const client = supabaseAdmin || supabase;
-  const { error } = await client.from('biomarker_history').insert(rows);
-  if (error) {
-    console.error('[storeBiomarkerRecords] Insert error:', error);
-  } else {
-    console.log(`[storeBiomarkerRecords] Stored ${rows.length} biomarker records for user ${userId}`);
+  // Attempt insertions silently using try-catch blocks
+  if (rowsLegacy.length > 0) {
+    try {
+      const { error } = await client.from('biomarker_history').insert(rowsLegacy);
+      if (!error) console.log(`[storeBiomarkerRecords] Stored ${rowsLegacy.length} legacy-schema records in biomarker_history`);
+    } catch (e) {}
+
+    try {
+      const { error } = await client.from('biomarkers').insert(rowsLegacy);
+      if (!error) console.log(`[storeBiomarkerRecords] Stored ${rowsLegacy.length} legacy-schema records in biomarkers`);
+    } catch (e) {}
+  }
+
+  if (rowsUser.length > 0) {
+    try {
+      const { error } = await client.from('biomarker_history').insert(rowsUser);
+      if (!error) console.log(`[storeBiomarkerRecords] Stored ${rowsUser.length} user-schema records in biomarker_history`);
+    } catch (e) {}
+
+    try {
+      const { error } = await client.from('biomarkers').insert(rowsUser);
+      if (!error) console.log(`[storeBiomarkerRecords] Stored ${rowsUser.length} user-schema records in biomarkers`);
+    } catch (e) {}
   }
 }
 
@@ -180,7 +210,7 @@ export async function POST(req: NextRequest) {
 
     // Store biomarker data only for report analyses
     if (type === 'report') {
-      await storeBiomarkerRecords(userId, parsed.results);
+      await storeBiomarkerRecords(userId, parsed.results, file?.name || 'report');
     }
     return NextResponse.json({ success: true, data: parsed });
 
