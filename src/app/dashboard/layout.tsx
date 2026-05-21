@@ -82,7 +82,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       />
 
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} style={{ borderRight: '1.5px solid var(--border)', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(30px)', width: '260px', display: 'flex', flexDirection: 'column', minHeight: '100vh', height: 'auto' }}>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} style={{ borderRight: '1.5px solid var(--border)', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(30px)', width: '260px', display: 'flex', flexDirection: 'column', minHeight: '100vh', height: 'auto', position: 'sticky', top: 0 }}>
         <div className="sidebar-inner-sticky" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
           <div className="sidebar-logo" style={{ borderBottom: '1px solid rgba(226, 232, 240, 0.6)', padding: '24px' }}>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
