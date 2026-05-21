@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth';
+import { NextRequest } from 'next/server';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { authenticateUser, authenticateGoogle } from '@/lib/auth';
@@ -134,6 +135,16 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || 'aihcas-secret-2026',
 };
 
-const handler = NextAuth(authOptions);
+const nextAuthHandler = NextAuth(authOptions);
+
+const handler = async (req: NextRequest, ctx: any) => {
+  const host = req.headers.get('host');
+  const proto = req.headers.get('x-forwarded-proto') || (host && host.includes('localhost') ? 'http' : 'https');
+  if (host) {
+    process.env.NEXTAUTH_URL = `${proto}://${host}`;
+  }
+  return nextAuthHandler(req, ctx);
+};
+
 export { handler as GET, handler as POST };
 
