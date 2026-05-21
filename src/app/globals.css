@@ -595,6 +595,41 @@ section {
     gap: 16px !important;
   }
 
+  /* Interactive Body Map Mobile Fixes */
+  .body-map-root {
+    position: relative !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: fit-content !important;
+  }
+
+  .body-map-layout {
+    position: relative !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: fit-content !important;
+  }
+
+  .body-map-container {
+    width: 100% !important;
+    max-width: 340px !important;
+    height: auto !important;
+    min-height: 520px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+    flex: none !important;
+    margin: 0 auto !important; /* Centers map horizontally on mobile */
+  }
+
+  .body-map-flippable {
+    width: 100% !important;
+    height: 520px !important;
+    position: relative !important;
+  }
+
 }
 
 /* === CHAT === */

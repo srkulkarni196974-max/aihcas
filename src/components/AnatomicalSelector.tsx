@@ -198,7 +198,7 @@ export default function AnatomicalSelector({ onInjectSymptoms, onDirectSubmit }:
   };
 
   return (
-    <div className="glass-card animate-fadeInUp" style={{ padding: '24px', background: 'white', border: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 20 }}>
+    <div className="glass-card animate-fadeInUp body-map-root" style={{ padding: '24px', background: 'white', border: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 20 }}>
       
       {/* Header Widget */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
@@ -276,10 +276,10 @@ export default function AnatomicalSelector({ onInjectSymptoms, onDirectSubmit }:
       </div>
 
       {/* Main Selector Grid Layout */}
-      <div className="stack-mobile" style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
+      <div className="stack-mobile body-map-layout" style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
         
         {/* Left Side: High-fidelity clinical anatomical figure with 3D Rotation */}
-        <div style={{
+        <div className="body-map-container" style={{
           flex: '0 0 210px',
           height: '450px',
           background: 'radial-gradient(circle at center, rgba(30,58,138,0.02) 0%, rgba(179,143,93,0.01) 100%)',
@@ -301,6 +301,7 @@ export default function AnatomicalSelector({ onInjectSymptoms, onDirectSubmit }:
 
           {/* 3D Flippable Container */}
           <motion.div
+            className="body-map-flippable"
             style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d', position: 'relative' }}
             animate={{ rotateY: viewMode === 'front' ? 0 : 180 }}
             transition={{ type: 'spring', damping: 24, stiffness: 130 }}
