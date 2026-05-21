@@ -8,6 +8,7 @@ function ResetPasswordForm() {
   const router = useRouter();
   const token = searchParams.get('token');
   const email = searchParams.get('email');
+  const role = searchParams.get('role');
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -32,7 +33,7 @@ function ResetPasswordForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to update password');
       setMessage('Password updated successfully! Redirecting to login…');
-      setTimeout(() => router.push('/auth'), 2500);
+      setTimeout(() => router.push(role === 'doctor' ? '/doctor/auth' : '/auth'), 2500);
     } catch (err: any) {
       setError(err.message || 'Failed to update password. The link may have expired.');
     } finally {
@@ -50,7 +51,7 @@ function ResetPasswordForm() {
         <p style={{ color: 'var(--text-muted)', marginBottom: '28px' }}>
           This password reset link is invalid or has expired. Please request a new one.
         </p>
-        <Link href="/auth" className="btn btn-primary" style={{ display: 'inline-flex' }}>
+        <Link href={role === 'doctor' ? '/doctor/auth' : '/auth'} className="btn btn-primary" style={{ display: 'inline-flex' }}>
           Back to Login
         </Link>
       </div>

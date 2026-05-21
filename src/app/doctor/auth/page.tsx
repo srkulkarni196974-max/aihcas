@@ -5,7 +5,7 @@ import { Heart, Mail, Lock, User, Building, Award, Phone, MapPin, FileText, Arro
 
 export default function DoctorAuthPage() {
   const router = useRouter();
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [mode, setMode] = useState<'login' | 'register' | 'forgot-password'>('login');
   const [loading, setLoading] = useState(false);
 
   // Sync mode with URL query parameter
@@ -13,8 +13,8 @@ export default function DoctorAuthPage() {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const modeParam = params.get('mode');
-      if (modeParam === 'login' || modeParam === 'register') {
-        setMode(modeParam);
+      if (modeParam === 'login' || modeParam === 'register' || modeParam === 'forgot-password') {
+        setMode(modeParam as any);
       }
     }
   }, []);
@@ -70,6 +70,23 @@ export default function DoctorAuthPage() {
     } finally { setLoading(false); }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true); setError(''); setSuccess('');
+    try {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      setSuccess(data.message);
+    } catch (err: any) {
+      setError(err.message);
+    } finally { setLoading(false); }
+  };
+
   return (
     <div className="gradient-bg" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <div style={{ width: '100%', maxWidth: mode === 'register' ? 560 : 440 }}>
@@ -81,24 +98,30 @@ export default function DoctorAuthPage() {
           </div>
           <h1 style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--text-dark)' }}>AIHCAS Doctor Portal</h1>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginTop: 4 }}>
-            {mode === 'login' ? 'Sign in to your clinical dashboard' : 'Register as a healthcare provider'}
+            {mode === 'login' 
+              ? 'Sign in to your clinical dashboard' 
+              : mode === 'register' 
+              ? 'Register as a healthcare provider' 
+              : 'Enter your email for password recovery'}
           </p>
         </div>
 
         {/* Segmented toggle */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
-          <div style={{ display: 'flex', background: '#F1F5F9', padding: 4, borderRadius: 100, border: '1px solid var(--border)', width: 260 }}>
-            {(['login', 'register'] as const).map(m => (
-              <button key={m} onClick={() => { setMode(m); setError(''); setSuccess(''); }} style={{
-                flex: 1, padding: '8px 0', borderRadius: 100, border: 'none', cursor: 'pointer',
-                fontSize: '0.82rem', fontWeight: 800, fontFamily: 'inherit', transition: 'all 0.3s',
-                background: mode === m ? 'white' : 'transparent',
-                color: mode === m ? 'var(--primary-deep)' : 'var(--text-light)',
-                boxShadow: mode === m ? '0 2px 8px rgba(30,58,138,0.08)' : 'none',
-              }}>{m === 'login' ? 'Sign In' : 'Register'}</button>
-            ))}
+        {mode !== 'forgot-password' && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+            <div style={{ display: 'flex', background: '#F1F5F9', padding: 4, borderRadius: 100, border: '1px solid var(--border)', width: 260 }}>
+              {(['login', 'register'] as const).map(m => (
+                <button key={m} onClick={() => { setMode(m); setError(''); setSuccess(''); }} style={{
+                  flex: 1, padding: '8px 0', borderRadius: 100, border: 'none', cursor: 'pointer',
+                  fontSize: '0.82rem', fontWeight: 800, fontFamily: 'inherit', transition: 'all 0.3s',
+                  background: mode === m ? 'white' : 'transparent',
+                  color: mode === m ? 'var(--primary-deep)' : 'var(--text-light)',
+                  boxShadow: mode === m ? '0 2px 8px rgba(30,58,138,0.08)' : 'none',
+                }}>{m === 'login' ? 'Sign In' : 'Register'}</button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Card */}
         <div className="glass-card animate-fadeInUp" style={{ padding: 32, background: 'white', border: '1.5px solid var(--border)' }}>
@@ -123,11 +146,20 @@ export default function DoctorAuthPage() {
                 <label className="input-label"><Lock className="w-3 h-3 inline mr-1" />Password</label>
                 <input className="input-field" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required />
               </div>
+              <div style={{ textAlign: 'right', marginTop: -8, marginBottom: 4 }}>
+                <button
+                  type="button"
+                  onClick={() => { setMode('forgot-password'); setError(''); setSuccess(''); }}
+                  style={{ background: 'none', border: 'none', fontSize: '0.8rem', color: '#0D9488', fontWeight: 700, cursor: 'pointer' }}
+                >
+                  Forgot password?
+                </button>
+              </div>
               <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center', borderRadius: 100, fontWeight: 800, marginTop: 8 }}>
                 {loading ? 'Signing in...' : 'Sign In to Dashboard'} <ArrowRight className="w-4 h-4" />
               </button>
             </form>
-          ) : (
+          ) : mode === 'register' ? (
             <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 <div>
@@ -172,6 +204,25 @@ export default function DoctorAuthPage() {
               </button>
               <p style={{ fontSize: '0.72rem', color: 'var(--text-light)', textAlign: 'center', fontWeight: 600 }}>
                 Your account will be reviewed and approved before access is granted.
+              </p>
+            </form>
+          ) : (
+            <form onSubmit={handleForgotPassword} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div>
+                <label className="input-label"><Mail className="w-3 h-3 inline mr-1" />Email Address</label>
+                <input className="input-field" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="doctor@hospital.com" required />
+              </div>
+              <button className="btn btn-primary" type="submit" disabled={loading} style={{ width: '100%', justifyContent: 'center', borderRadius: 100, fontWeight: 800, marginTop: 8 }}>
+                {loading ? 'Sending link...' : '✉️ Request Recovery Link'}
+              </button>
+              <p style={{ textAlign: 'center', marginTop: 12, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                <button
+                  type="button"
+                  onClick={() => { setMode('login'); setError(''); setSuccess(''); }}
+                  style={{ background: 'none', border: 'none', color: '#0D9488', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem' }}
+                >
+                  Back to sign in
+                </button>
               </p>
             </form>
           )}

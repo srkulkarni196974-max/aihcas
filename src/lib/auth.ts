@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { createClient } from '@supabase/supabase-js';
 import { sendPasswordResetEmail } from './email';
 import { getServerSession } from 'next-auth/next';
+import { supabaseAdmin } from './supabase';
 
 // ─── Supabase server client ───────────────────────────────────────────────────
 // Uses the anon key — RLS is disabled on aihcas_users and aihcas_reset_tokens
@@ -148,6 +149,7 @@ export async function forgotPassword(
   email: string
 ): Promise<{ success: boolean; message: string }> {
   const normalizedEmail = email.toLowerCase().trim();
+  let role = 'patient';
 
   const { data: user } = await supabase
     .from('aihcas_users')
@@ -155,10 +157,25 @@ export async function forgotPassword(
     .eq('email', normalizedEmail)
     .maybeSingle();
 
+  let targetUser = user;
+
+  if (!targetUser) {
+    const { data: doctorUser } = await supabaseAdmin
+      .from('doctors')
+      .select('id, name, email')
+      .eq('email', normalizedEmail)
+      .maybeSingle();
+
+    if (doctorUser) {
+      targetUser = doctorUser;
+      role = 'doctor';
+    }
+  }
+
   // Always return the same message for security (don't reveal if email exists)
   const safeMessage = 'If an account exists with this email, a password reset link has been sent. Please check your inbox and spam folder.';
 
-  if (!user) return { success: true, message: safeMessage };
+  if (!targetUser) return { success: true, message: safeMessage };
 
   // Generate a secure reset token (expires in 1 hour)
   const token = generateToken();
@@ -173,7 +190,7 @@ export async function forgotPassword(
   });
 
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-  const resetLink = `${baseUrl}/auth/reset-password?token=${token}&email=${encodeURIComponent(normalizedEmail)}`;
+  const resetLink = `${baseUrl}/auth/reset-password?token=${token}&email=${encodeURIComponent(normalizedEmail)}${role === 'doctor' ? '&role=doctor' : ''}`;
 
   const emailResult = await sendPasswordResetEmail(normalizedEmail, resetLink);
 
@@ -219,13 +236,44 @@ export async function updateUserPassword(
   }
 
   const passwordHash = await hashPassword(newPassword);
-  const { error } = await supabase
+  
+  // Try updating in aihcas_users
+  const { data: patientExists } = await supabase
     .from('aihcas_users')
-    .update({ password_hash: passwordHash })
-    .eq('email', normalizedEmail);
+    .select('id')
+    .eq('email', normalizedEmail)
+    .maybeSingle();
 
-  if (error) {
-    console.error('updateUserPassword error:', error.message);
+  let updateError = null;
+  if (patientExists) {
+    const { error } = await supabase
+      .from('aihcas_users')
+      .update({ password_hash: passwordHash })
+      .eq('email', normalizedEmail);
+    updateError = error;
+  }
+
+  // Try updating in doctors using supabaseAdmin
+  const { data: doctorExists } = await supabaseAdmin
+    .from('doctors')
+    .select('id')
+    .eq('email', normalizedEmail)
+    .maybeSingle();
+
+  if (doctorExists) {
+    const { error } = await supabaseAdmin
+      .from('doctors')
+      .update({ password_hash: passwordHash })
+      .eq('email', normalizedEmail);
+    if (error) updateError = error;
+  }
+
+  if (!patientExists && !doctorExists) {
+    return { success: false, error: 'User account not found.' };
+  }
+
+  if (updateError) {
+    console.error('updateUserPassword error:', updateError.message || updateError);
     return { success: false, error: 'Failed to update password.' };
   }
 
