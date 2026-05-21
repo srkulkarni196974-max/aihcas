@@ -487,6 +487,18 @@ section {
   margin-top: 16px;
 }
 
+/* Sidebar sticky wrapper for desktop only */
+@media (min-width: 1025px) {
+  .sidebar-inner-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
 .main-content {
   flex: 1;
   padding: 32px;
