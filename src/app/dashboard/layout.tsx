@@ -82,87 +82,85 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       />
 
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} style={{ borderRight: '1.5px solid var(--border)', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(30px)', width: '260px', display: 'flex', flexDirection: 'column', minHeight: '100vh', height: 'auto', position: 'sticky', top: 0 }}>
-        <div className="sidebar-inner-sticky" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          <div className="sidebar-logo" style={{ borderBottom: '1px solid rgba(226, 232, 240, 0.6)', padding: '24px' }}>
-            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-              <div style={{ background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', width: 28, height: 28, borderRadius: '6px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Heart className="w-3.5 h-3.5 text-white" />
-              </div>
-              <span style={{ fontSize: '1.1rem', fontWeight: 800, letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #0F172A, #1E3A8A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                AIHCAS
-              </span>
-            </Link>
-          </div>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} style={{ borderRight: '1.5px solid var(--border)', background: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(30px)', width: '260px', display: 'flex', flexDirection: 'column', height: '100vh', position: 'sticky', top: 0 }}>
+        <div className="sidebar-logo" style={{ borderBottom: '1px solid rgba(226, 232, 240, 0.6)', padding: '24px' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+            <div style={{ background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', width: 28, height: 28, borderRadius: '6px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Heart className="w-3.5 h-3.5 text-white" />
+            </div>
+            <span style={{ fontSize: '1.1rem', fontWeight: 800, letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #0F172A, #1E3A8A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              AIHCAS
+            </span>
+          </Link>
+        </div>
 
-          <nav className="sidebar-nav" style={{ padding: '24px 16px', flex: 1, overflowY: 'auto' }}>
-            <div style={{ padding: '0 12px', marginBottom: 12 }}>
-              <span style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                Medical Services
-              </span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`sidebar-item ${pathname === item.href ? 'active' : ''}`}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    padding: '10px 14px',
-                    borderRadius: '10px',
-                    fontSize: '0.85rem',
-                    fontWeight: 700,
-                    transition: 'all 0.2s var(--transition)',
-                    color: pathname === item.href ? 'var(--primary-deep)' : 'var(--text-muted)',
-                    background: pathname === item.href ? 'linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(179, 143, 93, 0.03))' : 'transparent',
-                    border: `1px solid ${pathname === item.href ? 'rgba(30, 58, 138, 0.08)' : 'transparent'}`
-                  }}
-                >
-                  <span className="item-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {item.icon}
-                  </span>
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </nav>
-
-          <div className="sidebar-footer" style={{ padding: '20px 16px', borderTop: '1px solid rgba(226, 232, 240, 0.6)' }}>
-            {/* User avatar summary */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px', borderRadius: '12px', background: 'rgba(179, 143, 93, 0.04)', marginBottom: 10, border: '1px solid rgba(179, 143, 93, 0.1)' }}>
-              <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', color: 'white', fontWeight: 800 }}>
-                {user.name.charAt(0)}
-              </div>
-              <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-dark)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.name}</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-light)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</div>
-              </div>
-            </div>
-            <button
-              onClick={logout}
-              className="sidebar-item"
-              style={{ 
-                color: 'var(--danger-deep)', 
-                width: '100%', 
-                border: 'none', 
-                background: 'none', 
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                padding: '10px 14px',
-                borderRadius: '10px',
-                fontSize: '0.85rem',
-                fontWeight: 700
-              }}
-            >
-              <span className="item-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LogOut className="w-4 h-4" /></span>
-              Sign Out
-            </button>
+        <nav className="sidebar-nav" style={{ padding: '24px 16px', flex: 1, overflowY: 'auto' }}>
+          <div style={{ padding: '0 12px', marginBottom: 12 }}>
+            <span style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              Medical Services
+            </span>
           </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`sidebar-item ${pathname === item.href ? 'active' : ''}`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  fontSize: '0.85rem',
+                  fontWeight: 700,
+                  transition: 'all 0.2s var(--transition)',
+                  color: pathname === item.href ? 'var(--primary-deep)' : 'var(--text-muted)',
+                  background: pathname === item.href ? 'linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(179, 143, 93, 0.03))' : 'transparent',
+                  border: `1px solid ${pathname === item.href ? 'rgba(30, 58, 138, 0.08)' : 'transparent'}`
+                }}
+              >
+                <span className="item-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {item.icon}
+                </span>
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
+
+        <div className="sidebar-footer" style={{ padding: '20px 16px', borderTop: '1px solid rgba(226, 232, 240, 0.6)' }}>
+          {/* User avatar summary */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px', borderRadius: '12px', background: 'rgba(179, 143, 93, 0.04)', marginBottom: 10, border: '1px solid rgba(179, 143, 93, 0.1)' }}>
+            <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg, #1E3A8A, #B38F5D)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', color: 'white', fontWeight: 800 }}>
+              {user.name.charAt(0)}
+            </div>
+            <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-dark)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.name}</div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-light)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.email}</div>
+            </div>
+          </div>
+          <button
+            onClick={logout}
+            className="sidebar-item"
+            style={{ 
+              color: 'var(--danger-deep)', 
+              width: '100%', 
+              border: 'none', 
+              background: 'none', 
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              padding: '10px 14px',
+              borderRadius: '10px',
+              fontSize: '0.85rem',
+              fontWeight: 700
+            }}
+          >
+            <span className="item-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><LogOut className="w-4 h-4" /></span>
+            Sign Out
+          </button>
         </div>
       </aside>
 
