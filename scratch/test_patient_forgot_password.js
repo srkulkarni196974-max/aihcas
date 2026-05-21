@@ -43,7 +43,7 @@ async function runTests() {
   }
 
   // Choose a patient
-  const testPatientEmail = users && users.length > 0 ? users[0].email : 'patient@example.com';
+  const testPatientEmail = 'srkulkarni1969.74@gmail.com';
   console.log(`Testing with patient email: ${testPatientEmail}`);
 
   // 1. Send Forgot Password POST request

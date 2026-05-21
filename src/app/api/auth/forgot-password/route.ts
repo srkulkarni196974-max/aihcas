@@ -14,6 +14,13 @@ export async function POST(request: NextRequest) {
 
     const result = await forgotPassword(email.trim());
 
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.message || 'Failed to send password reset email' },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
       { message: result.message },
       { status: 200 }

@@ -147,7 +147,7 @@ export async function authenticateGoogle(
 // ─── Forgot Password ──────────────────────────────────────────────────────────
 export async function forgotPassword(
   email: string
-): Promise<{ success: boolean; message: string }> {
+): Promise<{ success: boolean; message: string; error?: string }> {
   const normalizedEmail = email.toLowerCase().trim();
   let role = 'patient';
 
@@ -172,7 +172,7 @@ export async function forgotPassword(
     }
   }
 
-  // Always return the same message for security (don't reveal if email exists)
+  // Always return the same message for security if user is not found
   const safeMessage = 'If an account exists with this email, a password reset link has been sent. Please check your inbox and spam folder.';
 
   if (!targetUser) return { success: true, message: safeMessage };
@@ -182,12 +182,17 @@ export async function forgotPassword(
   const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
 
   // Store the token in Supabase
-  await supabase.from('aihcas_reset_tokens').insert({
+  const { error: insertError } = await supabase.from('aihcas_reset_tokens').insert({
     email: normalizedEmail,
     token,
     expires_at: expiresAt,
     used: false,
   });
+
+  if (insertError) {
+    console.error('Failed to insert reset token:', insertError.message);
+    return { success: false, message: 'Failed to generate reset token. Please try again.', error: insertError.message };
+  }
 
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
   const resetLink = `${baseUrl}/auth/reset-password?token=${token}&email=${encodeURIComponent(normalizedEmail)}${role === 'doctor' ? '&role=doctor' : ''}`;
@@ -196,7 +201,11 @@ export async function forgotPassword(
 
   if (!emailResult.success) {
     console.error('Email send failed:', emailResult.error);
-    // Still return safe message
+    return { 
+      success: false, 
+      message: 'Failed to send recovery email. Please check your email configuration or try again later.', 
+      error: emailResult.error 
+    };
   }
 
   return { success: true, message: safeMessage };
