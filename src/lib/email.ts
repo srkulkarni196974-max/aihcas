@@ -15,7 +15,7 @@ function createTransporter() {
   });
 }
 
-export async function sendPasswordResetEmail(email: string, resetLink: string) {
+export async function sendPasswordResetEmail(email: string, resetLink: string, role: string = 'patient') {
   // 1. Try Resend if API key is set
   const resendApiKey = process.env.RESEND_API_KEY;
   if (resendApiKey) {
@@ -70,6 +70,21 @@ export async function sendPasswordResetEmail(email: string, resetLink: string) {
 
       if (error) {
         console.error('Resend delivery failed:', error);
+        
+        // Sandbox bypass check
+        const isDev = process.env.NODE_ENV !== 'production';
+        const isBypassEnabled = process.env.ENABLE_DEV_PASSWORD_RESET_BYPASS === 'true';
+        
+        if ((isDev || isBypassEnabled) && error.name === 'validation_error' && error.message.includes('only send testing emails')) {
+          console.log(`\n==================================================`);
+          console.log(`[DEV PASSWORD RESET BYPASS]`);
+          console.log(`Timestamp: ${new Date().toISOString()}`);
+          console.log(`Email: ${email}`);
+          console.log(`Role: ${role}`);
+          console.log(`Reset URL: ${resetLink}`);
+          console.log(`==================================================\n`);
+          return { success: true };
+        }
       } else {
         console.log(`Password reset email sent successfully via Resend to ${email}, ID: ${data?.id}`);
         return { success: true };
@@ -142,6 +157,22 @@ export async function sendPasswordResetEmail(email: string, resetLink: string) {
     return { success: true };
   } catch (error: any) {
     console.error('Failed to send email via Gmail SMTP:', error.message);
+    
+    // SMTP Failure Fallback bypass check
+    const isDev = process.env.NODE_ENV !== 'production';
+    const isBypassEnabled = process.env.ENABLE_DEV_PASSWORD_RESET_BYPASS === 'true';
+    
+    if (isDev || isBypassEnabled) {
+      console.log(`\n==================================================`);
+      console.log(`[DEV PASSWORD RESET BYPASS] (SMTP Failure Fallback)`);
+      console.log(`Timestamp: ${new Date().toISOString()}`);
+      console.log(`Email: ${email}`);
+      console.log(`Role: ${role}`);
+      console.log(`Reset URL: ${resetLink}`);
+      console.log(`==================================================\n`);
+      return { success: true };
+    }
+    
     return { success: false, error: error.message };
   }
 }

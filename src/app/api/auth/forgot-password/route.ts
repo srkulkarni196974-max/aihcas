@@ -3,7 +3,7 @@ import { forgotPassword } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const { email, role } = await request.json();
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await forgotPassword(email.trim());
+    const result = await forgotPassword(email.trim(), role);
 
     if (!result.success) {
       return NextResponse.json(

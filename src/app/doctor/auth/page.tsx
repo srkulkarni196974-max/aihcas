@@ -77,7 +77,7 @@ export default function DoctorAuthPage() {
       const res = await fetch('/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, role: 'doctor' }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Request failed');

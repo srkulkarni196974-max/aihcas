@@ -146,20 +146,15 @@ export async function authenticateGoogle(
 
 // ─── Forgot Password ──────────────────────────────────────────────────────────
 export async function forgotPassword(
-  email: string
+  email: string,
+  preferredRole?: 'patient' | 'doctor'
 ): Promise<{ success: boolean; message: string; error?: string }> {
   const normalizedEmail = email.toLowerCase().trim();
-  let role = 'patient';
+  let role = preferredRole || 'patient';
+  let targetUser = null;
 
-  const { data: user } = await supabase
-    .from('aihcas_users')
-    .select('id, name, email')
-    .eq('email', normalizedEmail)
-    .maybeSingle();
-
-  let targetUser = user;
-
-  if (!targetUser) {
+  if (role === 'doctor') {
+    // Check doctor table first
     const { data: doctorUser } = await supabaseAdmin
       .from('doctors')
       .select('id, name, email')
@@ -168,7 +163,39 @@ export async function forgotPassword(
 
     if (doctorUser) {
       targetUser = doctorUser;
-      role = 'doctor';
+    } else {
+      // Fallback to patient table
+      const { data: patientUser } = await supabase
+        .from('aihcas_users')
+        .select('id, name, email')
+        .eq('email', normalizedEmail)
+        .maybeSingle();
+      if (patientUser) {
+        targetUser = patientUser;
+        role = 'patient';
+      }
+    }
+  } else {
+    // Check patient table first
+    const { data: patientUser } = await supabase
+      .from('aihcas_users')
+      .select('id, name, email')
+      .eq('email', normalizedEmail)
+      .maybeSingle();
+
+    if (patientUser) {
+      targetUser = patientUser;
+    } else {
+      // Fallback to doctor table
+      const { data: doctorUser } = await supabaseAdmin
+        .from('doctors')
+        .select('id, name, email')
+        .eq('email', normalizedEmail)
+        .maybeSingle();
+      if (doctorUser) {
+        targetUser = doctorUser;
+        role = 'doctor';
+      }
     }
   }
 
@@ -197,7 +224,7 @@ export async function forgotPassword(
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
   const resetLink = `${baseUrl}/auth/reset-password?token=${token}&email=${encodeURIComponent(normalizedEmail)}${role === 'doctor' ? '&role=doctor' : ''}`;
 
-  const emailResult = await sendPasswordResetEmail(normalizedEmail, resetLink);
+  const emailResult = await sendPasswordResetEmail(normalizedEmail, resetLink, role);
 
   if (!emailResult.success) {
     console.error('Email send failed:', emailResult.error);
