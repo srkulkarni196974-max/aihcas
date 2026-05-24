@@ -44,9 +44,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
   }, [user, loading, router]);
 
+  // Set default state for desktop to open after mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setSidebarOpen(window.innerWidth > 1024);
+    }
+  }, []);
+
   // Close sidebar when route changes on mobile
   useEffect(() => {
-    setSidebarOpen(false);
+    if (typeof window !== 'undefined' && window.innerWidth <= 1024) {
+      setSidebarOpen(false);
+    }
   }, [pathname]);
 
   if (loading || !user) {
@@ -66,7 +75,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="gradient-bg" style={{ minHeight: '100vh', display: 'flex' }}>
       {/* Mobile Hamburger Button */}
       <button 
-        className="hamburger-btn" 
+        className={`hamburger-btn ${sidebarOpen ? 'sidebar-open' : ''}`} 
         onClick={() => setSidebarOpen(!sidebarOpen)}
         aria-label="Toggle Menu"
         style={{ background: 'white', border: '1.5px solid var(--border)', borderRadius: '12px', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)', top: '16px', left: '16px' }}
@@ -165,31 +174,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main Container */}
-      <main className="main-content page-fade" style={{ flex: 1, padding: '36px', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        {/* Top Navbar for mobile or extra visibility */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '24px' }}>
-          <button
-            onClick={logout}
-            className="btn btn-secondary"
-            style={{ 
-              color: 'var(--danger-deep)', 
-              border: '1px solid rgba(220, 38, 38, 0.2)', 
-              background: 'rgba(220, 38, 38, 0.05)', 
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '8px 16px',
-              borderRadius: '100px',
-              fontSize: '0.85rem',
-              fontWeight: 700
-            }}
-          >
-            <LogOut className="w-4 h-4" />
-            Sign Out
-          </button>
+      <main className={`main-content page-fade ${sidebarOpen ? 'sidebar-open' : ''}`} style={{ flex: 1, minHeight: '100vh', padding: '36px', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div className="main-content-inner" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          {/* Top Navbar for mobile or extra visibility */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '24px' }}>
+            <button
+              onClick={logout}
+              className="btn btn-secondary"
+              style={{ 
+                color: 'var(--danger-deep)', 
+                border: '1px solid rgba(220, 38, 38, 0.2)', 
+                background: 'rgba(220, 38, 38, 0.05)', 
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '8px 16px',
+                borderRadius: '100px',
+                fontSize: '0.85rem',
+                fontWeight: 700
+              }}
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </button>
+          </div>
+          {children}
         </div>
-        {children}
       </main>
     </div>
   );
