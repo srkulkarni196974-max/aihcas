@@ -4060,7 +4060,7 @@ Esophageal spasms are painful contractions of the muscles in the esophagus, whic
   },
   {
     id: 'barretts_esophagus',
-    name: 'Barrett's Esophagus',
+    name: "Barrett's Esophagus",
     keywords: ['barretts esophagus', 'chronic acid reflux damage', 'precancerous esophagus'],
     triage: 'consult',
     response: `**Barrett's Esophagus Assessment**
