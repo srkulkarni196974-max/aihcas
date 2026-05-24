@@ -48,6 +48,7 @@ export default function VoicePage() {
   const transcriptsRef = useRef<Transcript[]>([]);
   const transcriptEndRef = useRef<HTMLDivElement>(null);
   const recognitionActiveRef = useRef(false);
+  const isSpeakingRef = useRef(false); // true while TTS is playing — blocks mic
 
   // Keep refs in sync
   useEffect(() => { phaseRef.current = phase; }, [phase]);
@@ -69,12 +70,24 @@ export default function VoicePage() {
 
   // TTS speak
   const speak = useCallback((text: string, onDone?: () => void) => {
+    // ── Stop mic BEFORE we start speaking to prevent echo feedback ──
+    isSpeakingRef.current = true;
+    recognitionActiveRef.current = false;
+    if (recognitionRef.current) {
+      try { recognitionRef.current.abort(); } catch (_) {}
+      recognitionRef.current = null;
+    }
+
     window.speechSynthesis.cancel();
     setPhase('speaking');
     phaseRef.current = 'speaking';
 
     const cleaned = stripForSpeech(text);
-    if (!cleaned) { onDone?.(); return; }
+    if (!cleaned) {
+      isSpeakingRef.current = false;
+      onDone?.();
+      return;
+    }
 
     const utterance = new SpeechSynthesisUtterance(cleaned);
     utterance.lang = 'en-IN';
@@ -82,11 +95,14 @@ export default function VoicePage() {
 
     const finish = () => {
       if (phaseRef.current === 'speaking') {
-        onDone?.();
+        // Wait 400 ms for the speaker audio to fully fade before opening mic
+        setTimeout(() => {
+          isSpeakingRef.current = false;
+          onDone?.();
+        }, 400);
       }
     };
 
-    utterance.onend = finish;
     utterance.onerror = (e) => {
       // 'interrupted' is expected when we cancel manually — ignore it
       if ((e as any).error !== 'interrupted') finish();
@@ -104,6 +120,8 @@ export default function VoicePage() {
 
   // Speech Recognition
   const startListening = useCallback(() => {
+    // Refuse to start mic while AI is speaking — prevents echo
+    if (isSpeakingRef.current) return;
     if (typeof window === 'undefined') return;
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) { alert('Voice recognition requires Chrome or Edge.'); return; }
