@@ -153,51 +153,83 @@ export async function forgotPassword(
   let role = preferredRole || 'patient';
   let targetUser = null;
 
+  console.log('forgotPassword: starting search', { email: normalizedEmail, preferredRole, initialRole: role });
+
   if (role === 'doctor') {
     // Check doctor table first
-    const { data: doctorUser } = await supabaseAdmin
+    const { data: doctorUser, error: docErr } = await supabaseAdmin
       .from('doctors')
       .select('id, name, email')
       .eq('email', normalizedEmail)
       .maybeSingle();
 
+    if (docErr) {
+      console.error('forgotPassword: error querying doctors table:', docErr.message || docErr);
+    }
+
     if (doctorUser) {
+      console.log('forgotPassword: found doctor user:', doctorUser);
       targetUser = doctorUser;
     } else {
+      console.log('forgotPassword: no doctor user found, falling back to patient table');
       // Fallback to patient table
-      const { data: patientUser } = await supabase
+      const { data: patientUser, error: patErr } = await supabase
         .from('aihcas_users')
         .select('id, name, email')
         .eq('email', normalizedEmail)
         .maybeSingle();
+      
+      if (patErr) {
+        console.error('forgotPassword: error querying patient fallback:', patErr.message || patErr);
+      }
+
       if (patientUser) {
+        console.log('forgotPassword: found patient fallback user:', patientUser);
         targetUser = patientUser;
         role = 'patient';
+      } else {
+        console.log('forgotPassword: no patient fallback user found either');
       }
     }
   } else {
     // Check patient table first
-    const { data: patientUser } = await supabase
+    const { data: patientUser, error: patErr } = await supabase
       .from('aihcas_users')
       .select('id, name, email')
       .eq('email', normalizedEmail)
       .maybeSingle();
 
+    if (patErr) {
+      console.error('forgotPassword: error querying aihcas_users table:', patErr.message || patErr);
+    }
+
     if (patientUser) {
+      console.log('forgotPassword: found patient user:', patientUser);
       targetUser = patientUser;
     } else {
+      console.log('forgotPassword: no patient user found, falling back to doctor table');
       // Fallback to doctor table
-      const { data: doctorUser } = await supabaseAdmin
+      const { data: doctorUser, error: docErr } = await supabaseAdmin
         .from('doctors')
         .select('id, name, email')
         .eq('email', normalizedEmail)
         .maybeSingle();
+      
+      if (docErr) {
+        console.error('forgotPassword: error querying doctor fallback:', docErr.message || docErr);
+      }
+
       if (doctorUser) {
+        console.log('forgotPassword: found doctor fallback user:', doctorUser);
         targetUser = doctorUser;
         role = 'doctor';
+      } else {
+        console.log('forgotPassword: no doctor fallback user found either');
       }
     }
   }
+
+  console.log('forgotPassword: final resolution:', { role, hasTargetUser: !!targetUser });
 
   // Always return the same message for security if user is not found
   const safeMessage = 'If an account exists with this email, a password reset link has been sent. Please check your inbox and spam folder.';

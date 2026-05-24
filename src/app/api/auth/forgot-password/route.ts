@@ -4,6 +4,7 @@ import { forgotPassword } from '@/lib/auth';
 export async function POST(request: NextRequest) {
   try {
     const { email, role } = await request.json();
+    console.log('API /api/auth/forgot-password received:', { email, role });
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
