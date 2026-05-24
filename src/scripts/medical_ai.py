@@ -1656,6 +1656,1233 @@ CONDITIONS = [
         ],
         "excludes": []
     }
+    {
+    "id": "pemphigus",
+    "name": "Pemphigus",
+    "keywords": [
+        "pemphigus", "skin blisters autoimmune",
+        "painful skin peeling", "mouth blisters"
+    ],
+    "excludes": []
+},
+{
+    "id": "bullous_pemphigoid",
+    "name": "Bullous Pemphigoid",
+    "keywords": [
+        "bullous pemphigoid", "large skin blisters",
+        "itchy blisters elderly"
+    ],
+    "excludes": []
+},
+{
+    "id": "dermatomyositis",
+    "name": "Dermatomyositis",
+    "keywords": [
+        "dermatomyositis", "muscle weakness rash",
+        "purple eyelid rash"
+    ],
+    "excludes": []
+},
+{
+    "id": "polymyositis",
+    "name": "Polymyositis",
+    "keywords": [
+        "polymyositis", "muscle inflammation",
+        "difficulty climbing stairs"
+    ],
+    "excludes": []
+},
+{
+    "id": "fibromyalgia",
+    "name": "Fibromyalgia",
+    "keywords": [
+        "fibromyalgia", "widespread body pain",
+        "tender points body", "chronic fatigue pain"
+    ],
+    "excludes": []
+},
+{
+    "id": "chronic_fatigue_syndrome",
+    "name": "Chronic Fatigue Syndrome",
+    "keywords": [
+        "chronic fatigue syndrome", "extreme fatigue",
+        "fatigue not improving rest"
+    ],
+    "excludes": []
+},
+{
+    "id": "temporomandibular_disorder",
+    "name": "Temporomandibular Joint Disorder",
+    "keywords": [
+        "temporomandibular disorder", "jaw clicking",
+        "pain chewing", "tmj pain"
+    ],
+    "excludes": []
+},
+{
+    "id": "costochondritis",
+    "name": "Costochondritis",
+    "keywords": [
+        "costochondritis", "rib chest pain",
+        "pain pressing chest wall"
+    ],
+    "excludes": []
+},
+{
+    "id": "pericarditis",
+    "name": "Pericarditis",
+    "keywords": [
+        "pericarditis", "sharp chest pain lying down",
+        "heart lining inflammation"
+    ],
+    "excludes": []
+},
+{
+    "id": "myocarditis",
+    "name": "Myocarditis",
+    "keywords": [
+        "myocarditis", "heart muscle inflammation",
+        "viral chest pain"
+    ],
+    "excludes": []
+},
+{
+    "id": "endocarditis",
+    "name": "Endocarditis",
+    "keywords": [
+        "endocarditis", "heart valve infection",
+        "fever heart murmur"
+    ],
+    "excludes": []
+},
+{
+    "id": "aortic_aneurysm",
+    "name": "Aortic Aneurysm",
+    "keywords": [
+        "aortic aneurysm", "pulsating abdomen",
+        "tearing chest pain"
+    ],
+    "excludes": []
+},
+{
+    "id": "aortic_dissection",
+    "name": "Aortic Dissection",
+    "keywords": [
+        "aortic dissection", "sudden tearing back pain",
+        "severe chest back pain"
+    ],
+    "excludes": []
+},
+{
+    "id": "pulmonary_hypertension",
+    "name": "Pulmonary Hypertension",
+    "keywords": [
+        "pulmonary hypertension", "shortness breath exertion",
+        "high lung blood pressure"
+    ],
+    "excludes": []
+},
+{
+    "id": "sleep_hypoventilation",
+    "name": "Sleep Hypoventilation",
+    "keywords": [
+        "sleep hypoventilation", "low oxygen sleep",
+        "shallow breathing sleep"
+    ],
+    "excludes": []
+},
+{
+    "id": "bronchiectasis",
+    "name": "Bronchiectasis",
+    "keywords": [
+        "bronchiectasis", "chronic mucus cough",
+        "repeated lung infections"
+    ],
+    "excludes": []
+},
+{
+    "id": "interstitial_lung_disease",
+    "name": "Interstitial Lung Disease",
+    "keywords": [
+        "interstitial lung disease", "dry cough fibrosis",
+        "lung scarring"
+    ],
+    "excludes": []
+},
+{
+    "id": "sarcoma",
+    "name": "Sarcoma",
+    "keywords": [
+        "sarcoma", "soft tissue tumor",
+        "bone tissue cancer"
+    ],
+    "excludes": []
+},
+{
+    "id": "melanoma",
+    "name": "Melanoma",
+    "keywords": [
+        "melanoma", "dark irregular mole",
+        "changing mole cancer"
+    ],
+    "excludes": []
+},
+{
+    "id": "pancreatic_cancer",
+    "name": "Pancreatic Cancer",
+    "keywords": [
+        "pancreatic cancer", "jaundice weight loss",
+        "upper abdomen cancer pain"
+    ],
+    "excludes": []
+},
+{
+    "id": "ovarian_cancer",
+    "name": "Ovarian Cancer",
+    "keywords": [
+        "ovarian cancer", "pelvic bloating",
+        "abdominal fullness female"
+    ],
+    "excludes": []
+},
+{
+    "id": "testicular_cancer",
+    "name": "Testicular Cancer",
+    "keywords": [
+        "testicular cancer", "testicle lump",
+        "painless testicle swelling"
+    ],
+    "excludes": []
+},
+{
+    "id": "bladder_cancer",
+    "name": "Bladder Cancer",
+    "keywords": [
+        "bladder cancer", "blood urine cancer",
+        "painful urination blood"
+    ],
+    "excludes": []
+},
+{
+    "id": "kidney_cancer",
+    "name": "Kidney Cancer",
+    "keywords": [
+        "kidney cancer", "flank mass",
+        "blood urine kidney tumor"
+    ],
+    "excludes": []
+},
+{
+    "id": "thyroid_cancer",
+    "name": "Thyroid Cancer",
+    "keywords": [
+        "thyroid cancer", "neck lump thyroid",
+        "difficulty swallowing thyroid"
+    ],
+    "excludes": []
+},
+{
+    "id": "parathyroid_disorder",
+    "name": "Parathyroid Disorder",
+    "keywords": [
+        "parathyroid disorder", "calcium imbalance",
+        "parathyroid hormone problem"
+    ],
+    "excludes": []
+},
+{
+    "id": "pheochromocytoma",
+    "name": "Pheochromocytoma",
+    "keywords": [
+        "pheochromocytoma", "episodes high blood pressure",
+        "sweating palpitations tumor"
+    ],
+    "excludes": []
+},
+{
+    "id": "diabetic_ketoacidosis",
+    "name": "Diabetic Ketoacidosis",
+    "keywords": [
+        "dka", "diabetic ketoacidosis",
+        "fruity breath diabetes", "deep rapid breathing"
+    ],
+    "excludes": []
+},
+{
+    "id": "hyperosmolar_state",
+    "name": "Hyperosmolar Hyperglycemic State",
+    "keywords": [
+        "hyperosmolar state", "very high blood sugar",
+        "severe dehydration diabetes"
+    ],
+    "excludes": []
+},
+{
+    "id": "hypoglycemia",
+    "name": "Hypoglycemia",
+    "keywords": [
+        "low blood sugar", "hypoglycemia",
+        "sweating shaking hunger"
+    ],
+    "excludes": []
+},
+{
+    "id": "diabetic_neuropathy",
+    "name": "Diabetic Neuropathy",
+    "keywords": [
+        "diabetic neuropathy", "burning feet diabetes",
+        "numb feet diabetes"
+    ],
+    "excludes": []
+},
+{
+    "id": "diabetic_retinopathy",
+    "name": "Diabetic Retinopathy",
+    "keywords": [
+        "diabetic retinopathy", "vision loss diabetes",
+        "blurred vision diabetes"
+    ],
+    "excludes": []
+},
+{
+    "id": "macular_degeneration",
+    "name": "Macular Degeneration",
+    "keywords": [
+        "macular degeneration", "central vision loss",
+        "blurred center vision"
+    ],
+    "excludes": []
+},
+{
+    "id": "uveitis",
+    "name": "Uveitis",
+    "keywords": [
+        "uveitis", "eye inflammation pain",
+        "light sensitivity eye"
+    ],
+    "excludes": []
+},
+{
+    "id": "keratitis",
+    "name": "Keratitis",
+    "keywords": [
+        "keratitis", "cornea infection",
+        "painful red eye"
+    ],
+    "excludes": []
+},
+{
+    "id": "otitis_media",
+    "name": "Otitis Media",
+    "keywords": [
+        "middle ear infection", "otitis media",
+        "ear pain fever child"
+    ],
+    "excludes": []
+},
+{
+    "id": "mastoiditis",
+    "name": "Mastoiditis",
+    "keywords": [
+        "mastoiditis", "swelling behind ear",
+        "ear infection spreading"
+    ],
+    "excludes": []
+},
+{
+    "id": "menieres_disease",
+    "name": "Meniere Disease",
+    "keywords": [
+        "menieres disease", "ringing ears vertigo",
+        "hearing loss vertigo"
+    ],
+    "excludes": []
+},
+{
+    "id": "labyrinthitis",
+    "name": "Labyrinthitis",
+    "keywords": [
+        "labyrinthitis", "inner ear infection dizziness",
+        "vertigo ear infection"
+    ],
+    "excludes": []
+},
+{
+    "id": "benign_positional_vertigo",
+    "name": "Benign Positional Vertigo",
+    "keywords": [
+        "bppv", "positional vertigo",
+        "dizziness head movement"
+    ],
+    "excludes": []
+},
+{
+    "id": "epiglottitis",
+    "name": "Epiglottitis",
+    "keywords": [
+        "epiglottitis", "drooling difficulty swallowing",
+        "severe throat swelling"
+    ],
+    "excludes": []
+},
+{
+    "id": "tonsil_abscess",
+    "name": "Peritonsillar Abscess",
+    "keywords": [
+        "tonsil abscess", "one sided throat swelling",
+        "difficulty opening mouth"
+    ],
+    "excludes": []
+},
+{
+    "id": "diphtheria",
+    "name": "Diphtheria",
+    "keywords": [
+        "diphtheria", "gray throat membrane",
+        "severe sore throat toxin"
+    ],
+    "excludes": []
+},
+{
+    "id": "whooping_cough",
+    "name": "Whooping Cough",
+    "keywords": [
+        "whooping cough", "pertussis",
+        "violent coughing fits"
+    ],
+    "excludes": []
+},
+{
+    "id": "scarlet_fever",
+    "name": "Scarlet Fever",
+    "keywords": [
+        "scarlet fever", "sandpaper rash",
+        "strep throat rash"
+    ],
+    "excludes": []
+},
+{
+    "id": "rheumatic_fever",
+    "name": "Rheumatic Fever",
+    "keywords": [
+        "rheumatic fever", "joint pain after strep",
+        "heart inflammation strep"
+    ],
+    "excludes": []
+}
+{
+    "id": "pagets_disease_bone",
+    "name": "Paget Disease of Bone",
+    "keywords": [
+        "paget disease bone", "abnormal bone growth",
+        "bone deformity", "enlarged skull"
+    ],
+    "excludes": []
+},
+{
+    "id": "ehlers_danlos_syndrome",
+    "name": "Ehlers Danlos Syndrome",
+    "keywords": [
+        "ehlers danlos", "hypermobile joints",
+        "stretchy skin", "joint dislocations"
+    ],
+    "excludes": []
+},
+{
+    "id": "marfan_syndrome",
+    "name": "Marfan Syndrome",
+    "keywords": [
+        "marfan syndrome", "tall thin body",
+        "long fingers", "aortic problems"
+    ],
+    "excludes": []
+},
+{
+    "id": "turner_syndrome",
+    "name": "Turner Syndrome",
+    "keywords": [
+        "turner syndrome", "short stature female",
+        "delayed puberty girl"
+    ],
+    "excludes": []
+},
+{
+    "id": "down_syndrome",
+    "name": "Down Syndrome",
+    "keywords": [
+        "down syndrome", "developmental delay",
+        "chromosomal disorder"
+    ],
+    "excludes": []
+},
+{
+    "id": "fragile_x_syndrome",
+    "name": "Fragile X Syndrome",
+    "keywords": [
+        "fragile x syndrome", "intellectual disability inherited",
+        "autism features genetic"
+    ],
+    "excludes": []
+},
+{
+    "id": "huntingtons_disease",
+    "name": "Huntington Disease",
+    "keywords": [
+        "huntingtons disease", "involuntary movements",
+        "genetic neurological disorder"
+    ],
+    "excludes": []
+},
+{
+    "id": "wilsons_disease",
+    "name": "Wilson Disease",
+    "keywords": [
+        "wilsons disease", "copper accumulation",
+        "liver neurological symptoms"
+    ],
+    "excludes": []
+},
+{
+    "id": "hemochromatosis",
+    "name": "Hemochromatosis",
+    "keywords": [
+        "hemochromatosis", "iron overload",
+        "bronze skin diabetes"
+    ],
+    "excludes": []
+},
+{
+    "id": "g6pd_deficiency",
+    "name": "G6PD Deficiency",
+    "keywords": [
+        "g6pd deficiency", "hemolytic anemia",
+        "jaundice after medication"
+    ],
+    "excludes": []
+},
+{
+    "id": "aplastic_anemia",
+    "name": "Aplastic Anemia",
+    "keywords": [
+        "aplastic anemia", "bone marrow failure",
+        "low blood cell counts"
+    ],
+    "excludes": []
+},
+{
+    "id": "polycythemia",
+    "name": "Polycythemia",
+    "keywords": [
+        "polycythemia", "high red blood cells",
+        "thick blood symptoms"
+    ],
+    "excludes": []
+},
+{
+    "id": "myelofibrosis",
+    "name": "Myelofibrosis",
+    "keywords": [
+        "myelofibrosis", "bone marrow scarring",
+        "enlarged spleen fatigue"
+    ],
+    "excludes": []
+},
+{
+    "id": "essential_thrombocythemia",
+    "name": "Essential Thrombocythemia",
+    "keywords": [
+        "essential thrombocythemia", "high platelet count",
+        "blood clot risk"
+    ],
+    "excludes": []
+},
+{
+    "id": "disseminated_intravascular_coagulation",
+    "name": "Disseminated Intravascular Coagulation",
+    "keywords": [
+        "dic", "uncontrolled clotting bleeding",
+        "disseminated intravascular coagulation"
+    ],
+    "excludes": []
+},
+{
+    "id": "thrombocytopenia",
+    "name": "Thrombocytopenia",
+    "keywords": [
+        "low platelets", "thrombocytopenia",
+        "easy bruising bleeding"
+    ],
+    "excludes": []
+},
+{
+    "id": "immune_thrombocytopenic_purpura",
+    "name": "Immune Thrombocytopenic Purpura",
+    "keywords": [
+        "itp", "immune thrombocytopenia",
+        "purple skin spots low platelets"
+    ],
+    "excludes": []
+},
+{
+    "id": "glomerular_disease",
+    "name": "Glomerular Disease",
+    "keywords": [
+        "glomerular disease", "protein blood urine",
+        "kidney filter damage"
+    ],
+    "excludes": []
+},
+{
+    "id": "renal_tubular_acidosis",
+    "name": "Renal Tubular Acidosis",
+    "keywords": [
+        "renal tubular acidosis", "acid base imbalance kidney",
+        "kidney acid disorder"
+    ],
+    "excludes": []
+},
+{
+    "id": "hydronephrosis",
+    "name": "Hydronephrosis",
+    "keywords": [
+        "hydronephrosis", "swollen kidney",
+        "urine blockage kidney"
+    ],
+    "excludes": []
+},
+{
+    "id": "vesicoureteral_reflux",
+    "name": "Vesicoureteral Reflux",
+    "keywords": [
+        "vesicoureteral reflux", "urine backflow",
+        "recurrent uti child"
+    ],
+    "excludes": []
+},
+{
+    "id": "urethral_stricture",
+    "name": "Urethral Stricture",
+    "keywords": [
+        "urethral stricture", "weak urine stream",
+        "narrow urethra"
+    ],
+    "excludes": []
+},
+{
+    "id": "peyronies_disease",
+    "name": "Peyronie Disease",
+    "keywords": [
+        "peyronie disease", "curved penis",
+        "painful erection curve"
+    ],
+    "excludes": []
+},
+{
+    "id": "lichen_planus",
+    "name": "Lichen Planus",
+    "keywords": [
+        "lichen planus", "itchy purple rash",
+        "mouth white streaks"
+    ],
+    "excludes": []
+},
+{
+    "id": "hidradenitis_suppurativa",
+    "name": "Hidradenitis Suppurativa",
+    "keywords": [
+        "hidradenitis suppurativa", "painful underarm lumps",
+        "recurrent skin abscesses"
+    ],
+    "excludes": []
+},
+{
+    "id": "seborrheic_dermatitis",
+    "name": "Seborrheic Dermatitis",
+    "keywords": [
+        "seborrheic dermatitis", "dandruff rash",
+        "oily flaky skin"
+    ],
+    "excludes": []
+},
+{
+    "id": "alopecia_areata",
+    "name": "Alopecia Areata",
+    "keywords": [
+        "alopecia areata", "patchy hair loss",
+        "round bald patches"
+    ],
+    "excludes": []
+},
+{
+    "id": "impetigo",
+    "name": "Impetigo",
+    "keywords": [
+        "impetigo", "honey crust rash",
+        "contagious skin infection"
+    ],
+    "excludes": []
+},
+{
+    "id": "erysipelas",
+    "name": "Erysipelas",
+    "keywords": [
+        "erysipelas", "raised red skin infection",
+        "fever skin redness"
+    ],
+    "excludes": []
+},
+{
+    "id": "necrotizing_fasciitis",
+    "name": "Necrotizing Fasciitis",
+    "keywords": [
+        "necrotizing fasciitis", "flesh eating bacteria",
+        "rapid tissue destruction"
+    ],
+    "excludes": []
+},
+{
+    "id": "toxic_shock_syndrome",
+    "name": "Toxic Shock Syndrome",
+    "keywords": [
+        "toxic shock syndrome", "high fever rash shock",
+        "tampon associated infection"
+    ],
+    "excludes": []
+},
+{
+    "id": "botulism",
+    "name": "Botulism",
+    "keywords": [
+        "botulism", "descending paralysis",
+        "food toxin paralysis"
+    ],
+    "excludes": []
+},
+{
+    "id": "legionnaires_disease",
+    "name": "Legionnaires Disease",
+    "keywords": [
+        "legionnaires disease", "severe pneumonia water source",
+        "legionella infection"
+    ],
+    "excludes": []
+},
+{
+    "id": "brucellosis",
+    "name": "Brucellosis",
+    "keywords": [
+        "brucellosis", "fever animal exposure",
+        "undulating fever"
+    ],
+    "excludes": []
+},
+{
+    "id": "leptospirosis",
+    "name": "Leptospirosis",
+    "keywords": [
+        "leptospirosis", "fever flood water",
+        "rat urine infection"
+    ],
+    "excludes": []
+},
+{
+    "id": "filariasis",
+    "name": "Filariasis",
+    "keywords": [
+        "filariasis", "elephantiasis",
+        "swollen limbs parasite"
+    ],
+    "excludes": []
+},
+{
+    "id": "onchocerciasis",
+    "name": "Onchocerciasis",
+    "keywords": [
+        "onchocerciasis", "river blindness",
+        "parasitic eye disease"
+    ],
+    "excludes": []
+},
+{
+    "id": "toxoplasmosis",
+    "name": "Toxoplasmosis",
+    "keywords": [
+        "toxoplasmosis", "cat parasite infection",
+        "brain infection parasite"
+    ],
+    "excludes": []
+},
+{
+    "id": "cryptosporidiosis",
+    "name": "Cryptosporidiosis",
+    "keywords": [
+        "cryptosporidiosis", "waterborne diarrhea parasite",
+        "persistent watery diarrhea"
+    ],
+    "excludes": []
+},
+{
+    "id": "rotavirus_infection",
+    "name": "Rotavirus Infection",
+    "keywords": [
+        "rotavirus", "child severe diarrhea",
+        "vomiting infant virus"
+    ],
+    "excludes": []
+},
+{
+    "id": "norovirus",
+    "name": "Norovirus Infection",
+    "keywords": [
+        "norovirus", "viral vomiting diarrhea",
+        "stomach flu outbreak"
+    ],
+    "excludes": []
+},
+{
+    "id": "ebola",
+    "name": "Ebola Virus Disease",
+    "keywords": [
+        "ebola", "viral hemorrhagic fever",
+        "bleeding fever virus"
+    ],
+    "excludes": []
+},
+{
+    "id": "yellow_fever",
+    "name": "Yellow Fever",
+    "keywords": [
+        "yellow fever", "mosquito jaundice fever",
+        "viral liver fever"
+    ],
+    "excludes": []
+},
+{
+    "id": "zika_virus",
+    "name": "Zika Virus Infection",
+    "keywords": [
+        "zika", "mosquito rash fever",
+        "pregnancy zika infection"
+    ],
+    "excludes": []
+},
+{
+    "id": "monkeypox",
+    "name": "Monkeypox",
+    "keywords": [
+        "monkeypox", "pox lesions",
+        "swollen lymph nodes rash"
+    ],
+    "excludes": []
+}
+{
+    "id": "acute_respiratory_distress_syndrome",
+    "name": "Acute Respiratory Distress Syndrome",
+    "keywords": [
+        "ards", "acute respiratory distress syndrome",
+        "severe lung failure", "low oxygen severe infection"
+    ],
+    "excludes": []
+},
+{
+    "id": "aspiration_pneumonia",
+    "name": "Aspiration Pneumonia",
+    "keywords": [
+        "aspiration pneumonia", "food into lungs",
+        "cough after vomiting", "breathing difficulty aspiration"
+    ],
+    "excludes": []
+},
+{
+    "id": "silicosis",
+    "name": "Silicosis",
+    "keywords": [
+        "silicosis", "dust lung disease",
+        "silica exposure cough"
+    ],
+    "excludes": []
+},
+{
+    "id": "asbestosis",
+    "name": "Asbestosis",
+    "keywords": [
+        "asbestosis", "asbestos lung disease",
+        "occupational lung fibrosis"
+    ],
+    "excludes": []
+},
+{
+    "id": "coal_workers_pneumoconiosis",
+    "name": "Coal Workers Pneumoconiosis",
+    "keywords": [
+        "black lung disease", "coal workers pneumoconiosis",
+        "coal dust lung disease"
+    ],
+    "excludes": []
+},
+{
+    "id": "hypersensitivity_pneumonitis",
+    "name": "Hypersensitivity Pneumonitis",
+    "keywords": [
+        "hypersensitivity pneumonitis",
+        "allergic lung inflammation",
+        "farmer lung disease"
+    ],
+    "excludes": []
+},
+{
+    "id": "goodpasture_syndrome",
+    "name": "Goodpasture Syndrome",
+    "keywords": [
+        "goodpasture syndrome", "lung kidney autoimmune",
+        "coughing blood kidney disease"
+    ],
+    "excludes": []
+},
+{
+    "id": "behcets_disease",
+    "name": "Behcet Disease",
+    "keywords": [
+        "behcet disease", "mouth genital ulcers",
+        "eye inflammation ulcers"
+    ],
+    "excludes": []
+},
+{
+    "id": "raynauds_phenomenon",
+    "name": "Raynaud Phenomenon",
+    "keywords": [
+        "raynaud phenomenon", "fingers turn white cold",
+        "cold induced finger color change"
+    ],
+    "excludes": []
+},
+{
+    "id": "scleroderma",
+    "name": "Scleroderma",
+    "keywords": [
+        "scleroderma", "tight skin autoimmune",
+        "hard skin disease"
+    ],
+    "excludes": []
+},
+{
+    "id": "mixed_connective_tissue_disease",
+    "name": "Mixed Connective Tissue Disease",
+    "keywords": [
+        "mixed connective tissue disease",
+        "overlap autoimmune disease"
+    ],
+    "excludes": []
+},
+{
+    "id": "reactive_arthritis",
+    "name": "Reactive Arthritis",
+    "keywords": [
+        "reactive arthritis", "joint pain after infection",
+        "arthritis after diarrhea"
+    ],
+    "excludes": []
+},
+{
+    "id": "juvenile_arthritis",
+    "name": "Juvenile Idiopathic Arthritis",
+    "keywords": [
+        "juvenile arthritis", "child joint swelling",
+        "arthritis child"
+    ],
+    "excludes": []
+},
+{
+    "id": "osteogenesis_imperfecta",
+    "name": "Osteogenesis Imperfecta",
+    "keywords": [
+        "osteogenesis imperfecta", "brittle bones",
+        "frequent fractures child"
+    ],
+    "excludes": []
+},
+{
+    "id": "slipped_disc",
+    "name": "Slipped Disc",
+    "keywords": [
+        "slipped disc", "herniated disc",
+        "radiating back pain"
+    ],
+    "excludes": []
+},
+{
+    "id": "cauda_equina_syndrome",
+    "name": "Cauda Equina Syndrome",
+    "keywords": [
+        "cauda equina syndrome", "loss bladder control back pain",
+        "numbness saddle area"
+    ],
+    "excludes": []
+},
+{
+    "id": "spinal_stenosis",
+    "name": "Spinal Stenosis",
+    "keywords": [
+        "spinal stenosis", "back pain walking",
+        "narrow spinal canal"
+    ],
+    "excludes": []
+},
+{
+    "id": "carpal_tunnel_syndrome",
+    "name": "Carpal Tunnel Syndrome",
+    "keywords": [
+        "carpal tunnel syndrome", "tingling fingers",
+        "wrist nerve compression"
+    ],
+    "excludes": []
+},
+{
+    "id": "cubital_tunnel_syndrome",
+    "name": "Cubital Tunnel Syndrome",
+    "keywords": [
+        "cubital tunnel syndrome", "ulnar nerve pain",
+        "ring finger numbness"
+    ],
+    "excludes": []
+},
+{
+    "id": "bell_palsy",
+    "name": "Bell Palsy",
+    "keywords": [
+        "bell palsy", "face drooping one side",
+        "facial paralysis sudden"
+    ],
+    "excludes": []
+},
+{
+    "id": "meningococcal_meningitis",
+    "name": "Meningococcal Meningitis",
+    "keywords": [
+        "meningococcal meningitis", "fever neck stiffness rash",
+        "bacterial meningitis"
+    ],
+    "excludes": []
+},
+{
+    "id": "brain_tumor",
+    "name": "Brain Tumor",
+    "keywords": [
+        "brain tumor", "persistent headache vomiting",
+        "seizures brain mass"
+    ],
+    "excludes": []
+},
+{
+    "id": "pituitary_apoplexy",
+    "name": "Pituitary Apoplexy",
+    "keywords": [
+        "pituitary apoplexy", "sudden headache vision loss",
+        "pituitary bleeding"
+    ],
+    "excludes": []
+},
+{
+    "id": "hydrocephalus",
+    "name": "Hydrocephalus",
+    "keywords": [
+        "hydrocephalus", "fluid in brain",
+        "large head infant"
+    ],
+    "excludes": []
+},
+{
+    "id": "craniosynostosis",
+    "name": "Craniosynostosis",
+    "keywords": [
+        "craniosynostosis", "abnormal skull shape",
+        "premature skull fusion"
+    ],
+    "excludes": []
+},
+{
+    "id": "retinoblastoma",
+    "name": "Retinoblastoma",
+    "keywords": [
+        "retinoblastoma", "white pupil child",
+        "eye cancer child"
+    ],
+    "excludes": []
+},
+{
+    "id": "strabismus",
+    "name": "Strabismus",
+    "keywords": [
+        "strabismus", "crossed eyes",
+        "misaligned eyes"
+    ],
+    "excludes": []
+},
+{
+    "id": "amblyopia",
+    "name": "Amblyopia",
+    "keywords": [
+        "amblyopia", "lazy eye",
+        "reduced vision one eye"
+    ],
+    "excludes": []
+},
+{
+    "id": "retinitis_pigmentosa",
+    "name": "Retinitis Pigmentosa",
+    "keywords": [
+        "retinitis pigmentosa", "night blindness",
+        "tunnel vision"
+    ],
+    "excludes": []
+},
+{
+    "id": "optic_neuritis",
+    "name": "Optic Neuritis",
+    "keywords": [
+        "optic neuritis", "pain eye movement",
+        "sudden vision loss"
+    ],
+    "excludes": []
+},
+{
+    "id": "cholesteatoma",
+    "name": "Cholesteatoma",
+    "keywords": [
+        "cholesteatoma", "foul ear discharge",
+        "abnormal ear skin growth"
+    ],
+    "excludes": []
+},
+{
+    "id": "otosclerosis",
+    "name": "Otosclerosis",
+    "keywords": [
+        "otosclerosis", "hearing loss bone ear",
+        "progressive hearing loss"
+    ],
+    "excludes": []
+},
+{
+    "id": "sleep_terrors",
+    "name": "Sleep Terrors",
+    "keywords": [
+        "sleep terrors", "night screaming child",
+        "terror episodes sleep"
+    ],
+    "excludes": []
+},
+{
+    "id": "oppositional_defiant_disorder",
+    "name": "Oppositional Defiant Disorder",
+    "keywords": [
+        "oppositional defiant disorder",
+        "defiant child behavior",
+        "frequent anger child"
+    ],
+    "excludes": []
+},
+{
+    "id": "conduct_disorder",
+    "name": "Conduct Disorder",
+    "keywords": [
+        "conduct disorder", "aggressive behavior child",
+        "rule breaking behavior"
+    ],
+    "excludes": []
+},
+{
+    "id": "dyslexia",
+    "name": "Dyslexia",
+    "keywords": [
+        "dyslexia", "reading difficulty",
+        "learning disorder reading"
+    ],
+    "excludes": []
+},
+{
+    "id": "dyscalculia",
+    "name": "Dyscalculia",
+    "keywords": [
+        "dyscalculia", "difficulty mathematics",
+        "math learning disorder"
+    ],
+    "excludes": []
+},
+{
+    "id": "speech_delay",
+    "name": "Speech Delay",
+    "keywords": [
+        "speech delay", "late talking child",
+        "delayed speech development"
+    ],
+    "excludes": []
+},
+{
+    "id": "aphasia",
+    "name": "Aphasia",
+    "keywords": [
+        "aphasia", "difficulty speaking",
+        "language impairment stroke"
+    ],
+    "excludes": []
+},
+{
+    "id": "apraxia",
+    "name": "Apraxia",
+    "keywords": [
+        "apraxia", "difficulty planned movements",
+        "motor planning disorder"
+    ],
+    "excludes": []
+},
+{
+    "id": "dissociative_disorder",
+    "name": "Dissociative Disorder",
+    "keywords": [
+        "dissociative disorder", "memory gaps",
+        "feeling detached reality"
+    ],
+    "excludes": []
+},
+{
+    "id": "conversion_disorder",
+    "name": "Conversion Disorder",
+    "keywords": [
+        "conversion disorder", "neurological symptoms stress",
+        "functional neurological symptoms"
+    ],
+    "excludes": []
+},
+{
+    "id": "body_dysmorphic_disorder",
+    "name": "Body Dysmorphic Disorder",
+    "keywords": [
+        "body dysmorphic disorder",
+        "obsession appearance flaws",
+        "distorted body image"
+    ],
+    "excludes": []
+},
+{
+    "id": "trichotillomania",
+    "name": "Trichotillomania",
+    "keywords": [
+        "trichotillomania", "hair pulling disorder",
+        "compulsive hair pulling"
+    ],
+    "excludes": []
+},
+{
+    "id": "kleptomania",
+    "name": "Kleptomania",
+    "keywords": [
+        "kleptomania", "compulsive stealing",
+        "impulse control stealing"
+    ],
+    "excludes": []
+}
 ]
 
 def classify_query(query):
