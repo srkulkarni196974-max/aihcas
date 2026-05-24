@@ -27,6 +27,12 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+    if (password.length > 45) {
+      return NextResponse.json(
+        { error: 'Password must not exceed 45 characters' },
+        { status: 400 }
+      );
+    }
 
     const result = await createUser(name.trim(), email.trim(), password);
 

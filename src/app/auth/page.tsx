@@ -47,6 +47,7 @@ export default function AuthPage() {
     if (mode === 'signup' && !form.name.trim()) e.name = 'Full name is required';
     if (!form.email.includes('@')) e.email = 'Enter a valid email address';
     if (mode !== 'forgot-password' && form.password.length < 6) e.password = 'Password must be at least 6 characters';
+    if (mode !== 'forgot-password' && form.password.length > 45) e.password = 'Password must not exceed 45 characters';
     return e;
   };
 
@@ -300,6 +301,7 @@ export default function AuthPage() {
                     value={form.password}
                     onChange={e => setForm({ ...form, password: e.target.value })}
                     autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                    maxLength={45}
                     style={{ paddingRight: '48px' }}
                   />
                   <button

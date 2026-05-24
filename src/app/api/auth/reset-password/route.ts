@@ -18,6 +18,12 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+    if (password.length > 45) {
+      return NextResponse.json(
+        { error: 'Password must not exceed 45 characters' },
+        { status: 400 }
+      );
+    }
 
     // Token is now validated against Supabase aihcas_reset_tokens table
     const result = await updateUserPassword(email, password, token);

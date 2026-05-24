@@ -144,7 +144,7 @@ export default function DoctorAuthPage() {
               </div>
               <div>
                 <label className="input-label"><Lock className="w-3 h-3 inline mr-1" />Password</label>
-                <input className="input-field" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required />
+                <input className="input-field" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required maxLength={45} />
               </div>
               <div style={{ textAlign: 'right', marginTop: -8, marginBottom: 4 }}>
                 <button
@@ -173,7 +173,7 @@ export default function DoctorAuthPage() {
               </div>
               <div>
                 <label className="input-label"><Lock className="w-3 h-3 inline mr-1" />Password * (min 8 characters)</label>
-                <input className="input-field" type="password" value={regPassword} onChange={e => setRegPassword(e.target.value)} placeholder="••••••••" required minLength={8} />
+                <input className="input-field" type="password" value={regPassword} onChange={e => setRegPassword(e.target.value)} placeholder="••••••••" required minLength={8} maxLength={45} />
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 <div>

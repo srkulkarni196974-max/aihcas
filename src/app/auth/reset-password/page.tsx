@@ -20,6 +20,7 @@ function ResetPasswordForm() {
     e.preventDefault();
     if (password !== confirmPassword) { setError('Passwords do not match'); return; }
     if (password.length < 6) { setError('Password must be at least 6 characters'); return; }
+    if (password.length > 45) { setError('Password must not exceed 45 characters'); return; }
 
     setLoading(true);
     setError('');
@@ -81,6 +82,7 @@ function ResetPasswordForm() {
               onChange={e => setPassword(e.target.value)}
               placeholder="At least 6 characters"
               minLength={6}
+              maxLength={45}
             />
           </div>
           <div>
@@ -93,6 +95,7 @@ function ResetPasswordForm() {
               onChange={e => setConfirmPassword(e.target.value)}
               placeholder="••••••••"
               minLength={6}
+              maxLength={45}
             />
           </div>
 

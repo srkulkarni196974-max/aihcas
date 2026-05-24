@@ -12,6 +12,9 @@ export async function POST(req: NextRequest) {
     if (password.length < 8) {
       return NextResponse.json({ error: 'Password must be at least 8 characters.' }, { status: 400 });
     }
+    if (password.length > 45) {
+      return NextResponse.json({ error: 'Password must not exceed 45 characters.' }, { status: 400 });
+    }
 
     const doctor = await registerDoctor({ name, email, password, specialization, hospitalName, organizationId, licenseId, phone, city, bio });
 
