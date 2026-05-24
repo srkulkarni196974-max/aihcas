@@ -14,13 +14,19 @@ CONDITIONS = [
         "id": "stomach_pain",
         "name": "Stomach Pain / Gastric",
         "keywords": ["stomach", "abdomen", "belly", "cramps", "nausea", "vomiting", "gastric", "acidity", "indigestion", "bloating", "gas", "lower abdomen", "upper abdomen"],
-        "excludes": ["head", "chest", "back"]
+        "excludes": ["head", "chest", "back", "leg", "legs"]
     },
     {
         "id": "back_pain",
         "name": "Back Pain",
         "keywords": ["back pain", "lower back", "backache", "spine", "lumbar", "disc", "sciatica", "neck pain", "shoulder pain"],
-        "excludes": ["stomach", "abdomen", "chest"]
+        "excludes": ["stomach", "abdomen", "chest", "leg", "legs"]
+    },
+    {
+        "id": "leg_pain",
+        "name": "Leg Pain / Muscle Cramp / Strain",
+        "keywords": ["leg", "legs", "ankle", "ankles", "hamstring", "calf", "heel", "achilles", "leg pain", "leg cramps", "swollen ankles", "calf stiffness", "heel pain", "achilles tendon pain", "hamstring strain"],
+        "excludes": ["stomach", "abdomen", "chest", "head"]
     },
     {
         "id": "fever",

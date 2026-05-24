@@ -685,6 +685,39 @@ Yellow eyes or skin means bilirubin is elevated — the liver, bile ducts, or bl
 
 ⚕️ *AI assistant — not a substitute for a doctor.*`
   },
+  {
+    id: 'leg_pain',
+    name: 'Leg Pain / Muscle Cramp / Strain / Swelling',
+    keywords: ['leg','legs','ankle','ankles','hamstring','calf','heel','achilles','leg pain','leg cramps','swollen ankles','calf stiffness','heel pain','achilles tendon pain','hamstring strain','cramps legs','cramp legs','cramp leg','cramps leg','leg muscle','leg cramp','ankle swelling','foot pain','foot cramps','shin splint'],
+    triage: 'self-care',
+    response: `**Leg Pain & Muscle Cramp / Strain / Swelling Assessment**
+
+Leg pain, cramps, and ankle swelling are common physical symptoms often related to muscle overuse, strains, or mild circulatory issues.
+
+**Likely causes:**
+- **Muscle Strain** (e.g., Hamstring strain) — from sports or sudden stretches
+- **Muscle Cramps** (e.g., Leg cramps, calf stiffness) — caused by dehydration, electrolyte imbalance, or muscle fatigue
+- **Peripheral Edema** (e.g., Swollen ankles) — fluid retention from prolonged standing or sitting
+- **Achilles Tendinitis / Heel Pain** — inflammation of the tendon from overuse or improper footwear
+
+**Self-care steps (R.I.C.E. Protocol):**
+- **Rest**: Avoid putting heavy weight on the affected leg or ankle
+- **Ice**: Apply cold packs to the strained muscle for 15-20 minutes, 3-4 times daily
+- **Compression**: Use an elastic bandage to support a strained muscle or reduce ankle swelling
+- **Elevation**: Prop your leg up on pillows above heart level to drain excess fluid and reduce swelling
+- **Hydration & Electrolytes**: Drink plenty of water and ORS to relieve leg muscle cramps
+- **Crocin / Combiflam** for pain and inflammation relief
+
+**⚠️ See a doctor if:**
+- You have severe, sudden swelling in only one leg with redness, warmth, or pain (deep vein thrombosis risk)
+- You cannot bear any weight on the leg or walk at all
+- There is a visible deformity or suspected fracture/rupture
+- The pain is severe, constant, or persists beyond 3-5 days
+
+✅ **Self-Care Recommended** for mild strain, leg cramps, or minor ankle swelling.
+
+⚕️ *AI assistant — not a substitute for a doctor.*`
+  },
 ];
 
 // ─── Multi-Symptom Combination Rules ─────────────────────────────────────────

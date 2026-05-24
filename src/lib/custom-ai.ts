@@ -236,6 +236,7 @@ export async function getChatResponse(
       if (condId === 'chest_pain') return `Chest pain needs careful attention. Does the pain spread to your left arm, jaw, or shoulder? And are you having any shortness of breath or sweating?`;
       if (condId === 'cold' || condId === 'asthma') return `I see you have respiratory symptoms. How long has this been going on, and do you have a fever or wheezing along with it?`;
       if (condId === 'back_pain') return `For your back pain — does the pain radiate down into your leg or foot? And on a scale of 1 to 10, how severe is it?`;
+      if (condId === 'leg_pain') return `I understand you have leg pain, cramps, or swelling. Did the discomfort start after a specific physical activity or injury, or did it develop suddenly? And do you have any visible swelling, redness, or difficulty putting weight on your leg?`;
       if (condId === 'anemia') return `How long have you been feeling this fatigue and weakness? And have you had a recent blood test checking your hemoglobin levels?`;
       if (condId === 'uti') return `I understand you have urinary symptoms. How long has this been going on? And do you have any fever or pain in your lower back or flanks?`;
       if (condId === 'diabetes' || condId === 'hypertension') return `Are you currently on any medication for this? And what was your most recent reading?`;
@@ -250,6 +251,9 @@ export async function getChatResponse(
       }
       if ((condId === 'stomach_pain' || condId === 'food_poisoning') && !hasAssociated) {
         return `Have you had any vomiting, loose stools, or blood in your stool along with the pain?`;
+      }
+      if (condId === 'leg_pain' && !hasAssociated) {
+        return `Are both legs affected, or is it just one? And does the pain get better with rest or worse when you try to walk?`;
       }
       if (condId === 'headache' && !hasAssociated) {
         return `Is this a recurring headache that you get often, or is this a new type of pain for you?`;
