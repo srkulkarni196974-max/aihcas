@@ -533,25 +533,33 @@ UPDATE doctors SET status = 'approved' WHERE id = :doctor_id;
 
 ### 4.6 Doctor Messaging System
 
-Both doctors and patients can send messages through the platform:
+Both doctors and patients can send text messages and media attachments (photos, PDFs) through the secure consultation chat:
 
-**Patient sends message:**
-POST to `/api/patient/messages` with `{ doctorId, message }`
+**Patient sends message/attachment:**
+POST to `/api/patient/messages` with `{ doctorId, message?, attachmentUrl?, attachmentType? }`
 
-**Doctor sends message:**
-POST to `/api/doctor/messages` with `{ patientId, message }`
+**Doctor sends message/attachment:**
+POST to `/api/doctor/messages` with `{ patientId, message?, attachmentUrl?, attachmentType? }`
 
-**Messages table:**
+**Consultation Messages Table Schema:**
 ```sql
-CREATE TABLE messages (
-  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  sender_id   UUID NOT NULL REFERENCES auth.users(id),
-  receiver_id UUID NOT NULL REFERENCES auth.users(id),
-  content     TEXT NOT NULL,
-  is_read     BOOLEAN DEFAULT FALSE,
-  created_at  TIMESTAMPTZ DEFAULT NOW()
+CREATE TABLE consultation_messages (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  patient_id      UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  doctor_id       UUID NOT NULL REFERENCES doctors(id) ON DELETE CASCADE,
+  sender_role     TEXT NOT NULL CHECK (sender_role IN ('patient', 'doctor')),
+  message         TEXT NOT NULL,
+  attachment_url  TEXT,             -- Stores base64 data URL for images or documents
+  attachment_type TEXT,             -- MIME type (e.g. image/jpeg, application/pdf)
+  is_read         BOOLEAN DEFAULT FALSE,
+  sent_at         TIMESTAMPTZ DEFAULT NOW()
 );
 ```
+
+**Send Media & Open Camera Integration:**
+- **Send Media**: The interface displays a paperclip button which triggers a hidden `<input type="file" accept="image/*,application/pdf" />`. When a file is selected, it is converted to a base64 Data URL using the HTML5 `FileReader` API and uploaded.
+- **Open Camera**: The interface displays a camera button which triggers a hidden file input configured with `capture="environment" accept="image/*"`. On mobile devices, this directly launches the native camera app to snap a picture. On desktops, it opens the file selector to choose an image. The captured picture is converted to base64 and sent inside the conversation thread.
+- **Rendering**: Images are rendered inline with preview options (expandable on click). Non-image files (such as reports in PDF format) are displayed as secure links showing a document preview icon.
 
 Messages are displayed in the doctor dashboard as a conversation thread, similar to a simple chat interface. Unread messages show a blue notification badge.
 

@@ -41,8 +41,10 @@ export async function POST(req: NextRequest) {
   const patientId = await getPatientId();
   if (!patientId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { doctorId, message } = await req.json();
-  if (!doctorId || !message) return NextResponse.json({ error: 'doctorId and message required' }, { status: 400 });
+  const { doctorId, message, attachmentUrl, attachmentType } = await req.json();
+  if (!doctorId || (!message && !attachmentUrl)) {
+    return NextResponse.json({ error: 'doctorId and message or attachment required' }, { status: 400 });
+  }
 
   const { data, error } = await supabaseAdmin
     .from('consultation_messages')
@@ -50,7 +52,9 @@ export async function POST(req: NextRequest) {
       patient_id: patientId,
       doctor_id: doctorId,
       sender_role: 'patient',
-      message,
+      message: message || (attachmentType?.startsWith('image/') ? '[Image Attachment]' : '[Document Attachment]'),
+      attachment_url: attachmentUrl || null,
+      attachment_type: attachmentType || null,
       sent_at: new Date().toISOString(),
     })
     .select()

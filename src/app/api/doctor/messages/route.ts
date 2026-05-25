@@ -41,8 +41,10 @@ export async function POST(req: NextRequest) {
   const session = await verifyDoctorToken(token);
   if (!session) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
-  const { patientId, message } = await req.json();
-  if (!patientId || !message) return NextResponse.json({ error: 'patientId and message are required' }, { status: 400 });
+  const { patientId, message, attachmentUrl, attachmentType } = await req.json();
+  if (!patientId || (!message && !attachmentUrl)) {
+    return NextResponse.json({ error: 'patientId and message or attachment are required' }, { status: 400 });
+  }
 
   const { data, error } = await supabaseAdmin
     .from('consultation_messages')
@@ -50,7 +52,9 @@ export async function POST(req: NextRequest) {
       patient_id: patientId,
       doctor_id: session.doctorId,
       sender_role: 'doctor',
-      message,
+      message: message || (attachmentType?.startsWith('image/') ? '[Image Attachment]' : '[Document Attachment]'),
+      attachment_url: attachmentUrl || null,
+      attachment_type: attachmentType || null,
       sent_at: new Date().toISOString(),
     })
     .select()

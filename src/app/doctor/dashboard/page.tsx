@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import {
   Heart, Users, FileText, MessageSquare, AlertTriangle, LogOut,
   ChevronRight, Clock, Send, Activity, Eye, Inbox, Bell, Stethoscope,
-  User, Upload, CheckCircle, ShieldAlert
+  User, Upload, CheckCircle, ShieldAlert, Paperclip, Camera
 } from 'lucide-react';
 
 interface Doctor { 
@@ -23,7 +23,7 @@ interface Doctor {
 }
 interface Patient { id: string; name: string; email: string; age?: number; gender?: string; blood_group?: string; chronic_conditions?: string; allergies?: string; }
 interface Report { id: string; patient_id: string; report_type: string; title: string; summary?: string; ai_analysis?: any; anatomical_regions?: any; triage_level?: string; severity?: string; is_read_by_doctor: boolean; shared_at: string; }
-interface Msg { id: string; patient_id: string; doctor_id: string; sender_role: string; message: string; is_read: boolean; sent_at: string; }
+interface Msg { id: string; patient_id: string; doctor_id: string; sender_role: string; message: string; is_read: boolean; sent_at: string; attachment_url?: string | null; attachment_type?: string | null; }
 
 export default function DoctorDashboard() {
   const router = useRouter();
@@ -120,6 +120,41 @@ export default function DoctorDashboard() {
       const data = await res.json();
       if (data.success) { setChatMessages(prev => [...prev, data.message]); setChatInput(''); }
     } finally { setSendingChat(false); }
+  };
+
+  const handleFileSelect = async (file: File) => {
+    if (!file || !selectedPatientId || sendingChat) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert("File size exceeds 5MB limit.");
+      return;
+    }
+    setSendingChat(true);
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        const base64data = reader.result as string;
+        const res = await fetch('/api/doctor/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            patientId: selectedPatientId,
+            message: '',
+            attachmentUrl: base64data,
+            attachmentType: file.type,
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          setChatMessages(prev => [...prev, data.message]);
+        }
+      };
+    } catch (err: any) {
+      console.error("Error sending media:", err);
+      alert("Failed to send media.");
+    } finally {
+      setSendingChat(false);
+    }
   };
 
   const handleLogout = async () => {
@@ -401,7 +436,20 @@ export default function DoctorDashboard() {
                             border: m.sender_role === 'doctor' ? 'none' : '1px solid var(--border)',
                             fontSize: '0.82rem', lineHeight: 1.5, textAlign: 'left',
                           }}>
-                            {m.message}
+                            {m.attachment_url && (
+                              <div style={{ marginBottom: m.message && m.message !== '[Image Attachment]' && m.message !== '[Document Attachment]' ? 8 : 0 }}>
+                                {m.attachment_type?.startsWith('image/') ? (
+                                  <img src={m.attachment_url} alt="Attachment" style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8, cursor: 'pointer' }} onClick={() => { if (m.attachment_url) window.open(m.attachment_url); }} />
+                                ) : (
+                                  <a href={m.attachment_url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 6, textDecoration: 'underline', color: m.sender_role === 'doctor' ? '#A5F3FC' : '#1E3A8A' }}>
+                                    <FileText className="w-4 h-4" /> View Document
+                                  </a>
+                                )}
+                              </div>
+                            )}
+                            {m.message && m.message !== '[Image Attachment]' && m.message !== '[Document Attachment]' && (
+                              <div>{m.message}</div>
+                            )}
                             <div style={{ fontSize: '0.6rem', opacity: 0.6, marginTop: 4 }}>{new Date(m.sent_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                           </div>
                         </div>
@@ -409,7 +457,17 @@ export default function DoctorDashboard() {
                       <div ref={chatEndRef} />
                     </div>
 
-                    <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)', display: 'flex', gap: 8 }}>
+                    <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)', display: 'flex', gap: 8, alignItems: 'center' }}>
+                      <input type="file" id="doctor-media-upload" accept="image/*,application/pdf" style={{ display: 'none' }} onChange={(e) => { const file = e.target.files?.[0]; if (file) { handleFileSelect(file); e.target.value = ''; } }} />
+                      <input type="file" id="doctor-camera-capture" accept="image/*" capture="environment" style={{ display: 'none' }} onChange={(e) => { const file = e.target.files?.[0]; if (file) { handleFileSelect(file); e.target.value = ''; } }} />
+
+                      <button className="btn btn-secondary" onClick={() => document.getElementById('doctor-media-upload')?.click()} style={{ borderRadius: '50%', width: 38, height: 38, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--border)' }} title="Send Media">
+                        <Paperclip className="w-4 h-4" />
+                      </button>
+                      <button className="btn btn-secondary" onClick={() => document.getElementById('doctor-camera-capture')?.click()} style={{ borderRadius: '50%', width: 38, height: 38, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--border)' }} title="Open Camera">
+                        <Camera className="w-4 h-4" />
+                      </button>
+
                       <input className="input-field" value={chatInput} onChange={e => setChatInput(e.target.value)} placeholder="Type your clinical response..." style={{ flex: 1, borderRadius: 100, fontSize: '0.85rem' }}
                         onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }} />
                       <button className="btn btn-primary" onClick={sendMessage} disabled={sendingChat || !chatInput.trim()} style={{ borderRadius: 100, paddingInline: 20 }}>
