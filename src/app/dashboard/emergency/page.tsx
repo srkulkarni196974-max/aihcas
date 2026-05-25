@@ -149,14 +149,14 @@ export default function EmergencyPage() {
                    <h3 style={{ fontSize: '0.98rem', fontWeight: 800, marginBottom: '6px', color: 'var(--text-dark)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{contact.name}</h3>
                    <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--danger-deep)', letterSpacing: '-0.01em' }}>{contact.number}</div>
                 </div>
-                <button 
+                <a 
+                  href={`tel:${contact.number}`}
                   className="btn btn-danger btn-icon" 
                   style={{ borderRadius: '50%', width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0 }}
-                  onClick={() => window.open(`tel:${contact.number}`, '_system')}
                   title={`Dial ${contact.name}`}
                 >
                    <PhoneCall className="w-4 h-4 text-white" />
-                </button>
+                </a>
              </div>
            ))
          ) : (
@@ -195,13 +195,13 @@ export default function EmergencyPage() {
       <footer style={{ marginTop: '80px', padding: '40px', background: 'linear-gradient(135deg, rgba(220,38,38,0.04), rgba(220,38,38,0.01))', borderRadius: '24px', textAlign: 'center', border: '1.5px solid rgba(220,38,38,0.15)' }}>
          <h4 style={{ marginBottom: '12px', fontWeight: 800, color: 'var(--text-dark)', fontSize: '1.15rem' }}>Active Life-Threatening Crisis?</h4>
          <p style={{ color: 'var(--text-muted)', marginBottom: '24px', fontSize: '0.88rem' }}>Do not delay diagnostic scans. Call 112 for direct dispatch of regional rescue vehicles immediately.</p>
-         <button 
+         <a 
+            href="tel:112"
             className="btn btn-danger btn-lg" 
-            style={{ padding: '16px 48px', borderRadius: 100, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8 }}
-            onClick={() => window.open('tel:112', '_system')}
+            style={{ padding: '16px 48px', borderRadius: 100, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none', color: 'white' }}
           >
             ⚡ Trigger Emergency 112
-         </button>
+         </a>
       </footer>
     </div>
   );

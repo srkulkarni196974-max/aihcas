@@ -365,10 +365,9 @@ export default function ProfilePage() {
                   <div style={{ fontWeight: 800, color: 'var(--text-dark)', fontSize: '0.92rem' }}>{profile.emergencyContact}</div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: 2 }}>{profile.emergencyPhone}</div>
                 </div>
-                <button className="btn btn-secondary btn-sm" style={{ marginLeft: 'auto', borderRadius: 100, fontWeight: 700 }}
-                  onClick={() => window.open(`tel:${profile.emergencyPhone}`, '_system')}>
+                <a href={`tel:${profile.emergencyPhone}`} className="btn btn-secondary btn-sm" style={{ marginLeft: 'auto', borderRadius: 100, fontWeight: 700, textDecoration: 'none', color: 'inherit', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                   <PhoneCall className="w-3.5 h-3.5" /> Direct Call
-                </button>
+                </a>
               </div>
             )}
           </div>
