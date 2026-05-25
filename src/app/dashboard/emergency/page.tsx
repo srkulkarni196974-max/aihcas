@@ -32,6 +32,22 @@ const emergencyData = [
   { id: 14, name: 'Fortis Hospital', number: '080-66214444', type: 'Apex Hospital', city: 'Bangalore', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
   { id: 15, name: 'Apollo Hospitals', number: '044-28293333', type: 'Apex Hospital', city: 'Chennai', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
   { id: 16, name: 'AMRI Hospitals', number: '033-66800000', type: 'Apex Hospital', city: 'Kolkata', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 17, name: 'Apollo Hospitals (Hyderabad)', number: '040-23607777', type: 'Apex Hospital', city: 'Hyderabad', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 18, name: 'NIMS (Nizam\'s Institute of Medical Sciences)', number: '040-23378899', type: 'Government Speciality', city: 'Hyderabad', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 19, name: 'Ruby Hall Clinic', number: '020-66455100', type: 'Apex Hospital', city: 'Pune', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 20, name: 'Jehangir Hospital', number: '020-66050300', type: 'Apex Hospital', city: 'Pune', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 21, name: 'Civil Hospital Ahmedabad', number: '079-22683721', type: 'Government Apex', city: 'Ahmedabad', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 22, name: 'Shalby Hospital', number: '079-40203000', type: 'Orthopedic Speciality', city: 'Ahmedabad', icon: <Heart className="w-5 h-5 text-[#B38F5D]" /> },
+  { id: 23, name: 'Medanta The Medicity', number: '0124-4141414', type: 'Multi-Speciality Apex', city: 'Gurgaon', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 24, name: 'Fortis Memorial Research Institute', number: '0124-4962200', type: 'Apex Hospital', city: 'Gurgaon', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 25, name: 'Jaypee Hospital', number: '0120-4122222', type: 'Apex Hospital', city: 'Noida', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 26, name: 'Kailash Hospital', number: '0120-2444444', type: 'Apex Hospital', city: 'Noida', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 27, name: 'SMS Hospital (Sawai Man Singh)', number: '0141-2560291', type: 'Government Apex', city: 'Jaipur', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 28, name: 'Fortis Escorts Hospital', number: '0141-2547000', type: 'Apex Hospital', city: 'Jaipur', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 29, name: 'SGPGI Hospital (Sanjay Gandhi Postgraduate Institute)', number: '0522-2668700', type: 'Government Apex', city: 'Lucknow', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 30, name: 'Sahara Hospital', number: '0522-6780001', type: 'Apex Hospital', city: 'Lucknow', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 31, name: 'PGIMER Chandigarh', number: '0172-2756565', type: 'Government Apex', city: 'Chandigarh', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
+  { id: 32, name: 'Fortis Hospital Mohali', number: '0172-5021222', type: 'Apex Hospital', city: 'Chandigarh', icon: <Heart className="w-5 h-5 text-[#1E3A8A]" /> },
 ];
 
 export default function EmergencyPage() {
@@ -40,7 +56,8 @@ export default function EmergencyPage() {
 
   const filteredData = emergencyData.filter(e => {
     const matchesSearch = e.name.toLowerCase().includes(search.toLowerCase()) || 
-                          e.type.toLowerCase().includes(search.toLowerCase());
+                          e.type.toLowerCase().includes(search.toLowerCase()) ||
+                          e.city.toLowerCase().includes(search.toLowerCase());
     // Always show 'National' emergency numbers even when a specific city is selected
     const matchesCity = selectedCity === 'All' || e.city === selectedCity || e.city === 'National';
     return matchesSearch && matchesCity;
