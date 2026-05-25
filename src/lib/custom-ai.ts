@@ -126,18 +126,21 @@ async function classify(text: string): Promise<{ condition: Condition; score: nu
   }
 
   // TypeScript keyword matching fallback
-  const tokens = tokenize(text);
-  if (tokens.length === 0) return null;
+  const q = text.toLowerCase();
   let best: { condition: Condition; score: number } | null = null;
   for (const condition of CONDITIONS) {
     let score = 0;
-    const q = tokens.join(' ');
     for (const kw of condition.keywords) {
-      if (q.includes(kw.toLowerCase())) score += 2.0;
+      const kwLow = kw.toLowerCase();
+      const escapedKw = kwLow.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      const regex = new RegExp(`\\b${escapedKw}\\b`, 'i');
+      if (regex.test(q)) {
+        score += kwLow.length * 3;
+      }
     }
     if (score > (best?.score || 0)) best = { condition, score };
   }
-  return best && best.score > 0.05 ? best : null;
+  return best && best.score > 5 ? best : null;
 }
 
 function isEmergency(query: string): boolean {

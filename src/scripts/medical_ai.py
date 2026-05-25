@@ -13,7 +13,7 @@ CONDITIONS = [
     {
         "id": "stomach_pain",
         "name": "Stomach Pain / Gastric",
-        "keywords": ["stomach", "abdomen", "belly", "cramps", "nausea", "vomiting", "gastric", "acidity", "indigestion", "bloating", "gas", "lower abdomen", "upper abdomen"],
+        "keywords": ["stomach", "abdomen", "belly", "cramps", "nausea", "vomiting", "gastric", "acidity", "acid reflux", "gerd", "heartburn", "indigestion", "bloating", "gas", "lower abdomen", "upper abdomen"],
         "excludes": ["head", "chest", "back", "leg", "legs", "arm", "arms", "wrist", "wrists", "hand", "hands"]
     },
     {
@@ -1655,9 +1655,9 @@ CONDITIONS = [
             "underweight infant"
         ],
         "excludes": []
-    }
+    },
     {
-    "id": "pemphigus",
+        "id": "pemphigus",
     "name": "Pemphigus",
     "keywords": [
         "pemphigus", "skin blisters autoimmune",
@@ -2069,7 +2069,7 @@ CONDITIONS = [
         "heart inflammation strep"
     ],
     "excludes": []
-}
+},
 {
     "id": "pagets_disease_bone",
     "name": "Paget Disease of Bone",
@@ -2474,7 +2474,7 @@ CONDITIONS = [
         "swollen lymph nodes rash"
     ],
     "excludes": []
-}
+},
 {
     "id": "acute_respiratory_distress_syndrome",
     "name": "Acute Respiratory Distress Syndrome",
@@ -2899,9 +2899,10 @@ def classify_query(query):
         
         # 1. Direct Keyword Matching with Negation Check
         for kw in condition["keywords"]:
-            if kw in query:
+            match = re.search(r'\b' + re.escape(kw) + r'\b', query)
+            if match:
                 # Check if this keyword is negated
-                start_idx = query.find(kw)
+                start_idx = match.start()
                 prefix = query[max(0, start_idx-15):start_idx]
                 is_negated = any(neg in prefix for neg in negations)
                 
@@ -2913,12 +2914,12 @@ def classify_query(query):
         
         # 2. Body Part Context (High specificity)
         # If 'abdomen' is mentioned, it's almost certainly stomach_pain
-        if condition["id"] == "stomach_pain" and "abdomen" in query:
+        if condition["id"] == "stomach_pain" and re.search(r'\b' + re.escape("abdomen") + r'\b', query):
             score += 40
             
         # 3. Disambiguation (Excludes)
         for exclude in condition.get("excludes", []):
-            if exclude in query:
+            if re.search(r'\b' + re.escape(exclude) + r'\b', query):
                 score -= 100 
                 
         if score > max_score:

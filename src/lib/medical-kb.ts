@@ -221,7 +221,7 @@ Hypertension is India's #1 silent killer — 1 in 3 Indian adults is affected.
   {
     id: 'stomach_pain',
     name: 'Abdominal / Stomach Pain',
-    keywords: ['stomach pain','stomach ache','abdominal pain','belly pain','cramps','nausea','vomiting','gastric','acidity','acid reflux','indigestion','bloating','gas'],
+    keywords: ['stomach pain','stomach ache','abdominal pain','belly pain','cramps','nausea','vomiting','gastric','acidity','acid reflux','gerd','heartburn','indigestion','bloating','gas'],
     triage: 'self-care',
     response: `**Stomach / Abdominal Pain Assessment**
 
