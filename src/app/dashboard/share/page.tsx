@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Search, UserPlus, CheckCircle, Stethoscope, Building, MapPin,
@@ -32,6 +32,12 @@ export default function ShareDoctorPage() {
   const [chatMessages, setChatMessages] = useState<Msg[]>([]);
   const [chatInput, setChatInput] = useState('');
   const [sendingChat, setSendingChat] = useState(false);
+
+  // WebRTC Camera state
+  const [showCameraModal, setShowCameraModal] = useState(false);
+  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+  const [cameraError, setCameraError] = useState('');
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Share modal state
   const [showShareModal, setShowShareModal] = useState(false);
@@ -221,6 +227,80 @@ export default function ShareDoctorPage() {
       alert("Failed to send media.");
     } finally {
       setSendingChat(false);
+    }
+  };
+
+  const openAttachment = (url: string | null | undefined, type: string | null | undefined) => {
+    if (!url) return;
+    try {
+      if (url.startsWith('data:')) {
+        const parts = url.split(',');
+        const base64 = parts[1];
+        const mime = parts[0].split(';')[0].split(':')[1];
+        const binary = atob(base64);
+        const array = [];
+        for (let i = 0; i < binary.length; i++) {
+          array.push(binary.charCodeAt(i));
+        }
+        const blob = new Blob([new Uint8Array(array)], { type: type || mime });
+        const blobUrl = URL.createObjectURL(blob);
+        window.open(blobUrl, '_blank');
+      } else {
+        window.open(url, '_blank');
+      }
+    } catch (err) {
+      console.error("Error opening attachment:", err);
+      window.open(url, '_blank');
+    }
+  };
+
+  const handleOpenCamera = async () => {
+    setShowCameraModal(true);
+    setCameraError('');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user' }
+      });
+      setCameraStream(stream);
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      }, 100);
+    } catch (err: any) {
+      console.error("Camera access failed:", err);
+      setCameraError("Could not access camera. Falling back to file upload.");
+      setTimeout(() => {
+        document.getElementById('patient-camera-capture')?.click();
+        setShowCameraModal(false);
+      }, 1500);
+    }
+  };
+
+  const stopCamera = () => {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      setCameraStream(null);
+    }
+    setShowCameraModal(false);
+  };
+
+  const capturePhoto = () => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], `camera-capture-${Date.now()}.png`, { type: 'image/png' });
+          handleFileSelect(file);
+        }
+        stopCamera();
+      }, 'image/png');
     }
   };
 
@@ -459,11 +539,11 @@ export default function ShareDoctorPage() {
                         {m.attachment_url && (
                           <div style={{ marginBottom: m.message && m.message !== '[Image Attachment]' && m.message !== '[Document Attachment]' ? 8 : 0 }}>
                             {m.attachment_type?.startsWith('image/') ? (
-                              <img src={m.attachment_url} alt="Attachment" style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8, cursor: 'pointer' }} onClick={() => { if (m.attachment_url) window.open(m.attachment_url); }} />
+                              <img src={m.attachment_url} alt="Attachment" style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8, cursor: 'pointer' }} onClick={() => { if (m.attachment_url) openAttachment(m.attachment_url, m.attachment_type); }} />
                             ) : (
-                              <a href={m.attachment_url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 6, textDecoration: 'underline', color: m.sender_role === 'patient' ? '#A5F3FC' : '#1E3A8A' }}>
+                              <button onClick={() => { if (m.attachment_url) openAttachment(m.attachment_url, m.attachment_type); }} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, textDecoration: 'underline', color: m.sender_role === 'patient' ? '#A5F3FC' : '#1E3A8A', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'inherit' }}>
                                 <FileText className="w-4 h-4" /> View Document
-                              </a>
+                              </button>
                             )}
                           </div>
                         )}
@@ -482,7 +562,7 @@ export default function ShareDoctorPage() {
                   <button className="btn btn-secondary" onClick={() => document.getElementById('patient-media-upload')?.click()} style={{ borderRadius: '50%', width: 38, height: 38, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--border)' }} title="Send Media">
                     <Paperclip className="w-4 h-4" />
                   </button>
-                  <button className="btn btn-secondary" onClick={() => document.getElementById('patient-camera-capture')?.click()} style={{ borderRadius: '50%', width: 38, height: 38, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--border)' }} title="Open Camera">
+                  <button className="btn btn-secondary" onClick={handleOpenCamera} style={{ borderRadius: '50%', width: 38, height: 38, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, border: '1px solid var(--border)' }} title="Open Camera">
                     <Camera className="w-4 h-4" />
                   </button>
 
@@ -634,6 +714,43 @@ export default function ShareDoctorPage() {
                 </p>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ── CAMERA CAPTURE MODAL ─────────────────────────── */}
+      {showCameraModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.4)', backdropFilter: 'blur(8px)', zIndex: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
+          onClick={stopCamera}>
+          <div className="glass-card animate-fadeInUp" style={{ width: '100%', maxWidth: 500, padding: 20, background: 'white', border: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 16 }}
+            onClick={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <h3 style={{ fontWeight: 850, fontSize: '1.05rem', color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Camera className="w-4 h-4 text-[#1E3A8A]" /> Capture Photo
+              </h3>
+              <button onClick={stopCamera} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-light)' }}><X className="w-5 h-5" /></button>
+            </div>
+            
+            {cameraError ? (
+              <div style={{ padding: 12, background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.15)', borderRadius: 10, textAlign: 'center' }}>
+                <p style={{ fontSize: '0.8rem', color: '#DC2626', fontWeight: 700 }}>{cameraError}</p>
+              </div>
+            ) : (
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '4/3', background: '#000', borderRadius: 12, overflow: 'hidden' }}>
+                <video ref={videoRef} autoPlay playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+            )}
+            
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button className="btn btn-secondary" onClick={stopCamera} style={{ borderRadius: 100, paddingInline: 16, fontSize: '0.8rem' }}>
+                Cancel
+              </button>
+              {!cameraError && (
+                <button className="btn btn-primary" onClick={capturePhoto} style={{ borderRadius: 100, paddingInline: 20, fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <Camera className="w-4 h-4" /> Capture &amp; Send
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
