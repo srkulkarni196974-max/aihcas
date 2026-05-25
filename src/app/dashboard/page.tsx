@@ -258,7 +258,7 @@ export default function DashboardPage() {
           </div>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
-          <button className="btn btn-danger btn-sm" onClick={() => window.location.href = 'tel:112'} style={{ borderRadius: 100, fontWeight: 700 }}>
+          <button className="btn btn-danger btn-sm" onClick={() => window.open('tel:112', '_system')} style={{ borderRadius: 100, fontWeight: 700 }}>
             📞 Trigger Emergency 112
           </button>
           <Link href="/dashboard/emergency" className="btn btn-secondary btn-sm" style={{ borderRadius: 100, border: '1px solid var(--border)', fontWeight: 700 }}>

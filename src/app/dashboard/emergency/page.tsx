@@ -152,7 +152,7 @@ export default function EmergencyPage() {
                 <button 
                   className="btn btn-danger btn-icon" 
                   style={{ borderRadius: '50%', width: 42, height: 42, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0 }}
-                  onClick={() => window.location.href = `tel:${contact.number}`}
+                  onClick={() => window.open(`tel:${contact.number}`, '_system')}
                   title={`Dial ${contact.name}`}
                 >
                    <PhoneCall className="w-4 h-4 text-white" />
@@ -198,7 +198,7 @@ export default function EmergencyPage() {
          <button 
             className="btn btn-danger btn-lg" 
             style={{ padding: '16px 48px', borderRadius: 100, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 8 }}
-            onClick={() => window.location.href = `tel:112`}
+            onClick={() => window.open('tel:112', '_system')}
           >
             ⚡ Trigger Emergency 112
          </button>

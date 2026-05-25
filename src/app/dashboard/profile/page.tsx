@@ -366,7 +366,7 @@ export default function ProfilePage() {
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: 2 }}>{profile.emergencyPhone}</div>
                 </div>
                 <button className="btn btn-secondary btn-sm" style={{ marginLeft: 'auto', borderRadius: 100, fontWeight: 700 }}
-                  onClick={() => window.location.href = `tel:${profile.emergencyPhone}`}>
+                  onClick={() => window.open(`tel:${profile.emergencyPhone}`, '_system')}>
                   <PhoneCall className="w-3.5 h-3.5" /> Direct Call
                 </button>
               </div>
