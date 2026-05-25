@@ -16,7 +16,18 @@ export async function POST(req: NextRequest) {
     // Read the file into base64
     const imageBytes = await imageFile.arrayBuffer();
     const base64Image = Buffer.from(imageBytes).toString('base64');
-    const mimeType = imageFile.type as 'image/jpeg' | 'image/png' | 'image/webp';
+    
+    let mimeType = imageFile.type;
+    const SUPPORTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+    if (!mimeType || mimeType === 'application/octet-stream' || !SUPPORTED_MIMES.includes(mimeType)) {
+      const ext = imageFile.name?.split('.').pop()?.toLowerCase() || 'jpg';
+      if (ext === 'png') mimeType = 'image/png';
+      else if (ext === 'webp') mimeType = 'image/webp';
+      else if (ext === 'heic') mimeType = 'image/heic';
+      else if (ext === 'heif') mimeType = 'image/heif';
+      else mimeType = 'image/jpeg';
+    }
+    if (mimeType === 'image/jpg') mimeType = 'image/jpeg';
 
     // Use gemini-2.5-flash for vision analysis
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });

@@ -78,7 +78,16 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     // Create a temporary file with the correct extension
-    const ext = file.name.split('.').pop() || 'jpg';
+    let ext = 'jpg';
+    if (file.name && file.name.includes('.')) {
+      const parsedExt = file.name.split('.').pop()?.toLowerCase();
+      if (parsedExt) ext = parsedExt;
+    } else if (file.type) {
+      const mimeExt = file.type.split('/').pop()?.toLowerCase();
+      if (mimeExt) {
+        ext = mimeExt === 'jpeg' ? 'jpg' : mimeExt;
+      }
+    }
     const tempDir = os.tmpdir();
     tempFilePath = path.join(tempDir, `upload_${Date.now()}.${ext}`);
 
@@ -137,18 +146,16 @@ export async function POST(req: NextRequest) {
     let pythonError = typedResult.error || '';
 
     if (pythonError) {
-      if (pythonError.includes('Extraction Error') || pythonError.includes('OCR Error') || pythonError.includes('Tesseract')) {
-        extractedText = pythonError; 
-      } else {
-        throw new Error(pythonError);
-      }
+      extractedText = pythonError;
     }
 
     // ─── Cloud Fallback Logic ──────────────────────────────────────────────────
-    const isOCRError = extractedText.includes('tesseract is not installed') || 
+    const isOCRError = !!pythonError ||
+                       extractedText.includes('tesseract is not installed') || 
                        extractedText.includes('OCR Error') ||
                        extractedText.includes('Extraction Error') ||
-                       extractedText.length < 5;
+                       extractedText.includes('Unsupported file type') ||
+                       extractedText.trim().length < 15;
 
     if (isOCRError) {
       console.log(`[analyze-local] Local OCR failed for ${type}. Falling back to Gemini...`);
@@ -164,7 +171,18 @@ export async function POST(req: NextRequest) {
           ? "You are an expert clinical pharmacist. Analyze this prescription image and return a JSON object with medications, dosages, timings, duration, purpose, drugClass, warnings, and instructions. Return ONLY raw JSON."
           : "You are an expert clinical pathologist. Analyze this medical lab report image. Extract all parameters, values, units, and reference ranges. Return a JSON object with results (array), summary, risks, recommendations, alerts, and urgency. Return ONLY raw JSON.";
 
-        const mimeType = ext === 'pdf' ? 'application/pdf' : `image/${ext}`;
+        let mimeType = file.type || '';
+        const SUPPORTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
+        if (!mimeType || mimeType === 'application/octet-stream' || !SUPPORTED_MIMES.includes(mimeType)) {
+          const lowerExt = ext.toLowerCase();
+          if (lowerExt === 'pdf') mimeType = 'application/pdf';
+          else if (lowerExt === 'png') mimeType = 'image/png';
+          else if (lowerExt === 'webp') mimeType = 'image/webp';
+          else if (lowerExt === 'heic') mimeType = 'image/heic';
+          else if (lowerExt === 'heif') mimeType = 'image/heif';
+          else mimeType = 'image/jpeg';
+        }
+        if (mimeType === 'image/jpg') mimeType = 'image/jpeg';
 
         const geminiResult = await model.generateContent([
           prompt,

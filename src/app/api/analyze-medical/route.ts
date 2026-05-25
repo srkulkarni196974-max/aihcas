@@ -166,9 +166,18 @@ export async function POST(req: NextRequest) {
           const textPrompt = `${prompt}\n\nHere is the prescription text to analyze:\n\n${textOnly.trim()}`;
           result = await model.generateContent(textPrompt);
         } else if (file) {
-          const SUPPORTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+          const SUPPORTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
           let mimeType = file.type || 'image/jpeg';
-          if (!SUPPORTED_MIMES.includes(mimeType)) mimeType = 'image/jpeg';
+          if (mimeType === 'image/jpg') mimeType = 'image/jpeg';
+          if (!mimeType || mimeType === 'application/octet-stream' || !SUPPORTED_MIMES.includes(mimeType)) {
+            const ext = file.name?.split('.').pop()?.toLowerCase() || 'jpg';
+            if (ext === 'pdf') mimeType = 'application/pdf';
+            else if (ext === 'png') mimeType = 'image/png';
+            else if (ext === 'webp') mimeType = 'image/webp';
+            else if (ext === 'heic') mimeType = 'image/heic';
+            else if (ext === 'heif') mimeType = 'image/heif';
+            else mimeType = 'image/jpeg';
+          }
           
           const bytes = await file.arrayBuffer();
           const base64 = Buffer.from(bytes).toString('base64');
