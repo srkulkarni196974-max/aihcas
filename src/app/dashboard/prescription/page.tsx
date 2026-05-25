@@ -43,6 +43,65 @@ interface PrescriptionResult {
 
 type Stage = 'upload' | 'scanning' | 'parsed';
 
+const compressImage = (file: File): Promise<File> => {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith('image/')) {
+      resolve(file);
+      return;
+    }
+    if (file.size <= 1.5 * 1024 * 1024) {
+      resolve(file);
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const MAX_DIM = 1600;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            0.82
+          );
+        } else {
+          resolve(file);
+        }
+      };
+      img.onerror = () => resolve(file);
+    };
+    reader.onerror = () => resolve(file);
+  });
+};
+
 export default function PrescriptionPage() {
   const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -165,11 +224,17 @@ export default function PrescriptionPage() {
     }
   }, [manualText, user?.userId]);
 
-  const handleFile = useCallback((file: File) => {
+  const handleFile = useCallback(async (file: File) => {
     if (!file) return;
-    const url = URL.createObjectURL(file);
+    let fileToUpload = file;
+    try {
+      fileToUpload = await compressImage(file);
+    } catch (e) {
+      console.error("Compression failed, using original file:", e);
+    }
+    const url = URL.createObjectURL(fileToUpload);
     setPreviewUrl(url);
-    analyzeFile(file);
+    analyzeFile(fileToUpload);
   }, [analyzeFile]);
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {

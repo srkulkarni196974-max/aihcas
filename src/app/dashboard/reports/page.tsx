@@ -43,6 +43,65 @@ const urgencyConfig = {
   urgent:  { color: '#DC2626', bg: 'rgba(220, 38, 38, 0.05)', label: 'Urgent Medical Attention', icon: <ShieldAlert className="w-4 h-4 text-[#DC2626]" /> },
 };
 
+const compressImage = (file: File): Promise<File> => {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith('image/')) {
+      resolve(file);
+      return;
+    }
+    if (file.size <= 1.5 * 1024 * 1024) {
+      resolve(file);
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const MAX_DIM = 1600;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            0.82
+          );
+        } else {
+          resolve(file);
+        }
+      };
+      img.onerror = () => resolve(file);
+    };
+    reader.onerror = () => resolve(file);
+  });
+};
+
 export default function ReportsPage() {
   const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -110,22 +169,34 @@ export default function ReportsPage() {
     }
   }, [user?.userId]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const url = URL.createObjectURL(file);
+    let fileToUpload = file;
+    try {
+      fileToUpload = await compressImage(file);
+    } catch (err) {
+      console.error("Compression failed:", err);
+    }
+    const url = URL.createObjectURL(fileToUpload);
     setPreviewUrl(url);
-    analyzeFile(file);
+    analyzeFile(fileToUpload);
   };
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
     const file = e.dataTransfer.files?.[0];
     if (!file) return;
     if (file.type.startsWith('image/') || file.type === 'application/pdf') {
-      const url = URL.createObjectURL(file);
+      let fileToUpload = file;
+      try {
+        fileToUpload = await compressImage(file);
+      } catch (err) {
+        console.error("Compression failed:", err);
+      }
+      const url = URL.createObjectURL(fileToUpload);
       setPreviewUrl(url);
-      analyzeFile(file);
+      analyzeFile(fileToUpload);
     }
   };
 
