@@ -369,49 +369,10 @@ export default function ReportsPage() {
               </div>
             </div>
           )}
-          {/* Critical Alerts */}
-          {analysisResult.alerts && analysisResult.alerts.length > 0 && (
-            <div style={{ padding: '16px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262625', display: 'flex', gap: 12, alignItems: 'flex-start', textAlign: 'left' }}>
-              <ShieldAlert className="w-5 h-5 text-[#DC2626] flex-shrink-0" />
-              <div>
-                <p style={{ fontWeight: 800, color: '#DC2626', fontSize: '0.9rem', marginBottom: 4 }}>Out-of-Range Critical Values</p>
-                <ul style={{ paddingLeft: 16, fontSize: '0.82rem', color: '#DC2626', lineHeight: 1.6, listStyleType: 'disc' }}>
-                  {analysisResult.alerts.map((a, i) => <li key={i}>{a}</li>)}
-                </ul>
-              </div>
-            </div>
-          )}
 
-          {/* Quick Metrics Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 16 }}>
-            {[
-              { icon: <ShieldAlert className="w-5 h-5 text-[#DC2626]" />, label: 'High Markers', val: analysisResult.results.filter(r => r.status === 'high').length, c: '#DC2626' },
-              { icon: <AlertTriangle className="w-5 h-5 text-[#D97706]" />, label: 'Low Markers', val: analysisResult.results.filter(r => r.status === 'low').length, c: '#D97706' },
-              { icon: <CheckCircle className="w-5 h-5 text-[#0D9488]" />, label: 'Normal Ranges', val: analysisResult.results.filter(r => r.status === 'normal').length, c: '#0D9488' },
-              { icon: <Layers className="w-5 h-5 text-[#1E3A8A]" />, label: 'Total Parameters', val: analysisResult.results.length, c: '#1E3A8A' },
-            ].map((item, i) => (
-              <div key={i} className="glass-card" style={{ padding: '20px', background: 'white', border: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-                <div style={{ width: 38, height: 38, borderRadius: '10px', background: 'white', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {item.icon}
-                </div>
-                <div style={{ fontSize: '1.4rem', fontWeight: 850, color: item.c }}>{item.val}</div>
-                <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.02em' }}>{item.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Urgency follow-up bar */}
-          <div style={{ padding: '14px 24px', borderRadius: 16, background: urgency.bg, border: `1px solid ${urgency.color}25`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-            <span style={{ fontWeight: 800, color: urgency.color, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-              {urgency.icon}
-              {urgency.label}
-            </span>
-            <button className="btn btn-secondary btn-sm" onClick={reset} style={{ borderRadius: 100, fontWeight: 700, border: '1px solid var(--border)' }}>↩ Scan Another Report</button>
-          </div>
-
-          {/* Grouped findings */}
+          {/* Grouped findings (Pathology Findings Overview displayed below the review layout) */}
           {analysisResult.results.length > 0 ? (
-            <div className="glass-card" style={{ padding: 28, background: 'white', border: '1.5px solid var(--border)' }}>
+            <div className="glass-card animate-fadeInUp" style={{ padding: 28, background: 'white', border: '1.5px solid var(--border)' }}>
               <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-dark)', marginBottom: 24, textAlign: 'left' }}>📋 Pathology Findings Overview</h3>
 
               {Object.entries(groupedResults).map(([category, tests]) => (
@@ -451,7 +412,7 @@ export default function ReportsPage() {
                               </span>
                             </div>
                           </div>
-                          {previewUrl && test.bounding_box && (
+                          {previewUrl && fileType !== 'application/pdf' && test.bounding_box && (
                             <div style={{ width: '100%', marginTop: 12, paddingLeft: 8 }}>
                               <ImageSnippet imageSrc={previewUrl} boundingBox={test.bounding_box} altTextText={`Snippet for ${test.name}`} />
                             </div>
@@ -464,7 +425,7 @@ export default function ReportsPage() {
               ))}
             </div>
           ) : (
-            <div className="glass-card" style={{ padding: 40, textAlign: 'center', background: 'white', border: '1.5px solid var(--border)' }}>
+            <div className="glass-card animate-fadeInUp" style={{ padding: 40, textAlign: 'center', background: 'white', border: '1.5px solid var(--border)' }}>
               <div style={{ width: 50, height: 50, borderRadius: '50%', background: 'rgba(220, 38, 38, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                 <AlertTriangle className="w-5 h-5 text-[#DC2626]" />
               </div>
@@ -477,6 +438,46 @@ export default function ReportsPage() {
               </button>
             </div>
           )}
+
+          {/* Critical Alerts */}
+          {analysisResult.alerts && analysisResult.alerts.length > 0 && (
+            <div style={{ padding: '16px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262625', display: 'flex', gap: 12, alignItems: 'flex-start', textAlign: 'left' }}>
+              <ShieldAlert className="w-5 h-5 text-[#DC2626] flex-shrink-0" />
+              <div>
+                <p style={{ fontWeight: 800, color: '#DC2626', fontSize: '0.9rem', marginBottom: 4 }}>Out-of-Range Critical Values</p>
+                <ul style={{ paddingLeft: 16, fontSize: '0.82rem', color: '#DC2626', lineHeight: 1.6, listStyleType: 'disc' }}>
+                  {analysisResult.alerts.map((a, i) => <li key={i}>{a}</li>)}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Quick Metrics Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 16 }}>
+            {[
+              { icon: <ShieldAlert className="w-5 h-5 text-[#DC2626]" />, label: 'High Markers', val: analysisResult.results.filter(r => r.status === 'high').length, c: '#DC2626' },
+              { icon: <AlertTriangle className="w-5 h-5 text-[#D97706]" />, label: 'Low Markers', val: analysisResult.results.filter(r => r.status === 'low').length, c: '#D97706' },
+              { icon: <CheckCircle className="w-5 h-5 text-[#0D9488]" />, label: 'Normal Ranges', val: analysisResult.results.filter(r => r.status === 'normal').length, c: '#0D9488' },
+              { icon: <Layers className="w-5 h-5 text-[#1E3A8A]" />, label: 'Total Parameters', val: analysisResult.results.length, c: '#1E3A8A' },
+            ].map((item, i) => (
+              <div key={i} className="glass-card" style={{ padding: '20px', background: 'white', border: '1.5px solid var(--border)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 38, height: 38, borderRadius: '10px', background: 'white', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {item.icon}
+                </div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 850, color: item.c }}>{item.val}</div>
+                <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.02em' }}>{item.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Urgency follow-up bar */}
+          <div style={{ padding: '14px 24px', borderRadius: 16, background: urgency.bg, border: `1px solid ${urgency.color}25`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+            <span style={{ fontWeight: 800, color: urgency.color, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+              {urgency.icon}
+              {urgency.label}
+            </span>
+            <button className="btn btn-secondary btn-sm" onClick={reset} style={{ borderRadius: 100, fontWeight: 700, border: '1px solid var(--border)' }}>↩ Scan Another Report</button>
+          </div>
 
           {/* AI/OCR Summary */}
           <div className="glass-card" style={{ padding: 28, background: 'rgba(179,143,93,0.03)', border: '1px solid rgba(179,143,93,0.12)', borderRadius: 20 }}>
