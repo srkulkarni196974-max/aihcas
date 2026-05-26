@@ -1,0 +1,291 @@
+Name :    Mr R S Kulkarni(58Y/M)
+Date :    10 Apr, 2026
+Test Asked :    Aarogyam B Pro With Utsh
+Report Status :    Complete Report
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+Patient Name            :  MR R S KULKARNI (58Y/M)  AAROGYAM B PRO WITH UTSH Tests Done         :
+Referred By               :  MR JAGADISH NAYAK
+Address                     :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR GERMAN  HOSPITAL CIRCLE,MAHANTESH NAGAR,NARAYANAPURA  DHARAWAD,580008
+Report Availability Summary
+Note: Please refer to the table below for status of your tests.
+9 Ready 0 Ready with Cancellation 0 Processing 0 Cancelled in Lab
+TEST DETAILS REPORT STATUS
+AAROGYAM B PRO WITH UTSH Ready
+CHLORIDE Ready
+SODIUM Ready
+HBA PROFILE Ready
+HEMOGRAM - 6 PART (DIFF) Ready
+LIVER FUNCTION TESTS Ready
+IRON DEFICIENCY PROFILE Ready
+KIDPRO Ready
+LIPID PROFILE Ready
+T3-T4-USTSH Ready
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+Patient Name            :  MR R S KULKARNI (58Y/M)  AAROGYAM B PRO WITH UTSH Tests Done         :
+Referred By               :  MR JAGADISH NAYAK
+Address                     :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR GERMAN  HOSPITAL CIRCLE,MAHANTESH NAGAR,NARAYANAPURA  DHARAWAD,580008
+Tests Outside Reference Range
+Note: Please refer to the table below for tests outside reference range.
+Test Name Observed Value Units Bio. Ref. Interval.
+COMPLETE HEMOGRAM
+28.7 MEAN CORP.HEMO.CONC(MCHC) 31.5-34.5 g/dL
+25.8 MEAN CORPUSCULAR HEMOGLOBIN(MCH) 27.0-32.0 pq
+12.1 MEAN PLATELET VOLUME(MPV) 6.5-12 fL
+17.2 PLATELET DISTRIBUTION WIDTH(PDW) 9.6-15.2 fL
+43.3 PLATELET TO LARGE CELL RATIO(PLCR) 19.7-42.4 %
+16.1 RED CELL DISTRIBUTION WIDTH (RDW-CV) 11.6-14 %
+53.1 RED CELL DISTRIBUTION WIDTH - SD(RDW-SD) 39-46 fL
+DIABETES
+203 AVERAGE BLOOD GLUCOSE (ABG) 90-120 mg/dL
+8.7 HbA1c < 5.7 %
+IRON DEFICIENCY
+393.03 UNSAT.IRON-BINDING CAPACITY(UIBC) 162 - 368 µg/dL
+LIPID
+0.33 HDL / LDL RATIO > 0.40 Ratio
+28 HDL CHOLESTEROL - DIRECT 40-60 mg/dL
+6.5 TC/ HDL CHOLESTEROL RATIO 3 - 5 Ratio
+16.32 TRIG / HDL RATIO < 3.12 Ratio
+457 TRIGLYCERIDES < 150 mg/dL
+91.42 VLDL CHOLESTEROL 5 - 40 mg/dL
+LIVER
+3.42 SERUM GLOBULIN 2.5-3.4 gm/dL
+RENAL
+3.94 URIC ACID 4.2 - 7.3 mg/dL
+Disclaimer: The above listed is the summary of the  parameters with values outside the BRI. For detailed report values, parameter correlation and clinical  interpretation, kindly refer to the same in subsequent pages.
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:51
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:42
+Sample Type | Barcode  :  SERUM | FH606310
+TEST NAME TECHNOLOGY VALUE UNITS
+µg/dL 72.32 PHOTOMETRY IRON
+Bio. Ref. Interval. :
+Male : 65 - 175 Female : 50 - 170
+Ferrozine method without deproteinization Method :
+µg/dL 465.35 PHOTOMETRY TOTAL IRON BINDING CAPACITY (TIBC)
+Male: 225 - 535 µg/dl  Female: 215 - 535 µg/dl Bio. Ref. Interval. :
+Spectrophotometric Assay Method :
+% 15.54 CALCULATED % TRANSFERRIN SATURATION
+13 - 45 Bio. Ref. Interval. :
+Derived from IRON and TIBC values Method :
+µg/dL 393.03 PHOTOMETRY UNSAT.IRON-BINDING  CAPACITY(UIBC)
+162 - 368 Bio. Ref. Interval. :
+SPECTROPHOTOMETRIC ASSAY Method :
+Please correlate with clinical conditions.
+AAROGYAM B PRO WITH UTSH Tests Done :
+Report Remarks :  Labcode:1004129327/KAR05  Scan QR to verify(valid for  30 days from release time) Dr.Anuswaru MBBS,MD
+(Biochem)
+Page : 1 of 8
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:51
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:42
+Sample Type | Barcode  :  SERUM | FH606310
+TEST NAME TECHNOLOGY VALUE UNITS Bio. Ref. Interval
+< 200 mg/dL  182 PHOTOMETRY TOTAL CHOLESTEROL
+40-60 mg/dL  28 PHOTOMETRY HDL CHOLESTEROL - DIRECT
+> 0.40 Ratio  0.33 CALCULATED HDL / LDL RATIO
+< 100 mg/dL  86 PHOTOMETRY LDL CHOLESTEROL - DIRECT
+< 3.12 Ratio  16.32 CALCULATED TRIG / HDL RATIO
+< 150 mg/dL  457 PHOTOMETRY TRIGLYCERIDES
+3 - 5 Ratio  6.5 CALCULATED TC/ HDL CHOLESTEROL RATIO
+1.5-3.5 Ratio  3.1 CALCULATED LDL / HDL RATIO
+< 160 mg/dL  154.1 CALCULATED NON-HDL CHOLESTEROL
+5 - 40 mg/dL  91.42 CALCULATED VLDL CHOLESTEROL
+Please correlate with clinical conditions.
+Method :
+CHOL - Cholesterol Oxidase, Esterase, Peroxidase HCHO - Direct Enzymatic Colorimetric HD/LD - Derived from HDL and LDL values. LDL - Direct Measure TRI/H - Derived from TRIG and HDL Values TRIG - Enzymatic, End Point TC/H - Derived from serum Cholesterol and Hdl values LDL/ - Derived from serum HDL and LDL Values NHDL - Derived from serum Cholesterol and HDL values VLDL - Derived from serum Triglyceride values
+*REFERENCE RANGES AS PER NCEP ATP III GUIDELINES:
+TOTAL CHOLESTEROL  (mg/dl) TRIGLYCERIDES    (mg/dl) LDL                           (mg/dl) HDL            (mg/dl)
+<150 NORMAL                    <100 OPTIMAL                     <40 LOW           <200 DESIRABLE
+150-199 BORDERLINE HIGH     100-129 NEAR OPTIMAL           >60 HIGH          200-239 BORDERLINE HIGH
+>190 VERY HIGH                  >500 VERY HIGH                  160-189 HIGH                          200-499 HIGH                         130-159 BORDERLINE HIGH    >240 HIGH
+Alert !!! 10-12 hours fasting is mandatory for lipid parameters. If not, values might fluctuate.
+AAROGYAM B PRO WITH UTSH Tests Done :
+Report Remarks :  Labcode:1004129327/KAR05
+Dr.Anuswaru MBBS,MD
+(Biochem)
+Page : 2 of 8
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:51
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:42
+Sample Type | Barcode  :  SERUM | FH606310
+TEST NAME TECHNOLOGY VALUE UNITS Bio. Ref. Interval
+45-129 U/L  69.13 PHOTOMETRY ALKALINE PHOSPHATASE
+0.3-1.2 mg/dL  0.79 PHOTOMETRY BILIRUBIN - TOTAL
+0 - 0.20 mg/dL  0.09 PHOTOMETRY BILIRUBIN -DIRECT
+0-0.9 mg/dL  0.7 CALCULATED BILIRUBIN (INDIRECT)
+< 55 U/L  25.4 PHOTOMETRY GAMMA GLUTAMYL TRANSFERASE (GGT)
+< 2 Ratio  0.88 CALCULATED SGOT / SGPT RATIO
+< 35 U/L  21.6 PHOTOMETRY ASPARTATE AMINOTRANSFERASE (SGOT )
+< 45 U/L  24.6 PHOTOMETRY ALANINE TRANSAMINASE (SGPT)
+5.7-8.2 gm/dL  7.81 PHOTOMETRY PROTEIN - TOTAL
+3.2-4.8 gm/dL  4.39 PHOTOMETRY ALBUMIN - SERUM
+2.5-3.4 gm/dL  3.42 CALCULATED SERUM GLOBULIN
+0.9 - 2 Ratio  1.28 CALCULATED SERUM ALB/GLOBULIN RATIO
+Please correlate with clinical conditions.
+Method :
+ALKP - Modified IFCC method BILT - Diazonium salt DPD method BILD - Diazonium salt DPD method BILI - Derived from serum Total and Direct Bilirubin values GGT - Modified IFCC method OT/PT - Derived from SGOT and SGPT values. SGOT - IFCC* Without Pyridoxal Phosphate Activation SGPT - IFCC* Without Pyridoxal Phosphate Activation PROT -   Biuret Method SALB - Albumin Bcg¹method (Colorimetric Assay Endpoint) SEGB - DERIVED FROM SERUM ALBUMIN AND PROTEIN VALUES A/GR - Derived from serum Albumin and Protein values
+AAROGYAM B PRO WITH UTSH Tests Done :
+Report Remarks :  Labcode:1004129327/KAR05
+Dr.Anuswaru MBBS,MD
+(Biochem)
+Page : 3 of 8
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:51
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:42
+Sample Type | Barcode  :  SERUM | FH606310
+TEST NAME TECHNOLOGY VALUE UNITS Bio. Ref. Interval
+7.94 - 20.07 mg/dL  10.1 PHOTOMETRY BLOOD UREA NITROGEN (BUN)
+Adult : 17-43 mg/dL  21.61 CALCULATED UREA (CALCULATED)
+0.72-1.18 mg/dL  0.84 PHOTOMETRY CREATININE - SERUM
+< 52 Ratio  25.73 CALCULATED UREA / SR.CREATININE RATIO
+9:1-23:1 Ratio  12.02 CALCULATED BUN / SR.CREATININE RATIO
+8.8-10.6 mg/dL  9.75 PHOTOMETRY CALCIUM
+4.2 - 7.3 mg/dL  3.94 PHOTOMETRY URIC ACID
+136 - 145 mmol/L  137.77 I.S.E - INDIRECT SODIUM
+98 - 107 mmol/L  102.21 I.S.E - INDIRECT CHLORIDE
+Please correlate with clinical conditions.
+Method :
+BUN - Kinetic UV Assay. UREAC - Derived from BUN Value. SCRE - Creatinine Enzymatic Method UR/CR - Derived from UREA and Sr.Creatinine values. B/CR - Derived from serum Bun and Creatinine values CALC - Arsenazo III Method, End Point. URIC - Uricase / Peroxidase Method SOD - ION SELECTIVE ELECTRODE - INDIRECT CHL - ION SELECTIVE ELECTRODE - INDIRECT
+AAROGYAM B PRO WITH UTSH Tests Done :
+Report Remarks :  Labcode:1004129327/KAR05
+Dr.Anuswaru MBBS,MD
+(Biochem)
+Page : 4 of 8
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:51
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:42
+Sample Type | Barcode  :  SERUM | FH606310
+TEST NAME TECHNOLOGY  VALUE UNITS Bio. Ref. Interval.
+80-200 ng/dL 87 E.C.L.I.A TOTAL TRIIODOTHYRONINE (T3)
+4.8-12.7 µg/dL 7.03 E.C.L.I.A TOTAL THYROXINE (T4)
+0.54-5.30 µIU/mL 3.33 E.C.L.I.A TSH - ULTRASENSITIVE
+Comments :
+The Biological Reference Ranges is specific to the age group. Kindly correlate clinically.
+Method :
+T3,T4 - Fully Automated Electrochemiluminescence Compititive Immunoassay USTSH - Fully Automated Electrochemiluminescence Sandwich Immunoassay
+Disclaimer :Results should always be interpreted using the reference range provided by the laboratory that  performed the test. Different laboratories do tests using different technologies, methods and using different  reagents which may cause difference. In reference ranges and hence it is recommended to interpret result with  assay specific reference ranges provided in the reports. To diagnose and monitor therapy doses, it is recommended  to get tested every time at the same Laboratory.
+AAROGYAM B PRO WITH UTSH Tests Done :
+Report Remarks :  Labcode:1004129327/KAR05
+Dr.Anuswaru MBBS,MD
+(Biochem)
+Page : 5 of 8
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:51
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:42
+Sample Type | Barcode  :  SERUM | FH606310
+TEST NAME UNITS VALUE TECHNOLOGY
+mL/min/1.73 m2 101 Bio. Ref. Interval. :- EST. GLOMERULAR FILTRATION RATE (eGFR) CALCULATED
+>  =  90 : Normal 60 - 89 : Mild Decrease 45 - 59  : Mild to Moderate Decrease 30 - 44 : Moderate to Severe Decrease   15 - 29 : Severe Decrease     <15   : Kidney Failure
+Clinical Significance
+The normal serum creatinine reference interval does not necessarily reflect a normal GFR for a patient. Because mild and moderate kidney injury is poorly inferred from serum creatinine alone. Thus, it is recommended for clinical laboratories to routinely estimate glomerular filtration rate (eGFR), a “gold standard” measurement for assessment of renal function, and report the value when serum creatinine is measured for patients 18 and older, when appropriate and feasible. It cannot be measured easily in clinical practice, instead, GFR is estimated from equations using serum creatinine, age, race and sex. This provides easy to interpret information for the doctor and patient on the degree of renal impairment since it approximately equates to the percentage of kidney function remaining. Application of CKD-EPI equation together with the other diagnostic tools in renal medicine will further improve the detection and management of patients with CKD.
+Reference
+Levey AS, Stevens LA, Schmid CH, Zhang YL, Castro AF, 3rd, Feldman HI, et al. A new equation to estimate glomerular filtration rate. Ann Intern Med. 2009;150(9):604-12.
+Please correlate with clinical conditions. Method:- 2021 CKD EPI Creatinine Equation
+AAROGYAM B PRO WITH UTSH Tests Done :
+Report Remarks :  Labcode:1004129327/KAR05
+Dr.Anuswaru MBBS,MD
+(Biochem)
+Page : 6 of 8
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:52
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:57
+Sample Type | Barcode  :  EDTA Whole Blood | EQ432203
+TEST NAME TECHNOLOGY VALUE UNITS
+% 8.7 H.P.L.C HbA1c
+Bio. Ref. Interval. :
+As per ADA Guidelines  Guidance For Known Diabetics
+Below 5.7%   : Normal 5.7% - 6.4% : Prediabetic >=6.5%        : Diabetic  Below 6.5% : Good Control 6.5% - 7%  : Fair Control 7.0% - 8%  : Unsatisfactory Control >8%          : Poor Control
+Fully Automated H.P.L.C method Method :
+mg/dL 203 CALCULATED AVERAGE BLOOD GLUCOSE (ABG)
+Bio. Ref. Interval. :
+90 - 120 mg/dl   : Good Control 121 - 150 mg/dl : Fair Control 151 - 180 mg/dl : Unsatisfactory Control > 180 mg/dl      : Poor Control
+Derived from HBA1c  values Method :
+Please correlate with clinical conditions.
+HBA PROFILE,HEMOGRAM Tests Done :
+Report Remarks :  Labcode:1004129464/KAR05
+Dr.Anuswaru MBBS,MD
+(Biochem)
+Page : 7 of 8
+Processed At :
+5CA-711, 3rd Floor, HRBR 2nd
+Block, Hennur, Bengaluru-560043
+MR R S KULKARNI (58Y/M) Patient Name  :  Sample Collected on (SCT)  :  10 Apr 2026 11:24
+MR JAGADISH NAYAK Referred By  :  Sample Received on (SRT)  :  11 Apr 2026 00:52
+Address  :  (5800082028),WELLNESS DIAGNOSTIC LABORATORY,NEAR  GERMAN HOSPITAL CIRCLE,MAHANTESH  NAGAR,NARAYANAPURA DHARAWAD,580008  Report  Released on (RRT)  :  11 Apr 2026 04:57
+Sample Type | Barcode  :  EDTA Whole Blood | EQ432203
+TEST NAME VALUE UNITS Bio. Ref. Interval. METHODOLOGY
+g/dL  13.5 13.0-17.0 HEMOGLOBIN SLS-Hemoglobin Method
+%  47 40.0-50.0 Hematocrit (PCV) CPH Detection
+X 10^6/µL  5.23 4.5-5.5 Total RBC HF & EI
+fL  89.9 83.0-101.0 Mean Corpuscular Volume (MCV) Calculated
+pq  25.8 27.0-32.0 Mean Corpuscular Hemoglobin (MCH) Calculated
+g/dL  28.7 31.5-34.5 Mean Corp.Hemo. Conc (MCHC) Calculated
+fL  53.1 39-46 Red Cell Distribution Width - SD (RDW-SD) Calculated
+%  16.1 11.6-14 Red Cell Distribution Width (RDW - CV) Calculated
+-  276.7 *Refer Note below RED CELL DISTRIBUTION WIDTH INDEX (RDWI) Calculated
+-  17.2 *Refer Note below MENTZER INDEX Calculated
+X 10³ / µL  6.12 4.0 - 10.0 TOTAL LEUCOCYTE COUNT (WBC) HF & FC DIFFERENTIAL LEUCOCYTE COUNT
+%  65 40-80 Neutrophils Percentage Flow Cytometry
+%  26.5 20-40 Lymphocytes Percentage Flow Cytometry
+%  3.9 2-10 Monocytes Percentage Flow Cytometry
+%  3.8 1-6 Eosinophils Percentage Flow Cytometry
+%  0.5 0-2 Basophils Percentage Flow Cytometry
+%  0.3 0-0.5 Immature Granulocyte Percentage (IG%) Flow Cytometry
+%  0.01 0.0-5.0 Nucleated Red Blood Cells % Flow Cytometry ABSOLUTE LEUCOCYTE COUNT
+X 10³ / µL  3.98 2.0-7.0 Neutrophils - Absolute Count Calculated
+X 10³ / µL  1.62 1.0-3.0 Lymphocytes - Absolute Count Calculated
+X 10³ / µL  0.24 0.2 - 1.0 Monocytes - Absolute Count Calculated
+X 10³ / µL  0.03 0.02 - 0.1 Basophils - Absolute Count Calculated
+X 10³ / µL  0.23 0.02 - 0.5 Eosinophils - Absolute Count Calculated
+X 10³ / µL  0.02 0-0.3 Immature Granulocytes (IG) Calculated
+X 10³ / µL  0.01 0.0-0.5 Nucleated Red Blood Cells Calculated
+X 10³ / µL  244 150-410 PLATELET COUNT HF & EI
+fL  12.1 6.5-12 Mean Platelet Volume (MPV) Calculated
+fL  17.2 9.6-15.2 Platelet Distribution Width (PDW) Calculated
+%  43.3 19.7-42.4 Platelet to Large Cell Ratio (PLCR) Calculated
+%  0.29 0.19-0.39 Plateletcrit (PCT) Calculated
+Alert!!!  RBCs:Mild anisopoikilocytosis. Predominantly normocytic normochromic with ovalocytes.  Platelets:Appear adequate in smear. Remarks :
+*Note - Mentzer index (MI), RDW-CV and RDWI are hematological indices to differentiate between Iron Deficiency Anemia (IDA) and Beta Thalassemia Trait (BTT). MI >13, RDWI
+>220 and RDW-CV >14 more likely to be IDA. MI <13, RDWI <220, and RDW-CV <14 more likely to be BTT. Suggested Clinical correlation. BTT to be confirmed with HB
+electrophoresis if clinically indicated.
+Method : Fully automated bidirectional analyser (6 Part Differential SYSMEX XN-1000)
+(Reference : *FC- flowcytometry, *HF- hydrodynamic focussing, *EI- Electric Impedence, *Hb- hemoglobin, *CPH- Cumulative pulse height)
+~~ End of report ~~
+HBA PROFILE,HEMOGRAM Tests Done :
+Report Remarks :  Labcode:1004129464/KAR05
+Scan QR to verify(valid for  30 days from release time) Dr Syeda Sumaiya
+MD(Path)
+Page : 8 of 8
+CONDITIONS OF REPORTING
+v  The reported results are for information and interpretation of the referring doctor only.  v  It is presumed that the tests performed on the specimen belong to the patient; named or identified.  v  Results of tests may vary from laboratory to laboratory and also in some parameters from time to time for the same  patient.  v  Should the results indicate an unexpected abnormality, the same should be reconfirmed.  v  Only such medical professionals who understand reporting units, reference ranges and limitations of technologies  should interpret results.  v  This report is not valid for medico-legal purpose.  v  Neither Thyrocare, nor its employees/representatives assume: (a) any liability, responsibility for any loss or damage  that may be incurred by any person as a result of presuming the meaning or contents of the report, (b) any claims  of any nature whatsoever arising from or relating to the performance of the requested tests as well as any claim for  indirect, incidental or consequential damages. The total liability, in any case, of Thyrocare shall not exceed the  total amount of invoice for the services provided and paid for.   v   Thyrocare Discovery video link :- https://youtu.be/nbdYeRgYyQc
+EXPLANATIONS
+v  Majority of the specimen processed in the laboratory are collected by Pathologists and Hospitals we call them   as "Clients".   v  Name - The name is as declared by the client and recored by the personnel who collected the specimen.   v  Ref.Dr - The name of the doctor who has recommended testing as declared by the client.   v  Labcode - This is the accession number in our laboratory and it helps us in archiving and retrieving the data.   v  Barcode - This is the specimen identity number and it states that the results are for the specimen bearing   the barcode (irrespective  of the name).   v  SCP - Specimen Collection Point - This is the location where the blood or specimen was collected as declared by   the client.   v  SCT - Specimen Collection Time - The time when specimen was collected as declared by the client.   v  SRT - Specimen Receiving Time - This time when the specimen reached our laboratory.   v  RRT - Report Releasing Time - The time when our pathologist has released the values for Reporting.   v  Reference Range - Means the range of values in which 95% of the normal population would fall.
+SUGGESTIONS         v  Values out of reference range requires reconfirmation before starting any medical treatment.  v  Retesting is needed if you suspect any quality shortcomings.  v  Testing or retesting should be done in accredited laboratories.  v  For suggestions, complaints, clinical support or feedback, write to us at customersupport@thyrocare.com    or call us on 022-3090 0000
++  T&C Apply, #As on 5th December 2024 (Applicable for all company owned labs except Bhagalpur & Vijayawada),  As per survey on doctors’ perception of laboratory diagnostics (IJARIIT, 2023), -Mumbai Reference Lab is CAP Accredited
+*
+Page : 3 of 3

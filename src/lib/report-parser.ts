@@ -34,6 +34,7 @@ interface ParameterInfo {
     high: string;
     normal: string;
   };
+  exclude?: RegExp[];
 }
 
 const LAB_PARAMETERS: ParameterInfo[] = [
@@ -41,38 +42,41 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Hemoglobin',
     category: 'CBC',
-    regex: [/hemoglobin/i, /hgb/i, /hb\b/i],
+    regex: [/hemoglobin/i, /\bhgb\b/i, /\bhb\b/i],
     unit: 'g/dL',
     range: [12.0, 16.5],
     meanings: {
       low: 'Indicates potential anemia, iron deficiency, or blood loss.',
       high: 'Could be due to dehydration, smoking, or living at high altitudes.',
       normal: 'Healthy red blood cell oxygen-carrying capacity.'
-    }
+    },
+    exclude: [/\bmch\b/i, /\bmchc\b/i, /mean corpuscular/i, /corpuscular/i]
   },
   {
     name: 'WBC Count',
     category: 'CBC',
-    regex: [/wbc/i, /white blood cell/i, /leukocyte/i],
+    regex: [/\bwbc\b/i, /white blood cell/i, /leukocyte/i],
     unit: 'cells/mm³',
     range: [4000, 11000],
     meanings: {
       low: 'Risk of infection, potentially due to medication or bone marrow issues.',
       high: 'Sign of infection, inflammation, or physical stress.',
       normal: 'Healthy immune system response capability.'
-    }
+    },
+    exclude: [/absolute/i, /percentage/i, /\bneut/i, /\blymph/i, /\bmono/i, /\beos/i, /\bbaso/i]
   },
   {
     name: 'Platelet Count',
     category: 'CBC',
-    regex: [/platelet/i, /plt/i, /thrombocyte/i],
+    regex: [/platelet/i, /\bplt\b/i, /thrombocyte/i],
     unit: 'lakhs/mm³',
     range: [1.5, 4.5],
     meanings: {
       low: 'Risk of bruising or bleeding (Thrombocytopenia). Common in Dengue.',
       high: 'Risk of blood clots (Thrombocytosis).',
       normal: 'Healthy blood clotting function.'
-    }
+    },
+    exclude: [/volume/i, /\bmpv\b/i, /width/i, /\bpdw\b/i, /ratio/i, /\bplcr\b/i, /crit/i, /\bpct\b/i]
   },
 
   // --- Lipid Profile ---
@@ -86,38 +90,41 @@ const LAB_PARAMETERS: ParameterInfo[] = [
       low: 'Rare, could be due to hyperthyroidism or malabsorption.',
       high: 'Increased risk of heart disease and stroke.',
       normal: 'Desirable level for heart health.'
-    }
+    },
+    exclude: [/ratio/i, /hdl/i, /ldl/i, /vldl/i, /non-hdl/i]
   },
   {
     name: 'LDL (Bad) Cholesterol',
     category: 'Lipids',
-    regex: [/ldl/i, /low density lipoprotein/i],
+    regex: [/\bldl\b/i, /low density lipoprotein/i],
     unit: 'mg/dL',
     range: [0, 100],
     meanings: {
       low: 'Ideal for heart health.',
       high: 'Major risk factor for plaque buildup in arteries.',
       normal: 'Within optimal range.'
-    }
+    },
+    exclude: [/ratio/i, /hdl\s*\/\s*ldl/i, /ldl\s*\/\s*hdl/i, /vldl/i, /non-hdl/i]
   },
   {
     name: 'HDL (Good) Cholesterol',
     category: 'Lipids',
-    regex: [/hdl/i, /high density lipoprotein/i],
+    regex: [/\bhdl\b/i, /high density lipoprotein/i],
     unit: 'mg/dL',
     range: [40, 60],
     meanings: {
       low: 'Increased risk of heart disease.',
       high: 'Protective against heart disease.',
       normal: 'Good level for heart protection.'
-    }
+    },
+    exclude: [/ratio/i, /hdl\s*\/\s*ldl/i, /ldl\s*\/\s*hdl/i, /vldl/i, /non-hdl/i]
   },
 
   // --- Diabetes ---
   {
     name: 'Fasting Glucose',
     category: 'Diabetes',
-    regex: [/fasting glucose/i, /glucose fasting/i, /fbs\b/i],
+    regex: [/fasting glucose/i, /glucose fasting/i, /\bfbs\b/i],
     unit: 'mg/dL',
     range: [70, 99],
     meanings: {
@@ -129,7 +136,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'HbA1c',
     category: 'Diabetes',
-    regex: [/hba1c/i, /glycated hemoglobin/i, /a1c/i],
+    regex: [/hba1c/i, /glycated hemoglobin/i, /\ba1c\b/i],
     unit: '%',
     range: [4.0, 5.6],
     meanings: {
@@ -143,7 +150,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Creatinine',
     category: 'Kidney',
-    regex: [/creatinine/i, /creat\b/i],
+    regex: [/creatinine/i, /\bcreat\b/i],
     unit: 'mg/dL',
     range: [0.7, 1.3],
     meanings: {
@@ -169,33 +176,35 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'SGPT / ALT',
     category: 'Liver',
-    regex: [/sgpt/i, /alt\b/i, /alanine aminotransferase/i],
+    regex: [/sgpt/i, /\balt\b/i, /alanine aminotransferase/i],
     unit: 'U/L',
     range: [7, 55],
     meanings: {
       low: 'Usually normal/healthy.',
       high: 'May indicate liver inflammation or damage.',
       normal: 'Healthy liver enzyme levels.'
-    }
+    },
+    exclude: [/ratio/i]
   },
   {
     name: 'SGOT / AST',
     category: 'Liver',
-    regex: [/sgot/i, /ast\b/i, /aspartate aminotransferase/i],
+    regex: [/sgot/i, /\bast\b/i, /aspartate aminotransferase/i],
     unit: 'U/L',
     range: [8, 48],
     meanings: {
       low: 'Usually normal/healthy.',
       high: 'Possible liver or muscle damage.',
       normal: 'Healthy liver enzyme levels.'
-    }
+    },
+    exclude: [/ratio/i]
   },
 
   // --- Thyroid ---
   {
     name: 'TSH',
     category: 'Thyroid',
-    regex: [/tsh/i, /thyroid stimulating hormone/i],
+    regex: [/\btsh\b/i, /thyroid stimulating hormone/i],
     unit: 'uIU/mL',
     range: [0.4, 4.0],
     meanings: {
@@ -208,19 +217,20 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'RBC Count',
     category: 'CBC',
-    regex: [/rbc/i, /red blood cell/i, /erythrocyte/i],
+    regex: [/\brbc\b/i, /red blood cell/i, /erythrocyte/i],
     unit: 'million/µL',
     range: [4.2, 5.9],
     meanings: {
       low: 'May indicate anemia, blood loss, nutritional deficiency, or bone marrow disorders.',
       high: 'Could be due to dehydration, smoking, lung disease, or polycythemia.',
       normal: 'Healthy red blood cell production.'
-    }
+    },
+    exclude: [/nucleated/i, /\bnrbc\b/i, /width/i, /\brdw\b/i, /index/i]
   },
   {
     name: 'Hematocrit',
     category: 'CBC',
-    regex: [/hematocrit/i, /hct\b/i, /pcv\b/i],
+    regex: [/hematocrit/i, /\bhct\b/i, /\bpcv\b/i],
     unit: '%',
     range: [36, 50],
     meanings: {
@@ -232,7 +242,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'MCV',
     category: 'CBC',
-    regex: [/mcv/i, /mean corpuscular volume/i],
+    regex: [/\bmcv\b/i, /mean corpuscular volume/i],
     unit: 'fL',
     range: [80, 100],
     meanings: {
@@ -244,21 +254,22 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'MCH',
     category: 'CBC',
-    regex: [/mch/i, /mean corpuscular hemoglobin/i],
+    regex: [/\bmch\b/i, /mean corpuscular hemoglobin/i],
     unit: 'pg',
     range: [27, 33],
     meanings: {
       low: 'May suggest iron deficiency anemia.',
       high: 'May indicate macrocytic anemia.',
       normal: 'Normal hemoglobin content in red blood cells.'
-    }
+    },
+    exclude: [/\bmchc\b/i, /mean corpuscular hemoglobin concentration/i]
   },
 
   // --- Electrolytes ---
   {
     name: 'Sodium',
     category: 'Electrolytes',
-    regex: [/sodium/i, /na\b/i],
+    regex: [/sodium/i, /\bna\b/i],
     unit: 'mEq/L',
     range: [135, 145],
     meanings: {
@@ -270,7 +281,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Potassium',
     category: 'Electrolytes',
-    regex: [/potassium/i, /k\b/i],
+    regex: [/potassium/i, /\bk\b/i],
     unit: 'mEq/L',
     range: [3.5, 5.0],
     meanings: {
@@ -282,7 +293,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Chloride',
     category: 'Electrolytes',
-    regex: [/chloride/i, /cl\b/i],
+    regex: [/chloride/i, /\bcl\b/i],
     unit: 'mEq/L',
     range: [96, 106],
     meanings: {
@@ -296,7 +307,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Blood Urea Nitrogen (BUN)',
     category: 'Kidney',
-    regex: [/bun/i, /blood urea nitrogen/i, /urea/i],
+    regex: [/\bbun\b/i, /blood urea nitrogen/i],
     unit: 'mg/dL',
     range: [7, 20],
     meanings: {
@@ -308,7 +319,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'eGFR',
     category: 'Kidney',
-    regex: [/egfr/i, /glomerular filtration rate/i],
+    regex: [/\begfr\b/i, /glomerular filtration rate/i],
     unit: 'mL/min/1.73m²',
     range: [90, 120],
     meanings: {
@@ -329,12 +340,13 @@ const LAB_PARAMETERS: ParameterInfo[] = [
       low: 'Usually not clinically significant.',
       high: 'May indicate jaundice, liver disease, or red blood cell breakdown.',
       normal: 'Healthy liver and bile metabolism.'
-    }
+    },
+    exclude: [/\bdirect\b/i, /\bindirect\b/i]
   },
   {
     name: 'Alkaline Phosphatase (ALP)',
     category: 'Liver',
-    regex: [/alp\b/i, /alkaline phosphatase/i],
+    regex: [/\balp\b/i, /alkaline phosphatase/i],
     unit: 'U/L',
     range: [44, 147],
     meanings: {
@@ -348,7 +360,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Triglycerides',
     category: 'Lipids',
-    regex: [/triglycerides/i, /tg\b/i],
+    regex: [/triglycerides/i, /\btg\b/i],
     unit: 'mg/dL',
     range: [0, 150],
     meanings: {
@@ -362,7 +374,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Calcium',
     category: 'Minerals',
-    regex: [/calcium/i, /ca\b/i],
+    regex: [/calcium/i, /\bca\b/i],
     unit: 'mg/dL',
     range: [8.5, 10.5],
     meanings: {
@@ -374,7 +386,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Magnesium',
     category: 'Minerals',
-    regex: [/magnesium/i, /mg\b/i],
+    regex: [/magnesium/i, /\bmg\b/i],
     unit: 'mg/dL',
     range: [1.7, 2.2],
     meanings: {
@@ -388,14 +400,15 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Serum Iron',
     category: 'Iron Profile',
-    regex: [/serum iron/i, /iron\b/i],
+    regex: [/serum iron/i, /\biron\b/i],
     unit: 'µg/dL',
     range: [60, 170],
     meanings: {
       low: 'May indicate iron deficiency anemia.',
       high: 'May indicate iron overload or liver disease.',
       normal: 'Healthy iron availability.'
-    }
+    },
+    exclude: [/binding/i, /capacity/i, /\btibc\b/i, /\buibc\b/i]
   },
   {
     name: 'Ferritin',
@@ -442,31 +455,33 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'T3',
     category: 'Thyroid',
-    regex: [/t3\b/i, /triiodothyronine/i, /total t3/i],
+    regex: [/\bt3\b/i, /triiodothyronine/i, /total t3/i],
     unit: 'ng/dL',
     range: [80, 200],
     meanings: {
       low: 'May indicate hypothyroidism, severe illness, or metabolic suppression.',
       high: 'May indicate hyperthyroidism or thyroid overactivity.',
       normal: 'Healthy thyroid hormone levels.'
-    }
+    },
+    exclude: [/\bfree\b/i, /\bft3\b/i]
   },
   {
     name: 'T4',
     category: 'Thyroid',
-    regex: [/t4\b/i, /thyroxine/i, /total t4/i],
+    regex: [/\bt4\b/i, /thyroxine/i, /total t4/i],
     unit: 'µg/dL',
     range: [5.0, 12.0],
     meanings: {
       low: 'May suggest hypothyroidism.',
       high: 'May indicate hyperthyroidism.',
       normal: 'Healthy thyroid hormone production.'
-    }
+    },
+    exclude: [/\bfree\b/i, /\bft4\b/i]
   },
   {
     name: 'Free T3',
     category: 'Thyroid',
-    regex: [/ft3/i, /free t3/i],
+    regex: [/\bft3\b/i, /free t3/i],
     unit: 'pg/mL',
     range: [2.3, 4.2],
     meanings: {
@@ -478,7 +493,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Free T4',
     category: 'Thyroid',
-    regex: [/ft4/i, /free t4/i],
+    regex: [/\bft4\b/i, /free t4/i],
     unit: 'ng/dL',
     range: [0.8, 1.8],
     meanings: {
@@ -494,7 +509,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Post Prandial Glucose',
     category: 'Diabetes',
-    regex: [/ppbs/i, /post prandial/i, /pp glucose/i],
+    regex: [/\bppbs\b/i, /post prandial/i, /pp glucose/i],
     unit: 'mg/dL',
     range: [70, 140],
     meanings: {
@@ -506,7 +521,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Random Blood Sugar',
     category: 'Diabetes',
-    regex: [/rbs/i, /random blood sugar/i, /random glucose/i],
+    regex: [/\brbs\b/i, /random blood sugar/i, /random glucose/i],
     unit: 'mg/dL',
     range: [70, 140],
     meanings: {
@@ -522,7 +537,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Neutrophils',
     category: 'CBC',
-    regex: [/neutrophils/i, /neut\b/i],
+    regex: [/neutrophils/i, /\bneut\b/i],
     unit: '%',
     range: [40, 70],
     meanings: {
@@ -534,7 +549,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Lymphocytes',
     category: 'CBC',
-    regex: [/lymphocytes/i, /lymph\b/i],
+    regex: [/lymphocytes/i, /\blymph\b/i],
     unit: '%',
     range: [20, 40],
     meanings: {
@@ -546,7 +561,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Monocytes',
     category: 'CBC',
-    regex: [/monocytes/i, /mono\b/i],
+    regex: [/monocytes/i, /\bmono\b/i],
     unit: '%',
     range: [2, 10],
     meanings: {
@@ -558,7 +573,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Eosinophils',
     category: 'CBC',
-    regex: [/eosinophils/i, /eos\b/i],
+    regex: [/eosinophils/i, /\beos\b/i],
     unit: '%',
     range: [1, 6],
     meanings: {
@@ -570,7 +585,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Basophils',
     category: 'CBC',
-    regex: [/basophils/i, /baso\b/i],
+    regex: [/basophils/i, /\bbaso\b/i],
     unit: '%',
     range: [0, 2],
     meanings: {
@@ -626,7 +641,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Blood Urea',
     category: 'Kidney',
-    regex: [/blood urea/i, /urea\b/i],
+    regex: [/blood urea/i, /\burea\b/i],
     unit: 'mg/dL',
     range: [15, 40],
     meanings: {
@@ -642,7 +657,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'VLDL',
     category: 'Lipids',
-    regex: [/vldl/i],
+    regex: [/\bvldl\b/i],
     unit: 'mg/dL',
     range: [5, 40],
     meanings: {
@@ -654,7 +669,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Cholesterol / HDL Ratio',
     category: 'Lipids',
-    regex: [/cholesterol.*hdl/i, /chol\/hdl/i],
+    regex: [/cholesterol.*hdl/i, /chol\/\bhdl\b/i],
     unit: 'ratio',
     range: [0, 5],
     meanings: {
@@ -670,7 +685,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Urine pH',
     category: 'Urine',
-    regex: [/urine ph/i, /ph\b/i],
+    regex: [/urine ph/i, /\bph\b/i],
     unit: 'pH',
     range: [4.5, 8.0],
     meanings: {
@@ -694,14 +709,15 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Urine Protein',
     category: 'Urine',
-    regex: [/urine protein/i, /protein\b/i],
+    regex: [/urine protein/i, /\bprotein\b/i],
     unit: '',
     range: [0, 0],
     meanings: {
       low: 'Normal finding.',
       high: 'May indicate kidney disease or infection.',
       normal: 'No protein leakage in urine.'
-    }
+    },
+    exclude: [/total/i, /serum/i, /plasma/i, /globulin/i, /albumin/i]
   },
   {
     name: 'Urine Sugar',
@@ -730,7 +746,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Urine RBC',
     category: 'Urine',
-    regex: [/urine rbc/i, /rbc\/hpf/i],
+    regex: [/urine rbc/i, /\brbc\/hpf\b/i],
     unit: '/HPF',
     range: [0, 2],
     meanings: {
@@ -742,7 +758,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Urine Pus Cells',
     category: 'Urine',
-    regex: [/pus cells/i, /wbc\/hpf/i],
+    regex: [/pus cells/i, /\bwbc\/hpf\b/i],
     unit: '/HPF',
     range: [0, 5],
     meanings: {
@@ -758,7 +774,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'RDW',
     category: 'CBC',
-    regex: [/rdw/i, /red cell distribution width/i],
+    regex: [/\brdw\b/i, /red cell distribution width/i],
     unit: '%',
     range: [11.5, 14.5],
     meanings: {
@@ -770,7 +786,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'MPV',
     category: 'CBC',
-    regex: [/mpv/i, /mean platelet volume/i],
+    regex: [/\bmpv\b/i, /mean platelet volume/i],
     unit: 'fL',
     range: [7.5, 11.5],
     meanings: {
@@ -782,7 +798,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'ESR',
     category: 'Inflammation',
-    regex: [/esr/i, /erythrocyte sedimentation/i],
+    regex: [/\besr\b/i, /erythrocyte sedimentation/i],
     unit: 'mm/hr',
     range: [0, 20],
     meanings: {
@@ -798,7 +814,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'CRP',
     category: 'Inflammation',
-    regex: [/crp/i, /c reactive protein/i],
+    regex: [/\bcrp\b/i, /c reactive protein/i],
     unit: 'mg/L',
     range: [0, 10],
     meanings: {
@@ -882,14 +898,15 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'PT',
     category: 'Coagulation',
-    regex: [/prothrombin time/i, /pt\b/i],
+    regex: [/prothrombin time/i, /\bpt\b/i],
     unit: 'seconds',
     range: [11, 13.5],
     meanings: {
       low: 'Usually not clinically significant.',
       high: 'May indicate clotting disorder, liver disease, or anticoagulant effect.',
       normal: 'Healthy blood clotting function.'
-    }
+    },
+    exclude: [/\bsgpt\b/i, /\baptt\b/i]
   },
   {
     name: 'INR',
@@ -1062,7 +1079,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Absolute Neutrophil Count',
     category: 'CBC',
-    regex: [/anc/i, /absolute neutrophil/i],
+    regex: [/\banc\b/i, /absolute neutrophil/i],
     unit: 'cells/µL',
     range: [1500, 8000],
     meanings: {
@@ -1074,7 +1091,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Absolute Lymphocyte Count',
     category: 'CBC',
-    regex: [/alc/i, /absolute lymphocyte/i],
+    regex: [/\balc\b/i, /absolute lymphocyte/i],
     unit: 'cells/µL',
     range: [1000, 4800],
     meanings: {
@@ -1125,7 +1142,8 @@ const LAB_PARAMETERS: ParameterInfo[] = [
       low: 'Normal finding.',
       high: 'May indicate liver disease or bile duct obstruction.',
       normal: 'Healthy bilirubin metabolism.'
-    }
+    },
+    exclude: [/\bindirect\b/i]
   },
   {
     name: 'Indirect Bilirubin',
@@ -1137,7 +1155,8 @@ const LAB_PARAMETERS: ParameterInfo[] = [
       low: 'Usually not significant.',
       high: 'May indicate hemolysis or bilirubin metabolism disorders.',
       normal: 'Healthy red blood cell turnover.'
-    }
+    },
+    exclude: [/\bdirect\b/i]
   },
   {
     name: 'A/G Ratio',
@@ -1214,7 +1233,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'LDL / HDL Ratio',
     category: 'Lipids',
-    regex: [/ldl.*hdl/i, /ldl\/hdl/i],
+    regex: [/ldl.*hdl/i, /ldl\/\bhdl\b/i],
     unit: 'ratio',
     range: [0, 3.5],
     meanings: {
@@ -1378,7 +1397,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Blood pH',
     category: 'ABG',
-    regex: [/ph\b/i, /blood ph/i],
+    regex: [/\bph\b/i, /blood ph/i],
     unit: '',
     range: [7.35, 7.45],
     meanings: {
@@ -1610,7 +1629,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Total CK (CPK)',
     category: 'Cardiac',
-    regex: [/ck\b/i, /cpk/i, /creatine kinase/i],
+    regex: [/\bck\b/i, /cpk/i, /creatine kinase/i],
     unit: 'U/L',
     range: [30, 200],
     meanings: {
@@ -2074,7 +2093,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Direct Coombs Test',
     category: 'Immunohematology',
-    regex: [/direct coombs/i, /dat\b/i],
+    regex: [/direct coombs/i, /\bdat\b/i],
     unit: '',
     range: [0, 0],
     meanings: {
@@ -2086,7 +2105,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'Indirect Coombs Test',
     category: 'Immunohematology',
-    regex: [/indirect coombs/i, /iat\b/i],
+    regex: [/indirect coombs/i, /\biat\b/i],
     unit: '',
     range: [0, 0],
     meanings: {
@@ -2126,7 +2145,7 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   {
     name: 'HIV 1/2 Antibody',
     category: 'Serology',
-    regex: [/hiv/i, /hiv 1\/2/i],
+    regex: [/\bhiv\b/i, /hiv 1\/2/i],
     unit: 'Index',
     range: [0, 1.0],
     meanings: {
@@ -2137,14 +2156,81 @@ const LAB_PARAMETERS: ParameterInfo[] = [
   }
 ];
 
+function isNoiseLine(line: string): boolean {
+  const lower = line.toLowerCase();
+  const noiseKeywords = [
+    "clinical correlation",
+    "clinical conditions",
+    "correlation clinically",
+    "biological reference range",
+    "guideline",
+    "disclaimer",
+    "literature",
+    "ann intern med",
+    "journal",
+    "author",
+    "patient name",
+    "referred by",
+    "address",
+    "collected on",
+    "received on",
+    "released on",
+    "barcode",
+    "sample type",
+    "scan qr",
+    "labcode",
+    "report remarks",
+    "conditions of reporting",
+    "explanations",
+    "suggestions",
+    "telephone",
+    "e-mail",
+    "email",
+    "website",
+    "video link",
+    "road",
+    "street",
+    "block",
+    "floor",
+    "bengaluru",
+    "mumbai",
+    "delhi",
+    "pune",
+    "hyderabad",
+    "chennai",
+    "kolkata",
+    "dharawad",
+    "hospital",
+    "diagnostic",
+    "laboratory",
+    "wellness",
+    "dr.",
+    "mbbs",
+    " md ",
+    "pathologist",
+    "ready",
+    "processing",
+    "cancelled",
+    "test details",
+    "report status",
+    "tests done",
+    "derived from",
+    "method:-",
+    "method :"
+  ];
+  if (noiseKeywords.some(k => lower.includes(k))) return true;
+  if (/page\s*:\s*\d+/i.test(lower)) return true;
+  return false;
+}
+
 export function parseReportText(text: string): ReportAnalysis {
   const lowerText = text.toLowerCase();
   const results: LabResult[] = [];
   const lines = text.split('\n');
   const consumedLines = new Set<number>();
 
-  // Clean text for the original fallback method (remove some noise but keep numbers)
-  const cleanText = lowerText.replace(/[^\w\s\.\:]/g, ' ');
+  // Clean text for the original fallback method (remove some noise but keep numbers and operators)
+  const cleanText = lowerText.replace(/[^\w\s\.\:<>]/g, ' ');
 
   // Priority parameters list to avoid prefix conflicts (e.g. Free T3 matching T3 first)
   const PRIORITY_PARAMS = [
@@ -2193,6 +2279,8 @@ export function parseReportText(text: string): ReportAnalysis {
       if (consumedLines.has(i)) continue;
 
       const line = normalizedLines[i];
+      if (isNoiseLine(line)) continue;
+
       let matchedRegex: RegExp | null = null;
       let matchIndex = -1;
 
@@ -2201,6 +2289,10 @@ export function parseReportText(text: string): ReportAnalysis {
         const nameRegex = new RegExp(reg.source, 'i');
         const nameMatch = line.match(nameRegex);
         if (nameMatch && nameMatch.index !== undefined) {
+          // Check parameter-specific exclusions
+          if (param.exclude && param.exclude.some(exReg => exReg.test(line))) {
+            continue;
+          }
           matchedRegex = reg;
           matchIndex = nameMatch.index + nameMatch[0].length;
           break;
@@ -2209,78 +2301,124 @@ export function parseReportText(text: string): ReportAnalysis {
 
       if (matchedRegex && matchIndex !== -1) {
         // We found the parameter name on line i!
-        // Let's look at the line text after the match index, and optionally combine with the next line
-        let afterText = line.substring(matchIndex);
-        let nextLineIndex = -1;
         
-        // If there's almost nothing after the name on this line, check the next line
-        if (afterText.trim().replace(/[^\w]/g, '').length === 0 && i + 1 < normalizedLines.length && !consumedLines.has(i + 1)) {
-          afterText += ' ' + normalizedLines[i + 1];
-          nextLineIndex = i + 1;
+        // Clear all matched parameter names/abbreviations from the line to avoid their digits being matched as values
+        let lineWithClearedNames = line;
+        for (const reg of param.regex) {
+          const nameRegex = new RegExp(reg.source, 'gi');
+          lineWithClearedNames = lineWithClearedNames.replace(nameRegex, (m) => " ".repeat(m.length));
         }
 
-        // Clean text slightly (keep hyphens and forward slashes for units/ranges)
-        const cleanAfterText = afterText.replace(/[^\w\s\.\-\/\%–]/g, ' ');
+        // Clean line slightly (keep hyphens, slashes, en-dashes, percent signs, and comparison operators)
+        const cleanLine = lineWithClearedNames.replace(/[^\w\s\.\-\/\%–<>]/g, ' ');
 
-        // Find all numbers in the cleanAfterText
-        const allNumbers = cleanAfterText.match(/\d+(?:\.\d+)?/g);
+        // Find all numbers on the entire line
+        const allNumbersOnLine = cleanLine.match(/\d+(?:\.\d+)?/g);
+        let extractedVal: number | null = null;
 
-        if (allNumbers && allNumbers.length > 0) {
-          let extractedVal: number | null = null;
+        if (allNumbersOnLine && allNumbersOnLine.length > 0) {
+          // Identify numbers to exclude (reference ranges/limits and static unit constants)
+          const excludedNumbers = new Set<number>();
+          // Exclude static parts of the eGFR unit (1.73 and 2)
+          excludedNumbers.add(1.73);
+          excludedNumbers.add(2);
 
-          // Heuristic 1: Look for a range pattern like X - Y or X to Y or X – Y
-          const rangeRegex = /(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)/i;
-          const rangeMatch = cleanAfterText.match(rangeRegex);
+          // 1. Check range patterns: X - Y, X to Y, X – Y
+          const rangeRegex = /(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)/gi;
+          let rangeMatch;
+          while ((rangeMatch = rangeRegex.exec(cleanLine)) !== null) {
+            excludedNumbers.add(parseFloat(rangeMatch[1]));
+            excludedNumbers.add(parseFloat(rangeMatch[2]));
+          }
 
-          let hasRange = false;
-          if (rangeMatch) {
-            hasRange = true;
-            const r1 = parseFloat(rangeMatch[1]);
-            const r2 = parseFloat(rangeMatch[2]);
+          // 2. Check limit patterns: < X, > X, <= X, >= X
+          const limitRegex = /(?:<|>|<=|>=|ref|bio)\s*(\d+(?:\.\d+)?)/gi;
+          let limitMatch;
+          while ((limitMatch = limitRegex.exec(cleanLine)) !== null) {
+            excludedNumbers.add(parseFloat(limitMatch[1]));
+          }
 
-            // Find a number that is not r1 and not r2 (numerically)
-            const resultStr = allNumbers.find(numStr => {
-              const val = parseFloat(numStr);
-              return Math.abs(val - r1) > 0.001 && Math.abs(val - r2) > 0.001;
-            });
+          // Filter numbers on the line that are not in the excluded list
+          const candidateNumbers = allNumbersOnLine.filter(numStr => {
+            const val = parseFloat(numStr);
+            // Check if val is in excludedNumbers (using a small float tolerance)
+            for (const excl of excludedNumbers) {
+              if (Math.abs(val - excl) < 0.001) return false;
+            }
+            return true;
+          });
 
-            if (resultStr) {
-              extractedVal = parseFloat(resultStr);
+          // If there is exactly one candidate number on the line, that is our result!
+          if (candidateNumbers.length === 1) {
+            extractedVal = parseFloat(candidateNumbers[0]);
+          }
+        }
+
+        // 2. Fall back to scanning after parameter name if entire line didn't yield a single result
+        let nextLineIndex = -1;
+        if (extractedVal === null) {
+          let afterText = lineWithClearedNames.substring(matchIndex);
+          
+          if (afterText.trim().replace(/[^\w]/g, '').length === 0 && i + 1 < normalizedLines.length && !consumedLines.has(i + 1)) {
+            if (!isNoiseLine(normalizedLines[i + 1])) {
+              afterText += ' ' + normalizedLines[i + 1];
+              nextLineIndex = i + 1;
             }
           }
 
-          // Heuristic 2: If there's only 1 number and it's not a range pattern, use it
-          if (extractedVal === null && allNumbers.length === 1 && !hasRange) {
-            extractedVal = parseFloat(allNumbers[0]);
-          }
+          const cleanAfterText = afterText.replace(/[^\w\s\.\-\/\%–]/g, ' ');
+          const allNumbersAfter = cleanAfterText.match(/\d+(?:\.\d+)?/g);
 
-          // Heuristic 3: Fallback to the first number found ONLY if no range pattern was matched
-          // (If a range pattern was matched but resultStr is undefined, the line only has the range boundaries, so no actual result is present!)
-          if (extractedVal === null && !hasRange) {
-            extractedVal = parseFloat(allNumbers[0]);
-          }
+          if (allNumbersAfter && allNumbersAfter.length > 0) {
+            let hasRange = false;
+            const rangeRegex = /(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)/i;
+            const rangeMatch = cleanAfterText.match(rangeRegex);
 
-          if (extractedVal !== null && !isNaN(extractedVal)) {
-            let status: 'normal' | 'high' | 'low' = 'normal';
-            if (extractedVal < param.range[0]) status = 'low';
-            else if (extractedVal > param.range[1]) status = 'high';
+            if (rangeMatch) {
+              hasRange = true;
+              const r1 = parseFloat(rangeMatch[1]);
+              const r2 = parseFloat(rangeMatch[2]);
 
-            results.push({
-              name: param.name,
-              value: extractedVal,
-              unit: param.unit,
-              range: param.range,
-              status,
-              interpretation: param.meanings[status],
-              category: param.category
-            });
-            
-            consumedLines.add(i);
-            if (nextLineIndex !== -1) consumedLines.add(nextLineIndex);
-            
-            found = true;
-            break; // Stop searching for this parameter
+              const resultStr = allNumbersAfter.find(numStr => {
+                const val = parseFloat(numStr);
+                return Math.abs(val - r1) > 0.001 && Math.abs(val - r2) > 0.001;
+              });
+
+              if (resultStr) {
+                extractedVal = parseFloat(resultStr);
+              }
+            }
+
+            if (extractedVal === null && allNumbersAfter.length === 1 && !hasRange) {
+              extractedVal = parseFloat(allNumbersAfter[0]);
+            }
+
+            if (extractedVal === null && !hasRange) {
+              extractedVal = parseFloat(allNumbersAfter[0]);
+            }
           }
+        }
+
+        if (extractedVal !== null && !isNaN(extractedVal)) {
+          let status: 'normal' | 'high' | 'low' = 'normal';
+          if (extractedVal < param.range[0]) status = 'low';
+          else if (extractedVal > param.range[1]) status = 'high';
+
+          results.push({
+            name: param.name,
+            value: extractedVal,
+            unit: param.unit,
+            range: param.range,
+            status,
+            interpretation: param.meanings[status],
+            category: param.category
+          });
+          
+          consumedLines.add(i);
+          if (nextLineIndex !== -1) consumedLines.add(nextLineIndex);
+          
+          found = true;
+          break; // Stop searching for this parameter
         }
       }
     }
@@ -2288,7 +2426,7 @@ export function parseReportText(text: string): ReportAnalysis {
     // 2. Original Fallback Matcher (if line-by-line parser didn't find it)
     if (!found) {
       for (const reg of param.regex) {
-        const match = cleanText.match(new RegExp(`${reg.source}\\s*[:\\-]?\\s*(\\d+\\.?\\d*)`, 'i'));
+        const match = cleanText.match(new RegExp(`${reg.source}[ \\t]*[:\\-]?[ \\t]*(\\d+\\.?\\d*)`, 'i'));
         if (match) {
           const val = parseFloat(match[1]);
           let status: 'normal' | 'high' | 'low' = 'normal';
@@ -2299,6 +2437,7 @@ export function parseReportText(text: string): ReportAnalysis {
             name: param.name,
             value: val,
             unit: param.unit,
+
             range: param.range,
             status,
             interpretation: param.meanings[status],
