@@ -32,7 +32,36 @@ def extract_text(file_path):
             import fitz # PyMuPDF
             doc = fitz.open(file_path)
             for page in doc:
-                text += page.get_text("text") + "\n"
+                try:
+                    # Layout-preserving text extraction: group blocks on the same visual line (y0 diff <= 5pt)
+                    # and sort them left-to-right (x0) to keep columns aligned.
+                    blocks = page.get_text("blocks")
+                    text_blocks = [b for b in blocks if b[6] == 0] # block_type 0 is text
+                    if text_blocks:
+                        text_blocks.sort(key=lambda b: b[1]) # Sort vertically by y0
+                        lines = []
+                        current_line = []
+                        for b in text_blocks:
+                            if not current_line:
+                                current_line.append(b)
+                            else:
+                                avg_y0 = sum(item[1] for item in current_line) / len(current_line)
+                                if abs(b[1] - avg_y0) <= 5.0:
+                                    current_line.append(b)
+                                else:
+                                    current_line.sort(key=lambda item: item[0]) # Sort horizontally by x0
+                                    line_str = "  ".join([item[4].replace('\n', ' ').strip() for item in current_line])
+                                    lines.append(line_str)
+                                    current_line = [b]
+                        if current_line:
+                            current_line.sort(key=lambda item: item[0])
+                            line_str = "  ".join([item[4].replace('\n', ' ').strip() for item in current_line])
+                            lines.append(line_str)
+                        text += "\n".join(lines) + "\n"
+                    else:
+                        text += page.get_text("text") + "\n"
+                except Exception:
+                    text += page.get_text("text") + "\n"
                 
             # If PDF has no text, try OCR on the rendered image
             if len(text.strip()) < 20:
