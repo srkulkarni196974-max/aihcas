@@ -117,6 +117,7 @@ export default function PrescriptionPage() {
   const [activeWarning, setActiveWarning] = useState<number | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [fileType, setFileType] = useState<string | null>(null);
 
   // Analyze via API (Python Backend)
   const analyzeFile = useCallback(async (file: File) => {
@@ -236,6 +237,7 @@ export default function PrescriptionPage() {
     }
     const url = URL.createObjectURL(fileToUpload);
     setPreviewUrl(url);
+    setFileType(fileToUpload.type);
     analyzeFile(fileToUpload);
   }, [analyzeFile]);
 
@@ -257,6 +259,7 @@ export default function PrescriptionPage() {
     setStage('upload');
     setResult(null);
     setPreviewUrl(null);
+    setFileType(null);
     setProgress(0);
     setManualText('');
     setErrorMsg(null);
@@ -429,8 +432,12 @@ export default function PrescriptionPage() {
           {previewUrl && (
             <div className="glass-card animate-fadeInUp" style={{ padding: '20px', background: 'white', border: '1.5px solid var(--border)', textAlign: 'left' }}>
               <h3 style={{ fontSize: '0.98rem', fontWeight: 800, marginBottom: '12px', color: 'var(--text-dark)' }}>📄 Uploaded Prescription Preview</h3>
-              <div style={{ maxWidth: '100%', maxHeight: '250px', overflow: 'hidden', borderRadius: '12px', border: '1px solid var(--border)', background: '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <img src={previewUrl} alt="Prescription Preview" style={{ maxHeight: '250px', maxWidth: '100%', objectFit: 'contain' }} />
+              <div style={{ maxWidth: '100%', minHeight: fileType === 'application/pdf' ? '400px' : 'auto', maxHeight: fileType === 'application/pdf' ? '500px' : '250px', overflow: 'auto', borderRadius: '12px', border: '1px solid var(--border)', background: '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {fileType === 'application/pdf' ? (
+                  <iframe src={previewUrl} style={{ width: '100%', height: '400px', border: 'none', borderRadius: '12px' }} />
+                ) : (
+                  <img src={previewUrl} alt="Prescription Preview" style={{ maxHeight: '250px', maxWidth: '100%', objectFit: 'contain' }} />
+                )}
               </div>
             </div>
           )}

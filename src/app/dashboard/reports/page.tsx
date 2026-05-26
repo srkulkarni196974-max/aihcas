@@ -114,6 +114,7 @@ export default function ReportsPage() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [fileType, setFileType] = useState<string | null>(null);
   const [engine, setEngine] = useState<'python' | 'gemini'>('python');
 
   // Analyze via API (Python + Gemini Fallback)
@@ -182,6 +183,7 @@ export default function ReportsPage() {
     }
     const url = URL.createObjectURL(fileToUpload);
     setPreviewUrl(url);
+    setFileType(fileToUpload.type);
     analyzeFile(fileToUpload);
   };
 
@@ -198,6 +200,7 @@ export default function ReportsPage() {
       }
       const url = URL.createObjectURL(fileToUpload);
       setPreviewUrl(url);
+      setFileType(fileToUpload.type);
       analyzeFile(fileToUpload);
     }
   };
@@ -206,6 +209,7 @@ export default function ReportsPage() {
     setStage('upload');
     setAnalysisResult(null);
     setPreviewUrl(null);
+    setFileType(null);
     setProgress(0);
     setErrorMsg(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -356,8 +360,12 @@ export default function ReportsPage() {
           {previewUrl && (
             <div className="glass-card animate-fadeInUp" style={{ padding: '20px', background: 'white', border: '1.5px solid var(--border)', textAlign: 'left' }}>
               <h3 style={{ fontSize: '0.98rem', fontWeight: 800, marginBottom: '12px', color: 'var(--text-dark)' }}>📄 Uploaded Pathology Lab Report Preview</h3>
-              <div style={{ maxWidth: '100%', maxHeight: '250px', overflow: 'hidden', borderRadius: '12px', border: '1px solid var(--border)', background: '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <img src={previewUrl} alt="Report Preview" style={{ maxHeight: '250px', maxWidth: '100%', objectFit: 'contain' }} />
+              <div style={{ maxWidth: '100%', minHeight: fileType === 'application/pdf' ? '400px' : 'auto', maxHeight: fileType === 'application/pdf' ? '500px' : '250px', overflow: 'auto', borderRadius: '12px', border: '1px solid var(--border)', background: '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {fileType === 'application/pdf' ? (
+                  <iframe src={previewUrl} style={{ width: '100%', height: '400px', border: 'none', borderRadius: '12px' }} />
+                ) : (
+                  <img src={previewUrl} alt="Report Preview" style={{ maxHeight: '250px', maxWidth: '100%', objectFit: 'contain' }} />
+                )}
               </div>
             </div>
           )}
