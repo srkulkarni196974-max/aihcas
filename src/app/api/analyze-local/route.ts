@@ -238,6 +238,83 @@ export async function POST(req: NextRequest) {
       analysisData = parseReportText(extractedText);
     }
 
+    // ─── Smart Gemini Fallback for images with poor OCR ─────────────────────
+    // If the local regex parser found 0 results from an image, OCR text was
+    // likely garbled. Fall back to Gemini vision which can read the image directly.
+    const parsedResults = (analysisData as any).results;
+    const hasNoResults = !parsedResults || !Array.isArray(parsedResults) || parsedResults.length === 0;
+    const isImageFile = ext !== 'pdf' && ext !== 'txt';
+
+    if (hasNoResults && isImageFile && process.env.GEMINI_API_KEY) {
+      console.log(`[analyze-local] Local parser found 0 results from image. Falling back to Gemini vision...`);
+      try {
+        const genAI = new (require('@google/generative-ai').GoogleGenerativeAI)(process.env.GEMINI_API_KEY);
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+
+        const fileBuffer = await fs.readFile(tempFilePath);
+        const base64 = fileBuffer.toString('base64');
+
+        const imgPrompt = type === 'prescription'
+          ? `You are an expert clinical pharmacist. Analyze this prescription image and return a JSON object with medications, summary, warnings, generalAdvice, and allergyAlert. 
+             Each entry in the "medications" array must have:
+             - "name": Drug name
+             - "dosage": Dosage
+             - "timing": Timing shorthand translation
+             - "duration": Duration
+             - "purpose": Purpose
+             - "drugClass": Class
+             - "warnings": list of warnings
+             - "instructions": detailed instructions
+             - "bounding_box": [ymin, xmin, ymax, xmax] coordinates (0-1000 scale) enclosing the text line of this medication in the image.
+             Return ONLY raw JSON.`
+          : `You are an expert clinical pathologist. Analyze this medical lab report image. Extract all parameters, values, units, and reference ranges. Return a JSON object with results (array), summary, risks, recommendations, alerts, and urgency. 
+             Each entry in the "results" array must have:
+             - "name": Parameter name
+             - "value": numeric value
+             - "unit": unit string
+             - "range": [min, max] reference range as numbers
+             - "status": "normal", "high", or "low"
+             - "interpretation": clinical meaning
+             - "category": section category
+             - "bounding_box": [ymin, xmin, ymax, xmax] coordinates (0-1000 scale) enclosing the text line of this parameter in the image.
+             Return ONLY raw JSON.`;
+
+        let mimeType = file.type || '';
+        const SUPPORTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+        if (!mimeType || mimeType === 'application/octet-stream' || !SUPPORTED_MIMES.includes(mimeType)) {
+          const lowerExt = ext.toLowerCase();
+          if (lowerExt === 'png') mimeType = 'image/png';
+          else if (lowerExt === 'webp') mimeType = 'image/webp';
+          else if (lowerExt === 'heic') mimeType = 'image/heic';
+          else if (lowerExt === 'heif') mimeType = 'image/heif';
+          else mimeType = 'image/jpeg';
+        }
+        if (mimeType === 'image/jpg') mimeType = 'image/jpeg';
+
+        const geminiResult = await model.generateContent([
+          imgPrompt,
+          { inlineData: { data: base64, mimeType } }
+        ]);
+
+        const responseText = geminiResult.response.text().replace(/```json|```/g, '').trim();
+        const parsedData = JSON.parse(responseText);
+
+        if (type === 'report') {
+          await storeBiomarkerRecords(userId, parsedData.results, file?.name);
+        }
+
+        return NextResponse.json({
+          success: true,
+          data: parsedData,
+          source: 'image-vision-fallback',
+          engine: 'gemini'
+        });
+      } catch (geminiFallbackErr) {
+        console.error('[analyze-local] Gemini image fallback also failed:', geminiFallbackErr);
+        // Continue and return the empty local result below
+      }
+    }
+
     // Store biomarker data for reports (local OCR path)
     if (type === 'report') {
       await storeBiomarkerRecords(userId, (analysisData as any).results, file?.name);
