@@ -2141,16 +2141,58 @@ export function parseReportText(text: string): ReportAnalysis {
   const lowerText = text.toLowerCase();
   const results: LabResult[] = [];
   const lines = text.split('\n');
+  const consumedLines = new Set<number>();
 
   // Clean text for the original fallback method (remove some noise but keep numbers)
   const cleanText = lowerText.replace(/[^\w\s\.\:]/g, ' ');
 
-  for (const param of LAB_PARAMETERS) {
+  // Priority parameters list to avoid prefix conflicts (e.g. Free T3 matching T3 first)
+  const PRIORITY_PARAMS = [
+    'Free T3',
+    'Free T4',
+    'HbA1c',
+    'Blood Urea Nitrogen (BUN)',
+    'LDL (Bad) Cholesterol',
+    'HDL (Good) Cholesterol',
+    'Total Cholesterol',
+    'Serum Iron',
+    'Urine pH',
+    'Urine Specific Gravity',
+    'Urine Protein',
+    'Urine Sugar',
+    'Urine Ketones',
+    'Urine RBC',
+    'Urine Pus Cells'
+  ];
+
+  // Sort LAB_PARAMETERS so priority ones are checked first
+  const sortedParams = [...LAB_PARAMETERS].sort((a, b) => {
+    const idxA = PRIORITY_PARAMS.indexOf(a.name);
+    const idxB = PRIORITY_PARAMS.indexOf(b.name);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return 0;
+  });
+
+  // Preprocess text to normalize decimal separators (common OCR issues)
+  // 1. Replace commas between digits (e.g. "14,5" -> "14.5")
+  // 2. Replace spaces around decimal points (e.g. "14 . 5" -> "14.5")
+  const normalizedLines = lines.map(line => {
+    let l = line.toLowerCase();
+    l = l.replace(/(\d+)\s*,\s*(\d+)/g, '$1.$2');
+    l = l.replace(/(\d+)\s*\.\s*(\d+)/g, '$1.$2');
+    return l;
+  });
+
+  for (const param of sortedParams) {
     let found = false;
 
     // 1. Smart line-by-line parsing
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i].toLowerCase();
+    for (let i = 0; i < normalizedLines.length; i++) {
+      if (consumedLines.has(i)) continue;
+
+      const line = normalizedLines[i];
       let matchedRegex: RegExp | null = null;
       let matchIndex = -1;
 
@@ -2169,10 +2211,12 @@ export function parseReportText(text: string): ReportAnalysis {
         // We found the parameter name on line i!
         // Let's look at the line text after the match index, and optionally combine with the next line
         let afterText = line.substring(matchIndex);
+        let nextLineIndex = -1;
         
         // If there's almost nothing after the name on this line, check the next line
-        if (afterText.trim().replace(/[^\w]/g, '').length === 0 && i + 1 < lines.length) {
-          afterText += ' ' + lines[i + 1].toLowerCase();
+        if (afterText.trim().replace(/[^\w]/g, '').length === 0 && i + 1 < normalizedLines.length && !consumedLines.has(i + 1)) {
+          afterText += ' ' + normalizedLines[i + 1];
+          nextLineIndex = i + 1;
         }
 
         // Clean text slightly (keep hyphens and forward slashes for units/ranges)
@@ -2188,7 +2232,9 @@ export function parseReportText(text: string): ReportAnalysis {
           const rangeRegex = /(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)/i;
           const rangeMatch = cleanAfterText.match(rangeRegex);
 
+          let hasRange = false;
           if (rangeMatch) {
+            hasRange = true;
             const r1 = parseFloat(rangeMatch[1]);
             const r2 = parseFloat(rangeMatch[2]);
 
@@ -2203,13 +2249,14 @@ export function parseReportText(text: string): ReportAnalysis {
             }
           }
 
-          // Heuristic 2: If there's only 1 number, use it
-          if (extractedVal === null && allNumbers.length === 1) {
+          // Heuristic 2: If there's only 1 number and it's not a range pattern, use it
+          if (extractedVal === null && allNumbers.length === 1 && !hasRange) {
             extractedVal = parseFloat(allNumbers[0]);
           }
 
-          // Heuristic 3: Fallback to the first number found
-          if (extractedVal === null) {
+          // Heuristic 3: Fallback to the first number found ONLY if no range pattern was matched
+          // (If a range pattern was matched but resultStr is undefined, the line only has the range boundaries, so no actual result is present!)
+          if (extractedVal === null && !hasRange) {
             extractedVal = parseFloat(allNumbers[0]);
           }
 
@@ -2227,6 +2274,10 @@ export function parseReportText(text: string): ReportAnalysis {
               interpretation: param.meanings[status],
               category: param.category
             });
+            
+            consumedLines.add(i);
+            if (nextLineIndex !== -1) consumedLines.add(nextLineIndex);
+            
             found = true;
             break; // Stop searching for this parameter
           }
