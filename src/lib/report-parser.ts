@@ -2140,31 +2140,122 @@ const LAB_PARAMETERS: ParameterInfo[] = [
 export function parseReportText(text: string): ReportAnalysis {
   const lowerText = text.toLowerCase();
   const results: LabResult[] = [];
+  const lines = text.split('\n');
 
-  // Clean text for better matching (remove some noise but keep numbers)
+  // Clean text for the original fallback method (remove some noise but keep numbers)
   const cleanText = lowerText.replace(/[^\w\s\.\:]/g, ' ');
 
   for (const param of LAB_PARAMETERS) {
     let found = false;
-    for (const reg of param.regex) {
-      const match = cleanText.match(new RegExp(`${reg.source}\\s*[:\\-]?\\s*(\\d+\\.?\\d*)`, 'i'));
-      if (match) {
-        const val = parseFloat(match[1]);
-        let status: 'normal' | 'high' | 'low' = 'normal';
-        if (val < param.range[0]) status = 'low';
-        else if (val > param.range[1]) status = 'high';
 
-        results.push({
-          name: param.name,
-          value: val,
-          unit: param.unit,
-          range: param.range,
-          status,
-          interpretation: param.meanings[status],
-          category: param.category
-        });
-        found = true;
-        break;
+    // 1. Smart line-by-line parsing
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].toLowerCase();
+      let matchedRegex: RegExp | null = null;
+      let matchIndex = -1;
+
+      for (const reg of param.regex) {
+        // Compile the regex without the value part to find the parameter name in the line
+        const nameRegex = new RegExp(reg.source, 'i');
+        const nameMatch = line.match(nameRegex);
+        if (nameMatch && nameMatch.index !== undefined) {
+          matchedRegex = reg;
+          matchIndex = nameMatch.index + nameMatch[0].length;
+          break;
+        }
+      }
+
+      if (matchedRegex && matchIndex !== -1) {
+        // We found the parameter name on line i!
+        // Let's look at the line text after the match index, and optionally combine with the next line
+        let afterText = line.substring(matchIndex);
+        
+        // If there's almost nothing after the name on this line, check the next line
+        if (afterText.trim().replace(/[^\w]/g, '').length === 0 && i + 1 < lines.length) {
+          afterText += ' ' + lines[i + 1].toLowerCase();
+        }
+
+        // Clean text slightly (keep hyphens and forward slashes for units/ranges)
+        const cleanAfterText = afterText.replace(/[^\w\s\.\-\/\%–]/g, ' ');
+
+        // Find all numbers in the cleanAfterText
+        const allNumbers = cleanAfterText.match(/\d+(?:\.\d+)?/g);
+
+        if (allNumbers && allNumbers.length > 0) {
+          let extractedVal: number | null = null;
+
+          // Heuristic 1: Look for a range pattern like X - Y or X to Y or X – Y
+          const rangeRegex = /(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)/i;
+          const rangeMatch = cleanAfterText.match(rangeRegex);
+
+          if (rangeMatch) {
+            const r1 = parseFloat(rangeMatch[1]);
+            const r2 = parseFloat(rangeMatch[2]);
+
+            // Find a number that is not r1 and not r2 (numerically)
+            const resultStr = allNumbers.find(numStr => {
+              const val = parseFloat(numStr);
+              return Math.abs(val - r1) > 0.001 && Math.abs(val - r2) > 0.001;
+            });
+
+            if (resultStr) {
+              extractedVal = parseFloat(resultStr);
+            }
+          }
+
+          // Heuristic 2: If there's only 1 number, use it
+          if (extractedVal === null && allNumbers.length === 1) {
+            extractedVal = parseFloat(allNumbers[0]);
+          }
+
+          // Heuristic 3: Fallback to the first number found
+          if (extractedVal === null) {
+            extractedVal = parseFloat(allNumbers[0]);
+          }
+
+          if (extractedVal !== null && !isNaN(extractedVal)) {
+            let status: 'normal' | 'high' | 'low' = 'normal';
+            if (extractedVal < param.range[0]) status = 'low';
+            else if (extractedVal > param.range[1]) status = 'high';
+
+            results.push({
+              name: param.name,
+              value: extractedVal,
+              unit: param.unit,
+              range: param.range,
+              status,
+              interpretation: param.meanings[status],
+              category: param.category
+            });
+            found = true;
+            break; // Stop searching for this parameter
+          }
+        }
+      }
+    }
+
+    // 2. Original Fallback Matcher (if line-by-line parser didn't find it)
+    if (!found) {
+      for (const reg of param.regex) {
+        const match = cleanText.match(new RegExp(`${reg.source}\\s*[:\\-]?\\s*(\\d+\\.?\\d*)`, 'i'));
+        if (match) {
+          const val = parseFloat(match[1]);
+          let status: 'normal' | 'high' | 'low' = 'normal';
+          if (val < param.range[0]) status = 'low';
+          else if (val > param.range[1]) status = 'high';
+
+          results.push({
+            name: param.name,
+            value: val,
+            unit: param.unit,
+            range: param.range,
+            status,
+            interpretation: param.meanings[status],
+            category: param.category
+          });
+          found = true;
+          break;
+        }
       }
     }
   }
