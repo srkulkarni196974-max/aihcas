@@ -2,6 +2,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
+import ImageSnippet from '@/components/ImageSnippet';
 import { 
   FileSpreadsheet, 
   Upload, 
@@ -26,6 +27,7 @@ interface ReportResult {
   status: 'normal' | 'high' | 'low';
   interpretation: string;
   category?: string;
+  bounding_box?: number[];
 }
 
 interface AnalysisResult {
@@ -350,6 +352,15 @@ export default function ReportsPage() {
       {/* Results Stage */}
       {stage === 'results' && analysisResult && urgency && (
         <div className="page-fade" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+          {/* Full Report Preview */}
+          {previewUrl && (
+            <div className="glass-card animate-fadeInUp" style={{ padding: '20px', background: 'white', border: '1.5px solid var(--border)', textAlign: 'left' }}>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: 800, marginBottom: '12px', color: 'var(--text-dark)' }}>📄 Uploaded Pathology Lab Report Preview</h3>
+              <div style={{ maxWidth: '100%', maxHeight: '250px', overflow: 'hidden', borderRadius: '12px', border: '1px solid var(--border)', background: '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <img src={previewUrl} alt="Report Preview" style={{ maxHeight: '250px', maxWidth: '100%', objectFit: 'contain' }} />
+              </div>
+            </div>
+          )}
           {/* Critical Alerts */}
           {analysisResult.alerts && analysisResult.alerts.length > 0 && (
             <div style={{ padding: '16px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262625', display: 'flex', gap: 12, alignItems: 'flex-start', textAlign: 'left' }}>
@@ -413,23 +424,30 @@ export default function ReportsPage() {
                       const bgs = { high: 'rgba(220,38,38,0.03)', low: 'rgba(217,119,6,0.03)', normal: 'rgba(13, 148, 136, 0.03)' };
                       const c = colors[test.status];
                       return (
-                        <div key={i} className="stack-mobile" style={{ display: 'flex', alignItems: 'center', padding: '16px 20px', borderRadius: 14, background: bgs[test.status], border: `1px solid ${c}15`, position: 'relative', overflow: 'hidden' }}>
+                        <div key={i} className="stack-mobile" style={{ display: 'flex', flexDirection: 'column', padding: '16px 20px', borderRadius: 14, background: bgs[test.status], border: `1px solid ${c}15`, position: 'relative', overflow: 'hidden' }}>
                           <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: c }} />
-                          <div style={{ flex: 2, paddingLeft: 8, textAlign: 'left' }}>
-                            <div style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-dark)' }}>{test.name}</div>
-                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 2, lineHeight: 1.4 }}>{test.interpretation}</p>
+                          <div className="stack-mobile" style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
+                            <div style={{ flex: 2, paddingLeft: 8, textAlign: 'left' }}>
+                              <div style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-dark)' }}>{test.name}</div>
+                              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 2, lineHeight: 1.4 }}>{test.interpretation}</p>
+                            </div>
+                            <div style={{ flex: 1, textAlign: 'center', fontWeight: 850, fontSize: '1.05rem', color: c }}>
+                              {test.value} <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-light)' }}>{test.unit}</span>
+                            </div>
+                            <div style={{ flex: 1, textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                              {test.range[0]} – {test.range[1]}
+                            </div>
+                            <div style={{ flex: 1, textAlign: 'right' }}>
+                              <span style={{ padding: '4px 12px', borderRadius: 100, background: `${c}12`, color: c, fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.04em' }}>
+                                {test.status === 'high' ? '▲ HIGH' : test.status === 'low' ? '▼ LOW' : '✓ NORMAL'}
+                              </span>
+                            </div>
                           </div>
-                          <div style={{ flex: 1, textAlign: 'center', fontWeight: 850, fontSize: '1.05rem', color: c }}>
-                            {test.value} <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-light)' }}>{test.unit}</span>
-                          </div>
-                          <div style={{ flex: 1, textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                            {test.range[0]} – {test.range[1]}
-                          </div>
-                          <div style={{ flex: 1, textAlign: 'right' }}>
-                            <span style={{ padding: '4px 12px', borderRadius: 100, background: `${c}12`, color: c, fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.04em' }}>
-                              {test.status === 'high' ? '▲ HIGH' : test.status === 'low' ? '▼ LOW' : '✓ NORMAL'}
-                            </span>
-                          </div>
+                          {previewUrl && test.bounding_box && (
+                            <div style={{ width: '100%', marginTop: 12, paddingLeft: 8 }}>
+                              <ImageSnippet imageSrc={previewUrl} boundingBox={test.bounding_box} altTextText={`Snippet for ${test.name}`} />
+                            </div>
+                          )}
                         </div>
                       );
                     })}

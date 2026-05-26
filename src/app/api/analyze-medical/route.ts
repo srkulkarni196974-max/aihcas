@@ -21,7 +21,8 @@ Carefully read ALL text visible in this prescription image and return a JSON obj
       "purpose": "What this drug treats",
       "drugClass": "Drug category (e.g. Antibiotic, Antacid)",
       "warnings": ["Warning 1", "Warning 2"],
-      "instructions": "How/when to take it"
+      "instructions": "How/when to take it",
+      "bounding_box": [120, 50, 160, 950]
     }
   ],
   "summary": "A clear 2-3 sentence summary of this prescription and what conditions it appears to be treating.",
@@ -36,6 +37,7 @@ Rules:
 - If a field is unclear, use "As prescribed" or "See doctor".
 - allergyAlert should remain null unless you can specifically see allergy information.
 - Return ONLY the raw JSON object. No markdown, no code fences, no explanation.
+- bounding_box must be an array of exactly 4 numbers representing [ymin, xmin, ymax, xmax] coordinates (0-1000 scale) enclosing the text line of this medication in the image.
 `.trim();
 
 const REPORT_PROMPT = `
@@ -52,7 +54,8 @@ Carefully read ALL values, parameters, and text visible in this report image and
       "range": [11.5, 16.5],
       "status": "normal",
       "interpretation": "Brief clinical meaning of this value",
-      "category": "Category (e.g. CBC, Liver Function, Thyroid)"
+      "category": "Category (e.g. CBC, Liver Function, Thyroid)",
+      "bounding_box": [120, 50, 160, 950]
     }
   ],
   "summary": "A clear 3-4 sentence clinical summary of all findings.",
@@ -70,6 +73,7 @@ Rules:
 - Extract EVERY parameter visible in the report image.
 - If the report image contains multiple sections (e.g. CBC + LFT + KFT), extract all of them.
 - Return ONLY the raw JSON object. No markdown, no code fences, no explanation.
+- bounding_box must be an array of exactly 4 numbers representing [ymin, xmin, ymax, xmax] coordinates (0-1000 scale) enclosing the text line of this parameter in the image.
 `.trim();
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

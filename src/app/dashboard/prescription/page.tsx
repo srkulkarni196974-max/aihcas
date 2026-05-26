@@ -2,6 +2,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
+import ImageSnippet from '@/components/ImageSnippet';
 import { 
   FileText, 
   Upload, 
@@ -31,6 +32,7 @@ interface Medication {
   drugClass: string;
   warnings: string[];
   instructions: string;
+  bounding_box?: number[];
 }
 
 interface PrescriptionResult {
@@ -423,6 +425,15 @@ export default function PrescriptionPage() {
       {/* Results Stage */}
       {stage === 'parsed' && result && (
         <div className="page-fade" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+          {/* Full Prescription Preview */}
+          {previewUrl && (
+            <div className="glass-card animate-fadeInUp" style={{ padding: '20px', background: 'white', border: '1.5px solid var(--border)', textAlign: 'left' }}>
+              <h3 style={{ fontSize: '0.98rem', fontWeight: 800, marginBottom: '12px', color: 'var(--text-dark)' }}>📄 Uploaded Prescription Preview</h3>
+              <div style={{ maxWidth: '100%', maxHeight: '250px', overflow: 'hidden', borderRadius: '12px', border: '1px solid var(--border)', background: '#F8FAFC', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <img src={previewUrl} alt="Prescription Preview" style={{ maxHeight: '250px', maxWidth: '100%', objectFit: 'contain' }} />
+              </div>
+            </div>
+          )}
           {/* Allergy alert flag */}
           {result.allergyAlert && (
             <div style={{ padding: '16px 20px', borderRadius: 16, background: '#FFF0F0', border: '1.5px solid #DC262625', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
@@ -511,6 +522,11 @@ export default function PrescriptionPage() {
                               {med.warnings.map((w, j) => <li key={j} style={{ marginBottom: 4 }}>{w}</li>)}
                             </ul>
                           )}
+                        </div>
+                      )}
+                      {previewUrl && med.bounding_box && (
+                        <div style={{ marginTop: 12, borderTop: '1px solid rgba(226, 232, 240, 0.6)', paddingTop: 12 }}>
+                          <ImageSnippet imageSrc={previewUrl} boundingBox={med.bounding_box} altTextText={`Snippet for ${med.name}`} />
                         </div>
                       )}
                     </div>

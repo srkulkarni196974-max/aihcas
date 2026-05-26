@@ -168,8 +168,29 @@ export async function POST(req: NextRequest) {
         const base64 = fileBuffer.toString('base64');
         
         const prompt = type === 'prescription' 
-          ? "You are an expert clinical pharmacist. Analyze this prescription image and return a JSON object with medications, dosages, timings, duration, purpose, drugClass, warnings, and instructions. Return ONLY raw JSON."
-          : "You are an expert clinical pathologist. Analyze this medical lab report image. Extract all parameters, values, units, and reference ranges. Return a JSON object with results (array), summary, risks, recommendations, alerts, and urgency. Return ONLY raw JSON.";
+          ? `You are an expert clinical pharmacist. Analyze this prescription image and return a JSON object with medications, summary, warnings, generalAdvice, and allergyAlert. 
+             Each entry in the "medications" array must have:
+             - "name": Drug name
+             - "dosage": Dosage
+             - "timing": Timing shorthand translation
+             - "duration": Duration
+             - "purpose": Purpose
+             - "drugClass": Class
+             - "warnings": list of warnings
+             - "instructions": detailed instructions
+             - "bounding_box": [ymin, xmin, ymax, xmax] coordinates (0-1000 scale) enclosing the text line of this medication in the image.
+             Return ONLY raw JSON.`
+          : `You are an expert clinical pathologist. Analyze this medical lab report image. Extract all parameters, values, units, and reference ranges. Return a JSON object with results (array), summary, risks, recommendations, alerts, and urgency. 
+             Each entry in the "results" array must have:
+             - "name": Parameter name
+             - "value": numeric value
+             - "unit": unit string
+             - "range": [min, max] reference range as numbers
+             - "status": "normal", "high", or "low"
+             - "interpretation": clinical meaning
+             - "category": section category
+             - "bounding_box": [ymin, xmin, ymax, xmax] coordinates (0-1000 scale) enclosing the text line of this parameter in the image.
+             Return ONLY raw JSON.`;
 
         let mimeType = file.type || '';
         const SUPPORTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
