@@ -695,3 +695,16 @@ S.D.M. College of Engineering and Technology (SDMCET) · May 2026
 *Empowering every patient with the medical literacy they deserve.*
 
 </div>
+<img width="958" height="473" alt="image" src="https://github.com/user-attachments/assets/6002c975-8397-41cc-9774-603381db373c" />
+<img width="959" height="418" alt="image" src="https://github.com/user-attachments/assets/282a77ec-5d7d-4232-a1f1-1fe3a1591cb9" />
+<img width="729" height="407" alt="image" src="https://github.com/user-attachments/assets/b90cdff0-0fa7-424e-8576-2d6a87ea2f76" />
+<img width="958" height="471" alt="image" src="https://github.com/user-attachments/assets/cf9b9892-62ee-4d09-b1e3-f8ff8813312e" />
+<img width="959" height="463" alt="image" src="https://github.com/user-attachments/assets/4f3fddb0-6b0f-4ca1-ace8-dcd019fff366" />
+<img width="953" height="474" alt="image" src="https://github.com/user-attachments/assets/8f7f7cc9-60af-4039-806a-7c5bd46556a0" />
+<img width="953" height="422" alt="image" src="https://github.com/user-attachments/assets/7a0bc21b-6bca-4920-8c0e-3ab7102e5c2f" />
+
+
+
+
+
+
